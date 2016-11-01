@@ -33,76 +33,12 @@ public class MusicController {
     }
   }
 
-  // notes in the form of duration, pitch, accidental, octave, start
-  // override
-  public void control() {
+  private void tryAppend(String s) {
     try {
-      Scanner scanner = new Scanner(rd);
-      String command = "";
-      boolean commandCorrectInput = false;
-
-      try {
-        command = scanner.next();
-      } catch (NoSuchElementException e) {
-        ap.append()
-      }
-
-      while (!commandCorrectInput) {
-        try {
-          switch(command) {
-            case "add":
-
-              break;
-            case "edit":
-
-              break;
-            case "delete":
-
-              break;
-            default:
-              break;
-          }
-        } catch ()
-      }
-
-    } catch ()
-  }
-
-  public Note noteMaker(String d, String p, String a, String o, String s) {
-    try {
-      int duration = Integer.parseInt(d);
-
-      Pitch pitch;
-      switch (p) {
-        case "C":
-          pitch = Pitch.C;
-          break;
-        case "D":
-          pitch = Pitch.D;
-          break;
-        case "E":
-          pitch = Pitch.E;
-          break;
-        case "F":
-          pitch = Pitch.F;
-          break;
-        case "G":
-          pitch = Pitch.G;
-          break;
-        case "A":
-          pitch = Pitch.A;
-          break;
-        case "B":
-          pitch = Pitch.B;
-          break;
-        default:
-          ap.append("Not a valid pitch.");
-      }
-
-
+      ap.append(s);
+    } catch (IOException e) {
+      e.printStackTrace();
     }
-
   }
-
 
 }

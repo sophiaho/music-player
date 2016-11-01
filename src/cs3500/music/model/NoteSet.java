@@ -1,5 +1,6 @@
 package cs3500.music.model;
 
+import java.util.HashMap;
 import java.util.TreeMap;
 
 /**
@@ -8,9 +9,11 @@ import java.util.TreeMap;
  */
 public class NoteSet extends TreeMap<Integer, Note> implements Comparable<NoteSet> {
   Tone set;
+  private HashMap<Integer, Playing> isPlaying;
 
   NoteSet(Note note) {
     this.set = note.tone;
+    this.isPlaying = new HashMap<>();
     this.addSafe(note);
   }
 
@@ -20,10 +23,19 @@ public class NoteSet extends TreeMap<Integer, Note> implements Comparable<NoteSe
    * @param note note to add
    */
   public void addSafe(Note note) {
-    if (note.rightTone(set)) {
-      this.put(note.start, note);
-    } else {
+    if (!note.rightTone(set)) {
       throw new IllegalArgumentException("Can't add note with different tone.");
+    } else if ((this.keySet().contains(note.start)) &&
+            (note.equals(this.get(note.start)))) {
+      throw new IllegalArgumentException("Can't add duplicate notes.");
+    }
+    this.put(note.start, note);
+
+    isPlaying.put(note.start, Playing.HEAD);
+    for (int i = 1; i < note.duration; i++) {
+      if (!isPlaying.keySet().contains(note.start + i)) {
+        isPlaying.put(note.start + i, Playing.SUSTAIN);
+      }
     }
   }
 
@@ -44,7 +56,6 @@ public class NoteSet extends TreeMap<Integer, Note> implements Comparable<NoteSe
     for (Note n : this.values()) {
       d = Math.max(n.start + n.duration, d);
     }
-
     return d;
   }
 
@@ -54,17 +65,9 @@ public class NoteSet extends TreeMap<Integer, Note> implements Comparable<NoteSe
    * @return the playing enum for what is playing at the given time
    */
   public Playing whatPlaying(int time) {
-    if (this.containsKey(time)) {
-      return Playing.HEAD;
-    } else if (time == 0) {
-      return Playing.REST;
+    if (isPlaying.keySet().contains(time)) {
+      return isPlaying.get(time);
     } else {
-      for (int i : keySet()) {
-        if ((get(i).start + get(i).duration > time)
-                && (i < time)) {
-          return Playing.SUSTAIN;
-        }
-      }
       return Playing.REST;
     }
   }
