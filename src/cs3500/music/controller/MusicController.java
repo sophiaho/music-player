@@ -12,6 +12,7 @@ import cs3500.music.model.*;
  */
 public class MusicController {
 
+
   Readable rd;
   Appendable ap;
 
@@ -40,5 +41,4 @@ public class MusicController {
       e.printStackTrace();
     }
   }
-
 }
