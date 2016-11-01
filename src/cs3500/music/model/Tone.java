@@ -51,7 +51,7 @@ public class Tone implements Comparable {
    *
    * @return List of all tones in between this and upperBound, inclusive
    */
-  List<Tone> toneRange(Tone upperBound) {
+  public List<Tone> toneRange(Tone upperBound) {
     List<Tone> output = new ArrayList<>();
 
     Tone toAdd = this;
