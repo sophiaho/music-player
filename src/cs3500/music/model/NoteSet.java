@@ -9,14 +9,14 @@ import java.util.TreeMap;
  * NoteSet class stores all the notes with the same tone, it extends TreeMap so that it's
  * sorted and can allow easy access for times.
  */
-public class NoteSet implements Comparable<NoteSet> {
+class NoteSet implements Comparable<NoteSet> {
   private Tone set;
-  private TreeMap<Integer, List<Note>> contents;
+  private TreeMap<Integer, List<INote>> contents;
   private HashMap<Integer, Playing> isPlaying;
 
   NoteSet(Note note) {
     this.contents = new TreeMap<>();
-    this.set = note.tone;
+    this.set = note.getTone();
     this.isPlaying = new HashMap<>();
     this.addSafe(note);
   }
@@ -29,20 +29,20 @@ public class NoteSet implements Comparable<NoteSet> {
   public void addSafe(Note note) {
     if (!note.rightTone(set)) {
       throw new IllegalArgumentException("Can't add note with different tone.");
-    } else if ((this.contents.keySet().contains(note.start)) &&
-            (this.contents.get(note.start)).contains(note)) {
+    } else if ((this.contents.keySet().contains(note.getStart())) &&
+            (this.contents.get(note.getStart())).contains(note)) {
       throw new IllegalArgumentException("Can't add duplicate notes.");
-    } else if (this.contents.keySet().contains(note.start)) {
-      this.contents.get(note.start).add(note);
+    } else if (this.contents.keySet().contains(note.getStart())) {
+      this.contents.get(note.getStart()).add(note);
       return;
     }
-    this.contents.put(note.start, new ArrayList<>());
-    this.contents.get(note.start).add(note);
+    this.contents.put(note.getStart(), new ArrayList<>());
+    this.contents.get(note.getStart()).add(note);
 
-    isPlaying.put(note.start, Playing.HEAD);
-    for (int i = 1; i < note.duration; i++) {
-      if (!isPlaying.keySet().contains(note.start + i)) {
-        isPlaying.put(note.start + i, Playing.SUSTAIN);
+    isPlaying.put(note.getStart(), Playing.HEAD);
+    for (int i = 1; i < note.getDuration(); i++) {
+      if (!isPlaying.keySet().contains(note.getStart() + i)) {
+        isPlaying.put(note.getStart() + i, Playing.SUSTAIN);
       }
     }
   }
@@ -61,9 +61,9 @@ public class NoteSet implements Comparable<NoteSet> {
    */
   int endTime() {
     Integer d = 0;
-    for (List<Note> n : this.contents.values()) {
-      for (Note c : n) {
-        d = Math.max(c.start + c.duration, d);
+    for (List<INote> n : this.contents.values()) {
+      for (INote c : n) {
+        d = Math.max(c.getEnd(), d);
       }
     }
     return d;
@@ -95,7 +95,7 @@ public class NoteSet implements Comparable<NoteSet> {
    * @param time
    * @return
    */
-  public List<Note> notesStartAt(int time) {
+  public List<INote> notesStartAt(int time) {
     if (!this.contents.keySet().contains(time)) {
       return new ArrayList<>();
     }
@@ -107,13 +107,13 @@ public class NoteSet implements Comparable<NoteSet> {
    * @param time
    * @return
    */
-  public List<Note> notesEndAt(int time) {
+  public List<INote> notesEndAt(int time) {
     int currentTime = 0;
-    ArrayList<Note> output = new ArrayList<>();
+    ArrayList<INote> output = new ArrayList<>();
 
     while (currentTime <= time) {
       if (this.contents.keySet().contains(currentTime)) {
-        for (Note n : this.contents.get(currentTime)) {
+        for (INote n : this.contents.get(currentTime)) {
           if (n.getEnd() == time) {
             output.add(n);
           }
@@ -130,7 +130,7 @@ public class NoteSet implements Comparable<NoteSet> {
    * Removes a note n.
    * @param n
    */
-  public void remove(Note n) {
-    this.contents.get(n.start).remove(n);
+  public void remove(INote n) {
+    this.contents.get(n.getStart()).remove(n);
   }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Tone represents a sound (Pitch and Accidental and Octave) without any time fields.
  */
-public class Tone implements Comparable {
+class Tone implements ITone {
   Pitch pitch;
   Accidental accidental;
   Octave octave;
@@ -26,7 +26,7 @@ public class Tone implements Comparable {
    *
    * @return int value of tone
    */
-  double numeric() {
+  public double numeric() {
     return (this.octave.value * 8) + this.pitch.noteValue + this.accidental.effect;
   }
 
@@ -51,8 +51,9 @@ public class Tone implements Comparable {
    *
    * @return List of all tones in between this and upperBound, inclusive
    */
-  public List<Tone> toneRange(Tone upperBound) {
-    List<Tone> output = new ArrayList<>();
+  @Override
+  public List<ITone> toneRange(ITone upperBound) {
+    List<ITone> output = new ArrayList<>();
 
     Tone toAdd = this;
     Tone next;
@@ -245,6 +246,7 @@ public class Tone implements Comparable {
    * Returns the value of this as a midi int.
    * @return
    */
+  @Override
   public int midiOrdinal() {
     return 12 * this.octave.value +
             (new Tone(Pitch.C, Accidental.NATURAL, this.octave).toneRange(this)).size() - 1;

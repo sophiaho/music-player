@@ -5,13 +5,13 @@ import java.util.HashMap;
 /**
  * Note contains a tone (sound) a duration, and a start time.
  */
-public class Note implements Comparable {
+class Note implements INote {
 
-  int duration;
-  Tone tone;
-  int start;
-  int volume;
-  int instrument;
+  private int duration;
+  private Tone tone;
+  private int start;
+  private int volume;
+  private int instrument;
 
   /**
    * Constructor for Note.
@@ -208,23 +208,38 @@ public class Note implements Comparable {
    *
    * @return
    */
+  @Override
   public int getInstrument() {
     return this.instrument;
   }
 
+  @Override
   public int getEnd() {
     return this.start + this.duration - 1;
   }
 
+  @Override
   public int getStart() {
     return this.start;
   }
 
+  @Override
   public int getVolume() {
     return this.volume;
   }
 
+  @Override
   public int getMidi() {
     return this.tone.midiOrdinal();
+  }
+
+  @Override
+  public Tone getTone() {
+    return this.tone;
+  }
+
+  @Override
+  public int getDuration() {
+    return this.duration;
   }
 }

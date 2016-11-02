@@ -7,10 +7,8 @@ import java.util.TreeMap;
 /**
  * Class for Song, main music model.
  */
-public class Song {
+class Song implements ISong {
   private TreeMap<Tone, NoteSet> contents;
-  private Tone high;
-  private Tone low;
 
   Song() {
     this.contents = new TreeMap<>();
@@ -32,7 +30,7 @@ public class Song {
     }
     int indexDigits = (int) Math.log10(totalLength) + 1;
 
-    List<Tone> toneSet = this.contents.firstKey().toneRange(this.contents.lastKey());
+    List<ITone> toneSet = this.getRange();
 
     String output = header(indexDigits, toneSet);
     output += songVis(totalLength, indexDigits, toneSet);
@@ -44,11 +42,12 @@ public class Song {
    * Adds a note to the song.
    * @param n note to add to song.
    */
+  @Override
   public void addNote(Note n) {
-    if (this.contents.keySet().contains(n.tone)) {
-      this.contents.get(n.tone).addSafe(n);
+    if (this.contents.keySet().contains(n.getTone())) {
+      this.contents.get(n.getTone()).addSafe(n);
     } else {
-      this.contents.put(n.tone, new NoteSet(n));
+      this.contents.put(n.getTone(), new NoteSet(n));
     }
   }
 
@@ -56,9 +55,10 @@ public class Song {
    * Deletes a note.
    * @param n note to add to song.
    */
+  @Override
   public void deleteNote(Note n) {
-    if (this.contents.keySet().contains(n.tone)) {
-      this.contents.get(n.tone).remove(n);
+    if (this.contents.keySet().contains(n.getTone())) {
+      this.contents.get(n.getTone()).remove(n);
     } else {
       throw new IllegalArgumentException("Song does not contain that note.");
     }
@@ -69,6 +69,7 @@ public class Song {
    * @param input note to change.
    * @param changeTo what to change the note into.
    */
+  @Override
   public void editNote(Note input, Note changeTo) {
     this.deleteNote(input);
     this.addNote(changeTo);
@@ -81,9 +82,9 @@ public class Song {
    * @param toneSet     set of tones to write out
    * @return the notes in the song
    */
-  private String header(int indexDigits, List<Tone> toneSet) {
+  private String header(int indexDigits, List<ITone> toneSet) {
     String output = String.format("%" + indexDigits + "s", "");
-    for (Tone t : toneSet) {
+    for (ITone t : toneSet) {
       output += String.format("%5s", t.toString());
     }
     output += "\n";
@@ -97,12 +98,12 @@ public class Song {
    * @param indexDigits number of digits for index
    * @param toneSet     set of tones to render
    */
-  private String songVis(int totalLength, int indexDigits, List<Tone> toneSet) {
+  private String songVis(int totalLength, int indexDigits, List<ITone> toneSet) {
     String output = "";
     int ind = 0;
     for (int i = 0; i < totalLength; i++) {
       output += String.format("%" + indexDigits + "s", String.valueOf(ind)) + " ";
-      for (Tone t : toneSet) {
+      for (ITone t : toneSet) {
         if (!this.contents.keySet().contains(t)) {
           output += "     ";
         } else {
@@ -130,23 +131,26 @@ public class Song {
   /**
    *
    */
-  public List<Note> allStartsAt(int time) {
-    List<Note> output = new ArrayList<>();
+  @Override
+  public List<INote> allStartsAt(int time) {
+    List<INote> output = new ArrayList<>();
     for (Tone t : this.contents.keySet()) {
       output.addAll(this.contents.get(t).notesStartAt(time));
     }
     return output;
   }
 
-  public List<Note> allEndsAt(int time) {
-    List<Note> output = new ArrayList<>();
+  @Override
+  public List<INote> allEndsAt(int time) {
+    List<INote> output = new ArrayList<>();
     for (Tone t : this.contents.keySet()) {
       output.addAll(this.contents.get(t).notesEndAt(time));
     }
     return output;
   }
 
-  public List<Tone> getRange() {
+  @Override
+  public List<ITone> getRange() {
     return this.contents.firstKey().toneRange(this.contents.lastKey());
   }
 }

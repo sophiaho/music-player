@@ -1,37 +1,34 @@
 package cs3500.music.view;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 
 import javax.swing.*;
 
-import cs3500.music.model.Song;
-import cs3500.music.model.Tone;
+import cs3500.music.model.ISong;
+import cs3500.music.model.ITone;
 
 /**
  * A dummy view that simply draws a string
  */
 public class GuiViewPanel extends JPanel {
 
-  private final Song song;
+  private final ISong song;
 
-  public GuiViewPanel(Song song) {
+  public GuiViewPanel(ISong song) {
     this.song = song;
   }
 
   @Override
-  public void paintComponent(Graphics g){
+  public void paintComponent(Graphics g) {
     // Handle the default painting
     super.paintComponent(g);
 
-    List<Tone> toneSet = song.getRange();
+    List<ITone> toneSet = song.getRange();
 
     // draw: the list of tones
     int toneY = 20; //starting gap
-    for (Tone t : toneSet) {
+    for (ITone t : toneSet) {
       g.drawString(t.toString(), 2, toneY); //string, int x, int y
       toneY += 20;
     }
@@ -42,8 +39,5 @@ public class GuiViewPanel extends JPanel {
     for (int i = 0; i < toneSet.size(); i++) {
 
     }
-
-
   }
-
 }
