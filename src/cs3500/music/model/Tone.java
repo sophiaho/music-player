@@ -240,4 +240,13 @@ public class Tone implements Comparable {
       return false;
     }
   }
+
+  /**
+   * Returns the value of this as a midi int.
+   * @return
+   */
+  public int midiOrdinal() {
+    return 12 * this.octave.value +
+            (new Tone(Pitch.C, Accidental.NATURAL, this.octave).toneRange(this)).size() - 1;
+  }
 }

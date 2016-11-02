@@ -10,6 +10,8 @@ public class Note implements Comparable {
   int duration;
   Tone tone;
   int start;
+  int volume;
+  int instrument;
 
   /**
    * Constructor for Note.
@@ -23,6 +25,25 @@ public class Note implements Comparable {
     this.tone = new Tone(p, a, o);
     this.duration = duration;
     this.start = start;
+    this.volume = 1;
+    this.instrument = 0;
+  }
+
+  /**
+   * Constructor for all fields.
+   *
+   * @param duration
+   * @param tone
+   * @param start
+   * @param volume
+   * @param instrument
+   */
+  Note(int duration, Tone tone, int start, int volume, int instrument) {
+    this.duration = duration;
+    this.tone = tone;
+    this.start = start;
+    this.volume = volume;
+    this.instrument = instrument;
   }
 
   @Override
@@ -120,7 +141,8 @@ public class Note implements Comparable {
    */
   @Override
   public int hashCode() {
-    return (int) ((this.tone.numeric() * 31 + this.duration) * 67 + this.start);
+    return (int) ((((this.tone.numeric() * 31 + this.duration) * 67 + this.start))
+            * 139 + this.instrument) * 19 + this.volume;
   }
 
   /**
@@ -173,9 +195,36 @@ public class Note implements Comparable {
     if (obj instanceof Note) {
       return (this.tone.numeric() == ((Note) obj).tone.numeric())
               && (this.start == ((Note) obj).start)
-              && (this.duration == ((Note) obj).duration);
+              && (this.duration == ((Note) obj).duration)
+              && (this.volume == ((Note) obj).volume)
+              && (this.instrument == ((Note) obj).instrument);
     } else {
       return false;
     }
+  }
+
+  /**
+   * Returns instrument key.
+   *
+   * @return
+   */
+  public int getInstrument() {
+    return this.instrument;
+  }
+
+  public int getEnd() {
+    return this.start + this.duration - 1;
+  }
+
+  public int getStart() {
+    return this.start;
+  }
+
+  public int getVolume() {
+    return this.volume;
+  }
+
+  public int getMidi() {
+    return this.tone.midiOrdinal();
   }
 }

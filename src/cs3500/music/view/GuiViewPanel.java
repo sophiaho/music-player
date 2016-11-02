@@ -27,7 +27,7 @@ public class GuiViewPanel extends JPanel {
     // Handle the default painting
     super.paintComponent(g);
 
-    List<Tone> toneSet = song.firstKey().toneRange(song.lastKey());
+    List<Tone> toneSet = song.getRange();
 
     // draw: the list of tones
     int toneY = 20; //starting gap

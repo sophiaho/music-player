@@ -1,33 +1,38 @@
 package cs3500.music.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
 /**
  * Class for Song, main music model.
  */
-public class Song extends TreeMap<Tone, NoteSet> {
+public class Song {
+  private TreeMap<Tone, NoteSet> contents;
+  private Tone high;
+  private Tone low;
+
   Song() {
-    // extends the Treemap
+    this.contents = new TreeMap<>();
   }
 
   @Override
   /**
-   * Completes toString for this, using delegated toString methods.
-   * @return this song as a string that looks like a table
+   * Completes toString for this.contents, using delegated toString methods.
+   * @return this.contents song as a string that looks like a table
    */
   public String toString() {
-    if (this.keySet().size() == 0) {
+    if (this.contents.keySet().size() == 0) {
       return "";
     }
 
     int totalLength = 0;
-    for (NoteSet n : this.values()) {
+    for (NoteSet n : this.contents.values()) {
       totalLength = Math.max(totalLength, n.endTime());
     }
     int indexDigits = (int) Math.log10(totalLength) + 1;
 
-    List<Tone> toneSet = this.firstKey().toneRange(this.lastKey());
+    List<Tone> toneSet = this.contents.firstKey().toneRange(this.contents.lastKey());
 
     String output = header(indexDigits, toneSet);
     output += songVis(totalLength, indexDigits, toneSet);
@@ -40,10 +45,10 @@ public class Song extends TreeMap<Tone, NoteSet> {
    * @param n note to add to song.
    */
   public void addNote(Note n) {
-    if (this.keySet().contains(n.tone)) {
-      this.get(n.tone).addSafe(n);
+    if (this.contents.keySet().contains(n.tone)) {
+      this.contents.get(n.tone).addSafe(n);
     } else {
-      this.put(n.tone, new NoteSet(n));
+      this.contents.put(n.tone, new NoteSet(n));
     }
   }
 
@@ -52,8 +57,8 @@ public class Song extends TreeMap<Tone, NoteSet> {
    * @param n note to add to song.
    */
   public void deleteNote(Note n) {
-    if (this.keySet().contains(n.tone)) {
-      this.get(n.tone).remove(n);
+    if (this.contents.keySet().contains(n.tone)) {
+      this.contents.get(n.tone).remove(n);
     } else {
       throw new IllegalArgumentException("Song does not contain that note.");
     }
@@ -98,10 +103,10 @@ public class Song extends TreeMap<Tone, NoteSet> {
     for (int i = 0; i < totalLength; i++) {
       output += String.format("%" + indexDigits + "s", String.valueOf(ind)) + " ";
       for (Tone t : toneSet) {
-        if (!this.keySet().contains(t)) {
+        if (!this.contents.keySet().contains(t)) {
           output += "     ";
         } else {
-          switch (get(t).whatPlaying(i)) {
+          switch (this.contents.get(t).whatPlaying(i)) {
             case REST:
               output += "     ";
               break;
@@ -120,5 +125,28 @@ public class Song extends TreeMap<Tone, NoteSet> {
       ind += 1;
     }
     return output;
+  }
+
+  /**
+   *
+   */
+  public List<Note> allStartsAt(int time) {
+    List<Note> output = new ArrayList<>();
+    for (Tone t : this.contents.keySet()) {
+      output.addAll(this.contents.get(t).notesStartAt(time));
+    }
+    return output;
+  }
+
+  public List<Note> allEndsAt(int time) {
+    List<Note> output = new ArrayList<>();
+    for (Tone t : this.contents.keySet()) {
+      output.addAll(this.contents.get(t).notesEndAt(time));
+    }
+    return output;
+  }
+
+  public List<Tone> getRange() {
+    return this.contents.firstKey().toneRange(this.contents.lastKey());
   }
 }
