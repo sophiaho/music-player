@@ -38,7 +38,7 @@ public class GuiViewPanel extends JPanel {
 
     // draw: the horizontal lines
     int horLineY = 20;
-    g.drawLine(10, 20, )
+//    g.drawLine(10, 20, )
     for (int i = 0; i < toneSet.size(); i++) {
 
     }
