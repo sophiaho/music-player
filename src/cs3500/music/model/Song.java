@@ -7,7 +7,7 @@ import java.util.TreeMap;
 /**
  * Class for Song, main music model.
  */
-class Song implements ISong {
+public class Song implements ISong {
   private TreeMap<Tone, NoteSet> contents;
 
   Song() {
@@ -24,6 +24,7 @@ class Song implements ISong {
       return "";
     }
 
+    // TODO check to see if the new method works the way you want it to and then you can just delete this part and change it
     int totalLength = 0;
     for (NoteSet n : this.contents.values()) {
       totalLength = Math.max(totalLength, n.endTime());
@@ -129,7 +130,7 @@ class Song implements ISong {
   }
 
   /**
-   *
+   * //TODO write these javadocs
    */
   @Override
   public List<INote> allStartsAt(int time) {
@@ -152,5 +153,18 @@ class Song implements ISong {
   @Override
   public List<ITone> getRange() {
     return this.contents.firstKey().toneRange(this.contents.lastKey());
+  }
+
+  /**
+   * Gets the length of the song.
+   *
+   * @return int of the position
+   */
+  public int songLength() {
+    int totalLength = 0;
+    for (NoteSet n : this.contents.values()) {
+      totalLength = Math.max(totalLength, n.endTime());
+    }
+    return totalLength;
   }
 }

@@ -24,4 +24,11 @@ public interface ISong {
   List<INote> allEndsAt(int time);
 
   List<ITone> getRange();
+
+  /**
+   * Gets the length of the song.
+   *
+   * @return int of the position
+   */
+  int songLength();
 }

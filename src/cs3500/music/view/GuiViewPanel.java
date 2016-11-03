@@ -8,15 +8,22 @@ import javax.swing.*;
 import cs3500.music.model.ISong;
 import cs3500.music.model.ITone;
 
+
 /**
  * A dummy view that simply draws a string
  */
 public class GuiViewPanel extends JPanel {
 
-  private final ISong song;
+  ISong song;
 
   public GuiViewPanel(ISong song) {
-    this.song = song;
+    // setting the layout
+    this.setLayout(new BorderLayout());
+    JPanel musicPanel = new JPanel();
+    musicPanel.setPreferredSize(new Dimension(800,300));
+    JScrollPane scrollPane = new JScrollPane(musicPanel);
+    this.add(scrollPane,BorderLayout.CENTER);
+
   }
 
   @Override
@@ -35,9 +42,22 @@ public class GuiViewPanel extends JPanel {
 
     // draw: the horizontal lines
     int horLineY = 20;
-//    g.drawLine(10, 20, )
     for (int i = 0; i < toneSet.size(); i++) {
-
+      g.drawLine(10, horLineY, song.songLength() * 5, horLineY);
+      horLineY += 20;
     }
+
+    // draw: the vertical lines
+    int vertLineX = 20;
+    for (int i = 0; i < toneSet.size(); i++) {
+      g.drawLine(vertLineX, 20, vertLineX, song.songLength() * 5);
+      vertLineX += 20;
+    }
+
+    //draw: the green sustains
+//    int sustainX =
+//    g.drawRect();
+    // TODO draw out the rectangles
+
   }
 }

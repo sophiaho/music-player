@@ -6,39 +6,36 @@ import java.util.Objects;
 import java.util.Scanner;
 
 import cs3500.music.model.*;
+import cs3500.music.view.IMusicView;
 
 /**
  * A class representation of the Music Controller.
  */
-public class MusicController {
+public class MusicController implements IMusicController{
 
-
-  Readable rd;
-  Appendable ap;
+  ISong model;
+  IMusicView view;
 
   /**
-   * Constructs a {@Code MusicController} object.
    *
-   * @param rd readable
-   * @param ap appendable
+   * @param model
+   * @param view
    */
-  public MusicController(Readable rd, Appendable ap) {
-    this.rd = rd;
-    this.ap = ap;
-
-    try {
-      Objects.requireNonNull(rd);
-      Objects.requireNonNull(ap);
-    } catch (NullPointerException e) {
-      throw new IllegalStateException("Readable and appendable cannot be null.");
-    }
+  public MusicController(ISong model, IMusicView view) {
+    this.model = model;
+    this.view = view;
+    this.view.initialize();
   }
 
-  private void tryAppend(String s) {
-    try {
-      ap.append(s);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+  @Override
+  public void go() {
+    this.view.initialize();
   }
+
+  // TODO i believe this is next week's assignment
+  @Override
+  public String processCommand(String command) {
+    return "";
+  }
+
 }
