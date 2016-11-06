@@ -32,7 +32,5 @@ public interface ISong {
    */
   int songLength();
 
-  ISong generate();
-
   void setTempo(int tempo);
 }

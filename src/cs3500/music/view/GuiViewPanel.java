@@ -14,45 +14,49 @@ import cs3500.music.model.ITone;
  */
 public class GuiViewPanel extends JPanel {
 
-  ISong song;
+  private ISong song;
 
-  public GuiViewPanel(ISong song) {
-    // setting the layout
+//  public GuiViewPanel() {
+//    // setting the layout
+//    JPanel musicPanel = new JPanel();
+//    musicPanel.setPreferredSize(new Dimension(800,300));
+//    JScrollPane scrollPane = new JScrollPane(musicPanel);
+//    this.add(scrollPane,BorderLayout.CENTER);
+//  }
+
+  public void initialize(ISong song) {
+    this.setSize(800, 300);
     this.setLayout(new BorderLayout());
-    JPanel musicPanel = new JPanel();
-    musicPanel.setPreferredSize(new Dimension(800,300));
-    JScrollPane scrollPane = new JScrollPane(musicPanel);
-    this.add(scrollPane,BorderLayout.CENTER);
-
+    this.song = song;
+    int i = 1 + 1;
+    List<ITone> toneSet = song.getRange();
   }
 
   @Override
   public void paintComponent(Graphics g) {
+
     // Handle the default painting
     super.paintComponent(g);
 
     List<ITone> toneSet = song.getRange();
 
-    // draw: the list of tones
-    int toneY = 20; //starting gap
-    for (ITone t : toneSet) {
-      g.drawString(t.toString(), 2, toneY); //string, int x, int y
-      toneY += 20;
-    }
+    drawTones(g, toneSet);
 
     // draw: the horizontal lines
-    int horLineY = 20;
-    for (int i = 0; i < toneSet.size(); i++) {
-      g.drawLine(10, horLineY, song.songLength() * 5, horLineY);
-      horLineY += 20;
-    }
+//    int horLineY = 20;
+//    for (int i = 0; i < toneSet.size(); i++) {
+//      g.drawLine(10, horLineY, song.songLength() * 5, horLineY);
+//      horLineY += 20;
+//    }
 
     // draw: the vertical lines
-    int vertLineX = 20;
-    for (int i = 0; i < toneSet.size(); i++) {
-      g.drawLine(vertLineX, 20, vertLineX, song.songLength() * 5);
-      vertLineX += 20;
-    }
+//    int vertLineX = 20;
+//    for (int i = 0; i < toneSet.size(); i++) {
+//      g.drawLine(vertLineX, 20, vertLineX, song.songLength() * 5);
+//      vertLineX += 20;
+//    }
+
+
 
     //draw: the rectangles
 //    int sustainX = 0;
@@ -60,5 +64,14 @@ public class GuiViewPanel extends JPanel {
 //    g.drawRect();
     // TODO draw out the rectangles
 
+  }
+
+  private void drawTones(Graphics g, List<ITone> tones) {
+    // draw: the list of tones
+    int toneY = 20; //starting gap
+    for (ITone t : tones) {
+      g.drawString(t.toString(), 2, toneY); //string, int x, int y
+      toneY += 20;
+    }
   }
 }

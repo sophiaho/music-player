@@ -1,5 +1,6 @@
 package cs3500.music;
 
+import java.io.FileReader;
 import java.io.IOException;
 
 import javax.sound.midi.InvalidMidiDataException;
@@ -7,7 +8,8 @@ import javax.sound.midi.InvalidMidiDataException;
 import cs3500.music.controller.IMusicController;
 import cs3500.music.controller.MusicController;
 import cs3500.music.model.ISong;
-import cs3500.music.model.Song;
+import cs3500.music.util.MusicReader;
+import cs3500.music.util.SongBuilder;
 import cs3500.music.view.GUIView;
 import cs3500.music.view.IMusicView;
 
@@ -16,8 +18,8 @@ import cs3500.music.view.IMusicView;
  */
 public class MusicMain {
   public static void main(String[] args) throws IOException, InvalidMidiDataException{
-    ISong model = new Song();
-    IMusicView view = new GUIView(model);
+    ISong model = MusicReader.parseFile(new FileReader("songs/mary-little-lamb.txt"), new SongBuilder());
+    IMusicView view = new GUIView();
     IMusicController controller = new MusicController(model, view);
     controller.go();
   }

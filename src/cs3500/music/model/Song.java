@@ -175,10 +175,6 @@ public class Song implements ISong {
     return totalLength;
   }
 
-  public ISong generate() {
-    return new Song();
-  }
-
   public void setTempo(int tempo) {
     this.tempo = tempo;
   }

@@ -1,5 +1,7 @@
 package cs3500.music.view;
 
+import cs3500.music.model.ISong;
+
 /**
  * Created by andrew on 01/11/2016.
  */
@@ -8,6 +10,7 @@ public interface IMusicView {
   /**
    *
    */
-  public void initialize();
+  void initialize();
 
+  void render(ISong s);
 }

@@ -24,12 +24,10 @@ public class MusicController implements IMusicController{
   public MusicController(ISong model, IMusicView view) {
     this.model = model;
     this.view = view;
-    this.view.initialize();
   }
 
-  @Override
   public void go() {
-    this.view.initialize();
+    view.render(model);
   }
 
   // TODO i believe this is next week's assignment

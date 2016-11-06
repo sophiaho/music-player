@@ -11,22 +11,30 @@ import java.awt.*;
  */
 public class GUIView extends javax.swing.JFrame implements IMusicView {
 
-  private final JPanel displayPanel; // You may want to refine this to a subtype of JPanel
+  private GuiViewPanel displayPanel; // You may want to refine this to a subtype of JPanel
 
   /**
    * Creates new GuiView
    */
-  public GUIView(ISong song) {
-    this.displayPanel = new GuiViewPanel(song);
-    this.getContentPane().add(displayPanel);
-    this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+  public GUIView() {
+    this.displayPanel = new GuiViewPanel();
     this.setSize(800, 300);
     this.setResizable(false);
+    this.getContentPane().add(displayPanel);
     this.pack();
+
+    this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
   }
 
-//  @Override
-  public void initialize(){
+  public void render(ISong s) {
+    this.displayPanel.initialize(s);
+    this.pack();
+    this.repaint();
+  }
+
+  //  @Override
+  public void initialize() {
+    this.pack();
     this.setVisible(true);
   }
 
