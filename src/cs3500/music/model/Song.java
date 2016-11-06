@@ -10,7 +10,7 @@ import java.util.TreeMap;
 public class Song implements ISong {
   private TreeMap<Tone, NoteSet> contents;
 
-  Song() {
+  public Song() { // CHANGE: made public
     this.contents = new TreeMap<>();
   }
 

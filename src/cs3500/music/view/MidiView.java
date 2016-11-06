@@ -49,4 +49,9 @@ public class MidiView implements IMusicView {
               n.getMidi(), 0), beat);
     }
   }
+
+  @Override
+  public void initialize() {
+    //TODO
+  }
 }

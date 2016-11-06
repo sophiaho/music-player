@@ -30,7 +30,7 @@ public class GUIView extends javax.swing.JFrame implements IMusicView {
     this.setVisible(true);
   }
 
-  @Override
+  @Override //TODO what dis for
   public Dimension getPreferredSize(){
     return new Dimension(100, 100);
   }
