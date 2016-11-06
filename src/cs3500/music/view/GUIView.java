@@ -20,7 +20,7 @@ public class GUIView extends javax.swing.JFrame implements IMusicView {
     this.displayPanel = new GuiViewPanel(song);
     this.getContentPane().add(displayPanel);
     this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-    this.setSize(300, 800);
+    this.setSize(800, 300);
     this.setResizable(false);
     this.pack();
   }
@@ -30,9 +30,9 @@ public class GUIView extends javax.swing.JFrame implements IMusicView {
     this.setVisible(true);
   }
 
-  @Override //TODO what dis for
-  public Dimension getPreferredSize(){
-    return new Dimension(100, 100);
-  }
+//  @Override //TODO what dis for
+//  public Dimension getPreferredSize(){
+//    return new Dimension(100, 100);
+//  }
 
 }

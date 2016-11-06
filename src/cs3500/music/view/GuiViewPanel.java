@@ -54,8 +54,9 @@ public class GuiViewPanel extends JPanel {
       vertLineX += 20;
     }
 
-    //draw: the green sustains
-//    int sustainX =
+    //draw: the rectangles
+//    int sustainX = 0;
+//    for ()
 //    g.drawRect();
     // TODO draw out the rectangles
 
