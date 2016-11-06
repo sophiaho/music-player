@@ -8,10 +8,17 @@ import java.util.TreeMap;
  * Class for Song, main music model.
  */
 public class Song implements ISong {
-  private TreeMap<Tone, NoteSet> contents;
+  private TreeMap<ITone, NoteSet> contents;
+  private int tempo;
 
   public Song() { // CHANGE: made public
     this.contents = new TreeMap<>();
+    this.tempo = 0;
+  }
+
+  public Song(int tempo) {
+    this.contents = new TreeMap<>();
+    this.tempo = tempo;
   }
 
   @Override
@@ -44,7 +51,7 @@ public class Song implements ISong {
    * @param n note to add to song.
    */
   @Override
-  public void addNote(Note n) {
+  public void addNote(INote n) {
     if (this.contents.keySet().contains(n.getTone())) {
       this.contents.get(n.getTone()).addSafe(n);
     } else {
@@ -57,7 +64,7 @@ public class Song implements ISong {
    * @param n note to add to song.
    */
   @Override
-  public void deleteNote(Note n) {
+  public void deleteNote(INote n) {
     if (this.contents.keySet().contains(n.getTone())) {
       this.contents.get(n.getTone()).remove(n);
     } else {
@@ -71,7 +78,7 @@ public class Song implements ISong {
    * @param changeTo what to change the note into.
    */
   @Override
-  public void editNote(Note input, Note changeTo) {
+  public void editNote(INote input, INote changeTo) {
     this.deleteNote(input);
     this.addNote(changeTo);
   }
@@ -135,7 +142,7 @@ public class Song implements ISong {
   @Override
   public List<INote> allStartsAt(int time) {
     List<INote> output = new ArrayList<>();
-    for (Tone t : this.contents.keySet()) {
+    for (ITone t : this.contents.keySet()) {
       output.addAll(this.contents.get(t).notesStartAt(time));
     }
     return output;
@@ -144,7 +151,7 @@ public class Song implements ISong {
   @Override
   public List<INote> allEndsAt(int time) {
     List<INote> output = new ArrayList<>();
-    for (Tone t : this.contents.keySet()) {
+    for (ITone t : this.contents.keySet()) {
       output.addAll(this.contents.get(t).notesEndAt(time));
     }
     return output;
@@ -166,5 +173,13 @@ public class Song implements ISong {
       totalLength = Math.max(totalLength, n.endTime());
     }
     return totalLength;
+  }
+
+  public ISong generate() {
+    return new Song();
+  }
+
+  public void setTempo(int tempo) {
+    this.tempo = tempo;
   }
 }

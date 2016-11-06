@@ -1,5 +1,7 @@
 package cs3500.music.model;
 
+import org.omg.CORBA.INTERNAL;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,27 +9,21 @@ import java.util.List;
 /**
  * Tone represents a sound (Pitch and Accidental and Octave) without any time fields.
  */
-class Tone implements ITone {
-  Pitch pitch;
-  Accidental accidental;
-  Octave octave;
+public class Tone implements ITone {
+  private Pitch pitch;
+  private int octave;
 
-  Tone(Pitch pitch, Accidental accidental, Octave octave) {
+  Tone(Pitch pitch, int octave) {
     this.pitch = pitch;
-    if ((!this.hasSharp().get(pitch)) && (accidental != Accidental.NATURAL)) {
-      throw new IllegalArgumentException("Not a valid note for sharps.");
-    }
-    this.accidental = accidental;
     this.octave = octave;
   }
 
-  /**
-   * Returns numeric value of Tone.
-   *
-   * @return int value of tone
-   */
-  public double numeric() {
-    return (this.octave.value * 8) + this.pitch.noteValue + this.accidental.effect;
+  public Pitch getPitch() {
+    return pitch;
+  }
+
+  public int getOctave() {
+    return octave;
   }
 
   /**
@@ -37,13 +33,7 @@ class Tone implements ITone {
    */
   @Override
   public String toString() {
-    if (accidental == Accidental.NATURAL) {
-      return this.pitch.toString() + String.valueOf(octave.value);
-    } else if (accidental == Accidental.SHARP) {
-      return this.pitch.toString() + "#" + String.valueOf(octave.value);
-    } else {
-      throw new IllegalArgumentException("Flats aren't implemented yet!");
-    }
+    return this.pitch.toString() + String.valueOf(this.octave);
   }
 
   /**
@@ -58,15 +48,12 @@ class Tone implements ITone {
     Tone toAdd = this;
     Tone next;
 
-    HashMap<Pitch, Boolean> hasSharp = this.hasSharp();
     while (toAdd.numeric() != upperBound.numeric()) {
 
-      if ((hasSharp.get(toAdd.pitch)) && (toAdd.accidental == Accidental.NATURAL)) {
-        next = new Tone(toAdd.pitch, Accidental.SHARP, toAdd.octave);
-      } else if (toAdd.pitch.equals(Pitch.B)) {
-        next = new Tone(toAdd.pitch.next(), Accidental.NATURAL, new Octave(toAdd.octave.value + 1));
+      if (toAdd.pitch.equals(Pitch.B)) {
+        next = new Tone(toAdd.pitch.next(), toAdd.octave + 1);
       } else {
-        next = new Tone(toAdd.pitch.next(), Accidental.NATURAL, toAdd.octave);
+        next = new Tone(toAdd.pitch.next(), toAdd.octave);
       }
 
       output.add(toAdd);
@@ -76,23 +63,6 @@ class Tone implements ITone {
     output.add(upperBound);
 
     return output;
-  }
-
-  /**
-   * Returns a hashmap that tells which pitches allow sharps.
-   */
-  private HashMap<Pitch, Boolean> hasSharp() {
-    HashMap<Pitch, Boolean> hasSharp = new HashMap<>();
-
-    hasSharp.put(Pitch.C, true);
-    hasSharp.put(Pitch.D, true);
-    hasSharp.put(Pitch.E, false);
-    hasSharp.put(Pitch.F, true);
-    hasSharp.put(Pitch.G, true);
-    hasSharp.put(Pitch.A, true);
-    hasSharp.put(Pitch.B, false);
-
-    return hasSharp;
   }
 
   /**
@@ -247,8 +217,8 @@ class Tone implements ITone {
    * @return
    */
   @Override
-  public int midiOrdinal() {
-    return 12 * this.octave.value +
-            (new Tone(Pitch.C, Accidental.NATURAL, this.octave).toneRange(this)).size() - 1;
+  public int numeric() {
+    return 12 * (1 + this.octave) +
+            this.pitch.getNoteValue();
   }
 }

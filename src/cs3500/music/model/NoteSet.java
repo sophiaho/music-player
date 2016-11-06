@@ -10,11 +10,11 @@ import java.util.TreeMap;
  * sorted and can allow easy access for times.
  */
 class NoteSet implements Comparable<NoteSet> {
-  private Tone set;
+  private ITone set;
   private TreeMap<Integer, List<INote>> contents;
   private HashMap<Integer, Playing> isPlaying;
 
-  NoteSet(Note note) {
+  NoteSet(INote note) {
     this.contents = new TreeMap<>();
     this.set = note.getTone();
     this.isPlaying = new HashMap<>();
@@ -26,8 +26,8 @@ class NoteSet implements Comparable<NoteSet> {
    *
    * @param note note to add
    */
-  public void addSafe(Note note) {
-    if (!note.rightTone(set)) {
+  public void addSafe(INote note) {
+    if (!note.getTone().equals(set)) {
       throw new IllegalArgumentException("Can't add note with different tone.");
     } else if ((this.contents.keySet().contains(note.getStart())) &&
             (this.contents.get(note.getStart())).contains(note)) {
@@ -86,7 +86,7 @@ class NoteSet implements Comparable<NoteSet> {
    * Getter for the tone of this set.
    * @return
    */
-  public Tone getSet() {
+  public ITone getSet() {
     return this.set;
   }
 

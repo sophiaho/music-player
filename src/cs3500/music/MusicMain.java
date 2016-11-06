@@ -17,7 +17,7 @@ import cs3500.music.view.IMusicView;
 public class MusicMain {
   public static void main(String[] args) throws IOException, InvalidMidiDataException{
     ISong model = new Song();
-    IMusicView view = new GUIView();
+    IMusicView view = new GUIView(model);
     IMusicController controller = new MusicController(model, view);
     controller.go();
   }

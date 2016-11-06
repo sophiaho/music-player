@@ -13,11 +13,11 @@ public interface ISong {
    */
   String toString();
 
-  void addNote(Note n);
+  void addNote(INote n);
 
-  void deleteNote(Note n);
+  void deleteNote(INote n);
 
-  void editNote(Note input, Note changeTo);
+  void editNote(INote input, INote changeTo);
 
   List<INote> allStartsAt(int time);
 
@@ -31,4 +31,8 @@ public interface ISong {
    * @return int of the position
    */
   int songLength();
+
+  ISong generate();
+
+  void setTempo(int tempo);
 }

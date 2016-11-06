@@ -5,10 +5,10 @@ import java.util.HashMap;
 /**
  * Note contains a tone (sound) a duration, and a start time.
  */
-class Note implements INote {
+public class Note implements INote {
 
   private int duration;
-  private Tone tone;
+  private ITone tone;
   private int start;
   private int volume;
   private int instrument;
@@ -17,12 +17,11 @@ class Note implements INote {
    * Constructor for Note.
    *
    * @param p        pitch
-   * @param a        accidental
    * @param duration duration
    * @param o        octave
    */
-  Note(Pitch p, Accidental a, int duration, Octave o, int start) {
-    this.tone = new Tone(p, a, o);
+  Note(Pitch p, int duration, int o, int start) {
+    this.tone = new Tone(p, o);
     this.duration = duration;
     this.start = start;
     this.volume = 1;
@@ -38,7 +37,7 @@ class Note implements INote {
    * @param volume
    * @param instrument
    */
-  Note(int duration, Tone tone, int start, int volume, int instrument) {
+  public Note(int duration, ITone tone, int start, int volume, int instrument) {
     this.duration = duration;
     this.tone = tone;
     this.start = start;
@@ -54,7 +53,7 @@ class Note implements INote {
   /**
    * Returns if a tone is the same as this.
    */
-  boolean rightTone(Tone tone) {
+  boolean rightTone(ITone tone) {
     return (tone.compareTo(tone) == 0);
   }
 
@@ -215,7 +214,7 @@ class Note implements INote {
 
   @Override
   public int getEnd() {
-    return this.start + this.duration - 1;
+    return this.start + this.duration;
   }
 
   @Override
@@ -230,11 +229,11 @@ class Note implements INote {
 
   @Override
   public int getMidi() {
-    return this.tone.midiOrdinal();
+    return this.tone.numeric();
   }
 
   @Override
-  public Tone getTone() {
+  public ITone getTone() {
     return this.tone;
   }
 

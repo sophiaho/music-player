@@ -6,20 +6,25 @@ import java.util.HashMap;
  * Pitch enum, represents the letter value of the Tone, which is the sound of a Note.
  */
 enum Pitch {
-  C(1), D(2), E(3), F(4), G(5), A(6), B(7);
+  C(1), CS(2), D(3), DS(4), E(5), F(6), FS(7), G(8), GS(9), A(10), AS(11), B(12);
 
-  int noteValue;
-  private String[] stringVal = new String[7];
+  private int noteValue;
+  private String[] stringVal = new String[12];
 
   Pitch(int value) {
     this.noteValue = value;
     stringVal[0] = "C";
-    stringVal[1] = "D";
-    stringVal[2] = "E";
-    stringVal[3] = "F";
-    stringVal[4] = "G";
-    stringVal[5] = "A";
-    stringVal[6] = "B";
+    stringVal[1] = "C#";
+    stringVal[2] = "D";
+    stringVal[3] = "D#";
+    stringVal[4] = "E";
+    stringVal[5] = "F";
+    stringVal[6] = "F#";
+    stringVal[7] = "G";
+    stringVal[8] = "G#";
+    stringVal[9] = "A";
+    stringVal[10] = "A#";
+    stringVal[11] = "B";
   }
 
   /**
@@ -40,14 +45,27 @@ enum Pitch {
   public Pitch next() {
     HashMap<Pitch, Pitch> nextMap = new HashMap<>();
 
-    nextMap.put(Pitch.A, Pitch.B);
+    nextMap.put(Pitch.A, Pitch.AS);
+    nextMap.put(Pitch.AS, Pitch.B);
     nextMap.put(Pitch.B, Pitch.C);
-    nextMap.put(Pitch.C, Pitch.D);
-    nextMap.put(Pitch.D, Pitch.E);
+    nextMap.put(Pitch.C, Pitch.CS);
+    nextMap.put(Pitch.CS, Pitch.D);
+    nextMap.put(Pitch.D, Pitch.DS);
+    nextMap.put(Pitch.DS, Pitch.E);
     nextMap.put(Pitch.E, Pitch.F);
-    nextMap.put(Pitch.F, Pitch.G);
-    nextMap.put(Pitch.G, Pitch.A);
+    nextMap.put(Pitch.F, Pitch.FS);
+    nextMap.put(Pitch.FS, Pitch.G);
+    nextMap.put(Pitch.G, Pitch.GS);
+    nextMap.put(Pitch.GS, Pitch.A);
 
     return nextMap.get(this);
+  }
+
+  public int getNoteValue() {
+    return noteValue;
+  }
+
+  public String[] getStringVal() {
+    return stringVal;
   }
 }

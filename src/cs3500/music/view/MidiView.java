@@ -15,25 +15,25 @@ import cs3500.music.model.INote;
 /**
  * Created by andrew on 01/11/2016.
  */
-public class MidiView implements IMusicView {
+public class MidiView {
   private Synthesizer synth;
   private Receiver receiver;
-
-  public MidiView() {
-    Synthesizer trySynth;
-    Receiver tryRec;
-    try {
-      trySynth = MidiSystem.getSynthesizer();
-      tryRec = trySynth.getReceiver();
-      trySynth.open();
-    } catch (MidiUnavailableException e) {
-      e.printStackTrace();
-      trySynth = null;
-      tryRec = null;
-    }
-    this.synth = trySynth;
-    this.receiver = tryRec;
-  }
+  
+//  public MidiView() {
+//    Synthesizer trySynth;
+//    Receiver tryRec;
+//    try {
+//      trySynth = MidiSystem.getSynthesizer();
+//      tryRec = trySynth.getReceiver();
+//      trySynth.open();
+//    } catch (MidiUnavailableException e) {
+//      e.printStackTrace();
+//      trySynth = null;
+//      tryRec = null;
+//    }
+//    this.synth = trySynth;
+//    this.receiver = tryRec;
+//  }
 
   public void render(int beat, ISong s) throws InvalidMidiDataException {
     List<INote> starts = s.allStartsAt(beat);
@@ -48,10 +48,5 @@ public class MidiView implements IMusicView {
       this.receiver.send(new ShortMessage(ShortMessage.NOTE_OFF, n.getInstrument(),
               n.getMidi(), 0), beat);
     }
-  }
-
-  @Override
-  public void initialize() {
-    //TODO
   }
 }

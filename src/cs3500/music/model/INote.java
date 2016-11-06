@@ -25,5 +25,5 @@ public interface INote extends Comparable {
 
   int getDuration();
 
-  Tone getTone();
+  ITone getTone();
 }

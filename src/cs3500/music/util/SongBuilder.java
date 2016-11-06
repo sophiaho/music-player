@@ -1,26 +1,28 @@
 package cs3500.music.util;
 
-import cs3500.music.model.Song;
+import cs3500.music.model.*;
 
 /**
  * Created by soapyho on 11/4/16.
  */
-public class SongBuilder implements CompositionBuilder<Song> {
+public class SongBuilder implements CompositionBuilder<ISong> {
 
-  private final Song comp = new Song();
+  private final ISong comp = new Song();
 
   @Override
-  public Song build() {
-    return null;
+  public ISong build() {
+    return this.comp;
   }
 
   @Override
-  public CompositionBuilder<Song> setTempo(int tempo) {
-    return null;
+  public CompositionBuilder<ISong> setTempo(int tempo) {
+    this.comp.setTempo(tempo);
+    return this;
   }
 
   @Override
-  public CompositionBuilder<Song> addNote(int start, int end, int instrument, int pitch, int volume) {
-    return null;
+  public CompositionBuilder<ISong> addNote(int start, int end, int instrument, int pitch, int volume) {
+    this.comp.addNote(new Note(end - start, ITone.fromInt(pitch), start, volume, instrument));
+    return this;
   }
 }
