@@ -20,10 +20,6 @@ public interface ISong {
 
   void editNote(INote input, INote changeTo);
 
-  List<INote> allStartsAt(int time);
-
-  List<INote> allEndsAt(int time);
-
   TreeMap<Integer, List<INote>> starts();
 
   TreeMap<Integer, List<INote>> ends();

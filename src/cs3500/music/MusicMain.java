@@ -18,13 +18,16 @@ import cs3500.music.view.IMusicViewFactory;
  */
 public class MusicMain {
   public static void main(String[] args) throws IOException, InvalidMidiDataException {
-    if (args.length != 2) {
+    String[] ars = new String[2];
+    ars[0] = "songs/chainsmokers.txt";
+    ars[1] = "midi";
+    if (ars.length != 2) {
       System.out.println("Should only have two arguments");
       return;
     }
     try {
-      ISong model = MusicReader.parseFile(new FileReader(args[0]), new SongBuilder());
-      IMusicView view = IMusicViewFactory.make(args[1]);
+      ISong model = MusicReader.parseFile(new FileReader(ars[0]), new SongBuilder());
+      IMusicView view = IMusicViewFactory.make(ars[1]);
       IMusicController controller = new MusicController(model, view);
       controller.go();
     } catch (IOException e) {
