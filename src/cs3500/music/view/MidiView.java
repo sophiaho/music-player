@@ -18,7 +18,7 @@ import cs3500.music.model.INote;
 public class MidiView extends GUIView {
   private Synthesizer synth;
   private Receiver receiver;
-  private int OFFSET = 1000000;
+  private int OFFSET = 100000;
 
   public MidiView() {
     Synthesizer trySynth;
