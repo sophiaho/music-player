@@ -84,7 +84,8 @@ class NoteSet implements Comparable<NoteSet> {
 
   /**
    * Getter for the tone of this set.
-   * @return
+   *
+   * @return an ITone that gets the tone that the noteset corresponds to
    */
   public ITone getSet() {
     return this.set;
@@ -93,7 +94,7 @@ class NoteSet implements Comparable<NoteSet> {
   /**
    * return all notes that start at a given time.
    * @param time
-   * @return
+   * @return a list of notes that start at a specific time.
    */
   public List<INote> notesStartAt(int time) {
     if (!this.contents.keySet().contains(time)) {
@@ -105,7 +106,7 @@ class NoteSet implements Comparable<NoteSet> {
   /**
    * Retruns all notes that end at a given time.
    * @param time
-   * @return
+   * @return a list of notes that end at a specific time
    */
   public List<INote> notesEndAt(int time) {
     int currentTime = 0;
@@ -127,7 +128,7 @@ class NoteSet implements Comparable<NoteSet> {
   }
 
   /**
-   * Removes a note n.
+   * Removes a note n from the noteset.
    * @param n
    */
   public void remove(INote n) {

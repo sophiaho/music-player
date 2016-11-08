@@ -10,6 +10,12 @@ public interface ITone extends Comparable {
   @Override
   String toString();
 
+  /**
+   * Returns the whole set of tones in between the two values.
+   *
+   * @param upperBound
+   * @return List of all tones in between this and upperBound, inclusive
+   */
   List<ITone> toneRange(ITone upperBound);
 
   @Override
@@ -21,8 +27,19 @@ public interface ITone extends Comparable {
   @Override
   boolean equals(Object obj);
 
+  /**
+   * Returns the value of this as a midi int.
+   *
+   * @return a number that corresponds to a tone's pitch and octave
+   */
   int numeric();
 
+  /**
+   * A static method that translates the numeric to a tone.
+   *
+   * @param value the numeric
+   * @return the tone that corresponds with the numeric
+   */
   static ITone fromInt(int value) {
 
     HashMap<Integer, Pitch> output = new HashMap<>();

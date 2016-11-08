@@ -13,13 +13,16 @@ import cs3500.music.model.ISong;
 import cs3500.music.model.INote;
 
 /**
- * Created by andrew on 01/11/2016.
+ * A class representation of the MidiView.
  */
 public class MidiView extends GUIView {
   private Synthesizer synth;
   private Receiver receiver;
   private int OFFSET = 100000;
 
+  /**
+   * A constructor for the MidiView.
+   */
   public MidiView() {
     Synthesizer trySynth;
     Receiver tryRec;
@@ -36,6 +39,9 @@ public class MidiView extends GUIView {
     this.receiver = tryRec;
   }
 
+  /**
+   * Renders the MidiView to be played.
+   */
   public void render() {
     super.render();
 
@@ -44,6 +50,7 @@ public class MidiView extends GUIView {
         if (this.panel.getStarts().containsKey(i)) {
           List<INote> startsNow = this.panel.getStarts().get(i);
           for (INote n : startsNow) {
+            System.out.println(n.getInstrument());
             this.receiver.send(new ShortMessage(ShortMessage.NOTE_ON, n.getInstrument(),
                     n.getMidi(), n.getVolume()), OFFSET + i * this.panel.getTempo());
           }

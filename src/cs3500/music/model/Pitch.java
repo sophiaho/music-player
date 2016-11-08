@@ -61,10 +61,20 @@ enum Pitch {
     return nextMap.get(this);
   }
 
+  /**
+   * Gets the value of a note.
+   *
+   * @return the note's value as an int
+   */
   public int getNoteValue() {
     return noteValue;
   }
 
+  /**
+   * Gets the names of the notes.
+   *
+   * @return the strings that the notes correspond to
+   */
   public String[] getStringVal() {
     return stringVal;
   }

@@ -5,11 +5,17 @@ import java.awt.*;
 
 import cs3500.music.model.ISong;
 
+/**
+ * A class implementation of the music view.
+ */
 public class GUIView extends JFrame implements IMusicView {
 
   private final JScrollPane scroller;
   final GuiViewPanel panel;
 
+  /**
+   * A constructor for the GUIView.
+   */
   public GUIView() {
     super();
 
@@ -38,6 +44,11 @@ public class GUIView extends JFrame implements IMusicView {
     this.setVisible(true);
   }
 
+  /**
+   * Sets up the view with the song.
+   *
+   * @param s  ISong
+   */
   public void setUp(ISong s) {
     this.panel.setSong(s);
   }
