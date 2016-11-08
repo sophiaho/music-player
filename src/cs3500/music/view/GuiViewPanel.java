@@ -107,11 +107,9 @@ public class GuiViewPanel extends JPanel {
    * @param g     Graphics
    */
   private void drawNumbers(Graphics g) {
-    int current = 0;
     for (int i = 0; i <= this.beatsFloor(); i++) {
-      g.drawString(String.valueOf(i * BEATS), i * BEATS * SQUARE + SQUARE * 2, TOPOFFSET);
-      //string, int x, int y
-      current += BEATS;
+      g.drawString(String.valueOf(i * BEATS), i * BEATS * SQUARE + SQUARE * 2,
+              TOPOFFSET - SQUARE / 2);
     }
   }
 
@@ -184,4 +182,13 @@ public class GuiViewPanel extends JPanel {
    * @return an int, that is the set tempo of the music piece.
    */
   public int getTempo() { return this.tempo; }
+
+  /**
+   * Creates the preferred dimensions of the window.
+   *
+   * @return a Dimension set to the preferred size.
+   */
+  public Dimension preferred() {
+    return new Dimension((SQUARE * (beatsFloor() + 3) * 4), TOPOFFSET + SQUARE * toneSet.size() + 50);
+  }
 }
