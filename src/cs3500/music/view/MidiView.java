@@ -12,15 +12,12 @@ import javax.sound.midi.Synthesizer;
 import cs3500.music.model.INote;
 
 /**
- * A class representation of the MidiView.
+ * Created by andrew on 01/11/2016.
  */
 public class MidiView extends GUIView {
   private Receiver receiver;
   private static final int OFFSET = 100000;
 
-  /**
-   * A constructor for the MidiView.
-   */
   public MidiView() {
     Synthesizer trySynth;
     Receiver tryRec;
@@ -35,9 +32,6 @@ public class MidiView extends GUIView {
     this.receiver = tryRec;
   }
 
-  /**
-   * Renders the MidiView to be played.
-   */
   public void render() {
     //super.render();
 
