@@ -1,6 +1,5 @@
 package cs3500.music.model;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -19,9 +18,11 @@ public interface ISong {
 
   void deleteNote(INote n);
 
-  HashMap<Integer, List<INote>> starts();
+  void editNote(INote input, INote changeTo);
 
-  HashMap<Integer, List<INote>> ends();
+  TreeMap<Integer, List<INote>> starts();
+
+  TreeMap<Integer, List<INote>> ends();
 
   List<ITone> getRange();
 
