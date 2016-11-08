@@ -40,6 +40,6 @@ public interface ITone extends Comparable {
     output.put(10, Pitch.AS);
     output.put(11, Pitch.B);
 
-    return new Tone(output.get(value % 12), value / 12);
+    return new Tone(output.get(value % 12), (value / 12) - 1);
   }
 }
