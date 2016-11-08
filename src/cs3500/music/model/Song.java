@@ -163,7 +163,7 @@ public class Song implements ISong {
   /**
    * Gets the length of the song.
    *
-   * @return int of the position
+   * @return int of the position.
    */
   public int songLength() {
     int totalLength = 0;
