@@ -21,9 +21,12 @@ public class GUIView extends JFrame implements IMusicView {
     super();
 
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.setPreferredSize(new Dimension(1000, 1000));
+    this.setPreferredSize(new Dimension(800, 300));
 
     this.panel = new GuiViewPanel();
+    //this.panel.setPreferredSize(new Dimension(2000, 400));
+
+
 
     this.scroller = new JScrollPane(this.panel);
     this.getContentPane().add(scroller);
@@ -32,6 +35,9 @@ public class GUIView extends JFrame implements IMusicView {
     this.repaint();
   }
 
+  /**
+   * Renders the view.
+   */
   @Override
   public void render() {
     this.setVisible(true);
@@ -40,10 +46,10 @@ public class GUIView extends JFrame implements IMusicView {
   /**
    * Sets up the view with the song.
    *
-   * @param s  ISong
+   * @param s ISong
    */
   public void setUp(ISong s) {
     this.panel.setSong(s);
-    this.setPreferredSize(this.panel.preferred());
+    this.panel.setPreferredSize(this.panel.preferred());
   }
 }

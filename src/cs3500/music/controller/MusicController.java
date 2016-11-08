@@ -11,16 +11,13 @@ import cs3500.music.view.IMusicView;
 /**
  * A class representation of the Music Controller.
  */
-public class MusicController implements IMusicController{
+public class MusicController implements IMusicController {
 
   ISong model;
   IMusicView view;
 
   /**
-   *  Constructor for the MusicController
-   *
-   * @param model
-   * @param view
+   * Constructor for the MusicController.
    */
   public MusicController(ISong model, IMusicView view) {
     this.model = model;
@@ -28,7 +25,7 @@ public class MusicController implements IMusicController{
   }
 
   /**
-   * Start the program, i.e. give control to the controller
+   * Start the program, i.e. give control to the controller.
    */
   @Override
   public void go() {

@@ -3,7 +3,7 @@ package cs3500.music.util;
 import cs3500.music.model.*;
 
 /**
- * Created by soapyho on 11/4/16.
+ * A class implementation of a Composition Builder.
  */
 public class SongBuilder implements CompositionBuilder<ISong> {
 
@@ -11,7 +11,8 @@ public class SongBuilder implements CompositionBuilder<ISong> {
 
   /**
    * Constructs the composition given the notes that have been added.
-   * @return    the composition (an ISong)
+   *
+   * @return the composition (an ISong)
    */
   @Override
   public ISong build() {
@@ -22,7 +23,7 @@ public class SongBuilder implements CompositionBuilder<ISong> {
    * Sets the tempo for the song.
    *
    * @param tempo The speed, in microseconds per beat
-   * @return     the song builder
+   * @return the song builder
    */
   @Override
   public CompositionBuilder<ISong> setTempo(int tempo) {
@@ -33,13 +34,13 @@ public class SongBuilder implements CompositionBuilder<ISong> {
   /**
    * Adds a note to the ISong.
    *
-   * @param start The start time of the note, in beats
-   * @param end The end time of the note, in beats
+   * @param start      The start time of the note, in beats
+   * @param end        The end time of the note, in beats
    * @param instrument The instrument number (to be interpreted by MIDI)
-   * @param pitch The pitch (in the range [0, 127], where 60 represents C4, the middle-C on a piano)
-   * @param volume The volume (in the range [0, 127])
-   *
-   * @return     the song builder
+   * @param pitch      The pitch (in the range [0, 127], where 60 represents C4, the middle-C on a
+   *                   piano)
+   * @param volume     The volume (in the range [0, 127])
+   * @return the song builder
    */
   @Override
   public CompositionBuilder<ISong> addNote(int start, int end, int instrument, int pitch,

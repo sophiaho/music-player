@@ -14,12 +14,16 @@ import cs3500.music.view.IMusicView;
 import cs3500.music.view.IMusicViewFactory;
 
 /**
- * Created by soapyho on 11/3/16.
+ * A main class for the music player.
  */
 public class MusicMain {
+
+  /**
+   * A static method to run the views of the music player.
+   */
   public static void main(String[] args) throws IOException, InvalidMidiDataException {
     String[] ars = new String[2];
-    ars[0] = "songs/chainsmokers.txt";
+    ars[0] = "songs/mary-little-lamb.txt";
     ars[1] = "midi";
     if (ars.length != 2) {
       System.out.println("Should only have two arguments");
@@ -38,7 +42,4 @@ public class MusicMain {
   }
 }
 
-//TODO need to do the note parser
-
-//TODO check out to see how ugly sophia's view is
 

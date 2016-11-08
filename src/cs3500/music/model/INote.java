@@ -37,7 +37,7 @@ public interface INote extends Comparable {
   /**
    * Returns the volume.
    *
-   * @return the volume of the note
+   * @return the volume of the Inote
    */
   int getVolume();
 

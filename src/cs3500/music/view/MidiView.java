@@ -13,13 +13,17 @@ import cs3500.music.model.ISong;
 import cs3500.music.model.INote;
 
 /**
- * Created by andrew on 01/11/2016.
+ * A class representation of the MidiView.
  */
 public class MidiView extends GUIView {
   private Synthesizer synth;
   private Receiver receiver;
   private int OFFSET = 1000000;
 
+
+  /**
+   * A constructor for the MidiView.
+   */
   public MidiView() {
     Synthesizer trySynth;
     Receiver tryRec;
@@ -36,6 +40,9 @@ public class MidiView extends GUIView {
     this.receiver = tryRec;
   }
 
+  /**
+   * Renders the MidiView to be played.
+   */
   public void render() {
     super.render();
 

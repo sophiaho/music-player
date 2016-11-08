@@ -11,7 +11,7 @@ public class Song implements ISong {
   private TreeMap<ITone, NoteSet> contents;
   private int tempo;
 
-  public Song() { // CHANGE: made public
+  public Song() {
     this.contents = new TreeMap<>();
     this.tempo = 0;
   }
@@ -31,7 +31,6 @@ public class Song implements ISong {
       return "";
     }
 
-    // TODO check to see if the new method works the way you want it to and then you can just delete this part and change it
     int totalLength = 0;
     for (NoteSet n : this.contents.values()) {
       totalLength = Math.max(totalLength, n.endTime());
@@ -48,6 +47,7 @@ public class Song implements ISong {
 
   /**
    * Adds a note to the song.
+   *
    * @param n note to add to song.
    */
   @Override
@@ -61,6 +61,7 @@ public class Song implements ISong {
 
   /**
    * Deletes a note.
+   *
    * @param n note to add to song.
    */
   @Override
@@ -74,7 +75,8 @@ public class Song implements ISong {
 
   /**
    * Edit note, changes an input note to anther one.
-   * @param input note to change.
+   *
+   * @param input    note to change.
    * @param changeTo what to change the note into.
    */
   @Override
@@ -137,7 +139,9 @@ public class Song implements ISong {
   }
 
   /**
-   * //TODO write these javadocs
+   * Given a time, gets the notes that start at that time.
+   *
+   * @return a list of notes corresponding to the same start time
    */
   private List<INote> allStartsAt(int time) {
     List<INote> output = new ArrayList<>();
@@ -147,6 +151,11 @@ public class Song implements ISong {
     return output;
   }
 
+  /**
+   * Given a time, gets the notes that end at that time.
+   *
+   * @return a list of notes corresponding to the same end time
+   */
   private List<INote> allEndsAt(int time) {
     List<INote> output = new ArrayList<>();
     for (ITone t : this.contents.keySet()) {
@@ -155,6 +164,11 @@ public class Song implements ISong {
     return output;
   }
 
+  /**
+   * Returns the range of the tones based off the song.
+   *
+   * @return a list of ITone that is the range of tones that the song has.
+   */
   @Override
   public List<ITone> getRange() {
     return this.contents.firstKey().toneRange(this.contents.lastKey());
@@ -173,10 +187,18 @@ public class Song implements ISong {
     return totalLength;
   }
 
+  /**
+   * Sets the tempo of the song.
+   */
   public void setTempo(int tempo) {
     this.tempo = tempo;
   }
 
+  /**
+   * Returns a map of the starts.
+   *
+   * @return notes' start points
+   */
   public TreeMap<Integer, List<INote>> starts() {
     TreeMap<Integer, List<INote>> output = new TreeMap<>();
     for (int i = 0; i <= this.songLength(); i++) {
@@ -188,6 +210,11 @@ public class Song implements ISong {
     return output;
   }
 
+  /**
+   * Returns a map of the ends.
+   *
+   * @return notes' end points
+   */
   @Override
   public TreeMap<Integer, List<INote>> ends() {
     TreeMap<Integer, List<INote>> output = new TreeMap<>();
@@ -200,6 +227,11 @@ public class Song implements ISong {
     return output;
   }
 
+  /**
+   * Gets the tempo.
+   *
+   * @return the tempo that was set for the song.
+   */
   public int getTempo() {
     return this.tempo;
   }

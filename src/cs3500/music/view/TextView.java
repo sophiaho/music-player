@@ -5,18 +5,26 @@ import java.io.IOException;
 import cs3500.music.model.ISong;
 
 /**
- * Created by andrew on 07/11/2016.
+ * A class representation of the TextView.
  */
 public class TextView implements IMusicView {
   String output;
 
   private Appendable ap;
 
+  /**
+   * A constructor for the TextView.
+   *
+   * @param ap appendable
+   */
   public TextView(Appendable ap) {
     output = "";
     this.ap = ap;
   }
 
+  /**
+   * Renders the view.
+   */
   @Override
   public void render() {
     try {
@@ -26,6 +34,11 @@ public class TextView implements IMusicView {
     }
   }
 
+  /**
+   * Sets up the textual view.
+   *
+   * @param s ISong
+   */
   @Override
   public void setUp(ISong s) {
     output = s.toString();

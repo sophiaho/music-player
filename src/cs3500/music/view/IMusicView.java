@@ -15,7 +15,7 @@ public interface IMusicView {
   /**
    * Sets up the song for the view.
    *
-   * @param s   ISong
+   * @param s ISong
    */
   void setUp(ISong s);
 }
