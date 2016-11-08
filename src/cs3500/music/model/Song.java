@@ -135,8 +135,7 @@ public class Song implements ISong {
     return output;
   }
 
-  @Override
-  public List<INote> allStartsAt(int time) {
+  private List<INote> allStartsAt(int time) {
     List<INote> output = new ArrayList<>();
     for (ITone t : this.contents.keySet()) {
       output.addAll(this.contents.get(t).notesStartAt(time));
@@ -144,8 +143,7 @@ public class Song implements ISong {
     return output;
   }
 
-  @Override
-  public List<INote> allEndsAt(int time) {
+  private List<INote> allEndsAt(int time) {
     List<INote> output = new ArrayList<>();
     for (ITone t : this.contents.keySet()) {
       output.addAll(this.contents.get(t).notesEndAt(time));

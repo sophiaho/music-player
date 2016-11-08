@@ -50,14 +50,13 @@ public class MidiView extends GUIView {
         if (this.panel.getStarts().containsKey(i)) {
           List<INote> startsNow = this.panel.getStarts().get(i);
           for (INote n : startsNow) {
-            System.out.println(n.getInstrument());
-            this.receiver.send(new ShortMessage(ShortMessage.NOTE_ON, n.getInstrument(),
+            this.receiver.send(new ShortMessage(ShortMessage.NOTE_ON, n.getInstrument() - 1,
                     n.getMidi(), n.getVolume()), OFFSET + i * this.panel.getTempo());
           }
         } else if (this.panel.getEnds().containsKey(i)) {
           List<INote> endsNow = this.panel.getEnds().get(i);
           for (INote n : endsNow) {
-            this.receiver.send(new ShortMessage(ShortMessage.NOTE_OFF, n.getInstrument(),
+            this.receiver.send(new ShortMessage(ShortMessage.NOTE_OFF, n.getInstrument() - 1,
                     n.getMidi(), n.getVolume()), OFFSET + (i * this.panel.getTempo()) - 1);
           }
         }

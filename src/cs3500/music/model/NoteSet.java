@@ -123,7 +123,6 @@ class NoteSet implements Comparable<NoteSet> {
 
       currentTime += 1;
     }
-
     return output;
   }
 

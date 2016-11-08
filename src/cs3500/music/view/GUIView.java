@@ -1,7 +1,8 @@
 package cs3500.music.view;
 
-import javax.swing.*;
 import java.awt.*;
+
+import javax.swing.*;
 
 import cs3500.music.model.ISong;
 
@@ -20,24 +21,16 @@ public class GUIView extends JFrame implements IMusicView {
     super();
 
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//    this.setSize(this.getPreferredSize());
+    this.setPreferredSize(new Dimension(1000, 1000));
 
     this.panel = new GuiViewPanel();
 
-    this.scroller = new JScrollPane(this.panel,
-            JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-            JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+    this.scroller = new JScrollPane(this.panel);
     this.getContentPane().add(scroller);
 
     this.pack();
     this.repaint();
   }
-
-  @Override
-  public Dimension getPreferredSize() {
-    return new Dimension(800, 300);
-  }
-
 
   @Override
   public void render() {
@@ -51,5 +44,6 @@ public class GUIView extends JFrame implements IMusicView {
    */
   public void setUp(ISong s) {
     this.panel.setSong(s);
+    this.setPreferredSize(this.panel.preferred());
   }
 }
