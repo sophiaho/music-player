@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.TreeMap;
 
 /**
- * NoteSet class stores all the notes with the same tone, it extends TreeMap so that it's sorted and
- * can allow easy access for times.
+ * NoteSet class stores all the notes with the same tone, it extends TreeMap so that it's
+ * sorted and can allow easy access for times.
  */
 class NoteSet implements Comparable<NoteSet> {
   private ITone set;
@@ -93,7 +93,7 @@ class NoteSet implements Comparable<NoteSet> {
 
   /**
    * return all notes that start at a given time.
-   *
+   * @param time
    * @return a list of notes that start at a specific time.
    */
   public List<INote> notesStartAt(int time) {
@@ -105,7 +105,7 @@ class NoteSet implements Comparable<NoteSet> {
 
   /**
    * Retruns all notes that end at a given time.
-   *
+   * @param time
    * @return a list of notes that end at a specific time
    */
   public List<INote> notesEndAt(int time) {
@@ -123,11 +123,13 @@ class NoteSet implements Comparable<NoteSet> {
 
       currentTime += 1;
     }
+
     return output;
   }
 
   /**
    * Removes a note n from the noteset.
+   * @param n
    */
   public void remove(INote n) {
     this.contents.get(n.getStart()).remove(n);

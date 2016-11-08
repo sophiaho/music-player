@@ -13,6 +13,7 @@ public interface ITone extends Comparable {
   /**
    * Returns the whole set of tones in between the two values.
    *
+   * @param upperBound
    * @return List of all tones in between this and upperBound, inclusive
    */
   List<ITone> toneRange(ITone upperBound);
@@ -56,6 +57,6 @@ public interface ITone extends Comparable {
     output.put(10, Pitch.AS);
     output.put(11, Pitch.B);
 
-    return new Tone(output.get(value % 12), (value / 12) - 1);
+    return new Tone(output.get(value % 12), value / 12);
   }
 }

@@ -2,7 +2,6 @@ package cs3500.music.view;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -39,11 +38,10 @@ public class GuiViewPanel extends JPanel {
   /**
    * Sets the song's tone, starts, ends, and tempo.
    *
-   * @param s ISong
+   * @param s  ISong
    */
   public void setSong(ISong s) {
     this.toneSet = s.getRange();
-    Collections.reverse(this.toneSet);
     this.starts = s.starts();
     this.ends = s.ends();
     this.tempo = s.getTempo();
@@ -69,7 +67,7 @@ public class GuiViewPanel extends JPanel {
   /**
    * Draws the tones' strings that the song uses.
    *
-   * @param g Graphics
+   * @param g    Graphics
    */
   private void drawTones(Graphics g) {
     // draw: the list of tones
@@ -83,18 +81,20 @@ public class GuiViewPanel extends JPanel {
   /**
    * Draws the notes of the song, with black for the first beat, and green for the sustains.
    *
-   * @param g Graphics
+   * @param g    Graphics
    */
   private void drawRect(Graphics g) {
     for (Integer i : starts.keySet()) {
-      for (INote n : starts.get(i)) {
-        int y = toneSet.indexOf(n.getTone());
-        g.setColor(Color.black);
-        g.fillRect((i * SQUARE) + SQUARE * 2, (y * SQUARE) + TOPOFFSET, SQUARE, SQUARE);
-        if (n.getDuration() > 1) {
-          g.setColor(Color.green);
-          g.fillRect((i * SQUARE) + SQUARE * 3, (y * SQUARE) + TOPOFFSET,
-                  (n.getDuration() - 1) * SQUARE, SQUARE);
+      if (starts.get(i).size() > 0) {
+        for (INote n : starts.get(i)) {
+          int y = toneSet.indexOf(n.getTone());
+          g.setColor(Color.black);
+          g.fillRect((i * SQUARE) + SQUARE * 2, (y * SQUARE) + TOPOFFSET, SQUARE, SQUARE);
+          if (n.getDuration() > 1) {
+            g.setColor(Color.green);
+            g.fillRect(((i * SQUARE) + SQUARE * 2) + SQUARE, (y * SQUARE) + TOPOFFSET,
+                    (n.getDuration() * SQUARE), SQUARE);
+          }
         }
       }
     }
@@ -103,22 +103,24 @@ public class GuiViewPanel extends JPanel {
   /**
    * Draws the numbers that count the measures.
    *
-   * @param g Graphics
+   * @param g     Graphics
    */
   private void drawNumbers(Graphics g) {
-    for (int i = 0; i <= this.beatsFloor(); i++) {
-      g.drawString(String.valueOf(i * BEATS), i * BEATS * SQUARE + SQUARE * 2,
-              TOPOFFSET - SQUARE / 2);
+    int current = 0;
+    for (int i = 0; i <= this.beatsCeil(); i++) {
+      g.drawString(String.valueOf(i * BEATS), i * BEATS * SQUARE + SQUARE * 2, TOPOFFSET);
+      //string, int x, int y
+      current += BEATS;
     }
   }
 
   /**
    * Draws the horizontal lines for the music piece.
    *
-   * @param g Graphics
+   * @param g    Graphics
    */
   private void drawHoriz(Graphics g) {
-    int songLength = this.beatsFloor() * 4;
+    int songLength = this.beatsCeil() * 4;
     int horLineY = TOPOFFSET;
     for (int i = 0; i <= toneSet.size(); i++) {
       g.setColor(Color.black);
@@ -129,13 +131,12 @@ public class GuiViewPanel extends JPanel {
 
   /**
    * Draws the vertical lines for the music piece.
-   *
-   * @param g Graphics
+   * @param g    Graphics
    */
   private void drawVert(Graphics g) {
     // draw: the vertical lines
     int toneLength = this.toneSet.size();
-    int totalBeats = this.beatsFloor() + 1;
+    int totalBeats = this.beatsCeil() + 1;
     int vertLineX = SQUARE * 2;
     for (int i = 0; i <= totalBeats; i++) {
       g.setColor(Color.black);
@@ -145,16 +146,16 @@ public class GuiViewPanel extends JPanel {
   }
 
   /**
-   * Calculates the floor for the beat count.
+   * Calculates the ceiling for the beat count.
    *
    * @return int, the beat count
    */
-  private int beatsFloor() {
+  private int beatsCeil() {
     int songLength = this.ends.lastKey();
     if (songLength % BEATS == 0) {
-      return songLength / BEATS - 1;
+      return songLength / BEATS;
     } else {
-      return (songLength / BEATS);
+      return (songLength / BEATS) + 1;
     }
   }
 
@@ -181,16 +182,5 @@ public class GuiViewPanel extends JPanel {
    *
    * @return an int, that is the set tempo of the music piece.
    */
-  public int getTempo() {
-    return this.tempo;
-  }
-
-  /**
-   * Creates the preferred dimensions of the window.
-   *
-   * @return a Dimension set to the preferred size.
-   */
-  public Dimension preferred() {
-    return new Dimension((SQUARE * (beatsFloor() + 3) * 4), TOPOFFSET + SQUARE * toneSet.size() + 50);
-  }
+  public int getTempo() { return this.tempo; }
 }
