@@ -21,7 +21,8 @@ public class SongBuilder implements CompositionBuilder<ISong> {
   }
 
   @Override
-  public CompositionBuilder<ISong> addNote(int start, int end, int instrument, int pitch, int volume) {
+  public CompositionBuilder<ISong> addNote(int start, int end, int instrument, int pitch,
+                                           int volume) {
     this.comp.addNote(new Note(end - start, ITone.fromInt(pitch), start, volume, instrument));
     return this;
   }

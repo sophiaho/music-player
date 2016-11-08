@@ -13,17 +13,52 @@ public interface INote extends Comparable {
   @Override
   int hashCode();
 
+  /**
+   * Returns instrument key.
+   *
+   * @return the int that corresponds to the instrument
+   */
   int getInstrument();
 
+  /**
+   * Returns the end of the note.
+   *
+   * @return the beat that the note ends on
+   */
   int getEnd();
 
+  /**
+   * Returns the start of the note.
+   *
+   * @return the beat that the note starts on
+   */
   int getStart();
 
+  /**
+   * Returns the volume.
+   *
+   * @return the volume of the note
+   */
   int getVolume();
 
+  /**
+   * Returns the midi numeric.
+   *
+   * @return the numerical value for the Tone
+   */
   int getMidi();
 
+  /**
+   * Returns the duration of the note.
+   *
+   * @return the duration
+   */
   int getDuration();
 
+  /**
+   * Returns the tone.
+   *
+   * @return the tone of the note.
+   */
   ITone getTone();
 }
