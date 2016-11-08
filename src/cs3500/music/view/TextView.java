@@ -4,10 +4,8 @@ import java.io.IOException;
 
 import cs3500.music.model.ISong;
 
-import static java.util.Objects.requireNonNull;
-
 /**
- * Text view that returns a console output for the song.
+ * Created by andrew on 07/11/2016.
  */
 public class TextView implements IMusicView {
   String output;
@@ -30,6 +28,6 @@ public class TextView implements IMusicView {
 
   @Override
   public void setUp(ISong s) {
-    output = requireNonNull(s).toString();
+    output = s.toString();
   }
 }
