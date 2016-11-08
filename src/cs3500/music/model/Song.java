@@ -178,4 +178,31 @@ public class Song implements ISong {
   public void setTempo(int tempo) {
     this.tempo = tempo;
   }
+
+  public TreeMap<Integer, List<INote>> starts() {
+    TreeMap<Integer, List<INote>> output = new TreeMap<>();
+    for (int i = 0; i <= this.songLength(); i++) {
+      List<INote> s = this.allStartsAt(i);
+      if (s.size() > 0) {
+        output.put(i, s);
+      }
+    }
+    return output;
+  }
+
+  @Override
+  public TreeMap<Integer, List<INote>> ends() {
+    TreeMap<Integer, List<INote>> output = new TreeMap<>();
+    for (int i = 0; i <= this.songLength(); i++) {
+      List<INote> s = this.allEndsAt(i);
+      if (s.size() > 0) {
+        output.put(i, s);
+      }
+    }
+    return output;
+  }
+
+  public int getTempo() {
+    return this.tempo;
+  }
 }

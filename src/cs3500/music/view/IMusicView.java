@@ -7,10 +7,7 @@ import cs3500.music.model.ISong;
  */
 public interface IMusicView {
 
-  /**
-   *
-   */
-  void initialize();
+  void render();
 
-  void render(ISong s);
+  void setUp(ISong s);
 }

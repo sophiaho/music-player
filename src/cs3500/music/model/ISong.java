@@ -1,6 +1,7 @@
 package cs3500.music.model;
 
 import java.util.List;
+import java.util.TreeMap;
 
 /**
  * Created by andrew on 02/11/2016.
@@ -23,6 +24,10 @@ public interface ISong {
 
   List<INote> allEndsAt(int time);
 
+  TreeMap<Integer, List<INote>> starts();
+
+  TreeMap<Integer, List<INote>> ends();
+
   List<ITone> getRange();
 
   /**
@@ -33,4 +38,6 @@ public interface ISong {
   int songLength();
 
   void setTempo(int tempo);
+
+  int getTempo();
 }

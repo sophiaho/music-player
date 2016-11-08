@@ -1,7 +1,9 @@
 package cs3500.music.view;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import javax.swing.*;
 
@@ -9,82 +11,120 @@ import cs3500.music.model.INote;
 import cs3500.music.model.ISong;
 import cs3500.music.model.ITone;
 
-
-/**
- * A dummy view that simply draws a string
- */
 public class GuiViewPanel extends JPanel {
+  private List<ITone> toneSet;
+  private TreeMap<Integer, List<INote>> starts;
+  private TreeMap<Integer, List<INote>> ends;
+  private int tempo;
 
-  private ISong song;
+  private final int SQUARE = 20;
+  private final int BEATS = 4;
+  private final int TOPOFFSET = 10 + SQUARE;
 
-//  public GuiViewPanel() {
-//    // setting the layout
-//    JPanel musicPanel = new JPanel();
-//    musicPanel.setPreferredSize(new Dimension(800,300));
-//    JScrollPane scrollPane = new JScrollPane(musicPanel);
-//    this.add(scrollPane,BorderLayout.CENTER);
-//  }
+  public GuiViewPanel() {
+    super();
+    this.toneSet = new ArrayList<>();
+    this.starts = new TreeMap<>();
+    this.ends = new TreeMap<>();
+    this.tempo = 1;
+  }
 
-  public void initialize(ISong song) {
-    this.setSize(800, 300);
-    this.setLayout(new BorderLayout());
-    this.song = song;
-    int i = 1 + 1;
-    List<ITone> toneSet = song.getRange();
+  public void setSong(ISong s) {
+    this.toneSet = s.getRange();
+    this.starts = s.starts();
+    this.ends = s.ends();
+    this.tempo = s.getTempo();
   }
 
   @Override
   public void paintComponent(Graphics g) {
-
-    // Handle the default painting
     super.paintComponent(g);
 
-    List<ITone> toneSet = song.getRange();
+//    this.setPreferredSize(new Dimension(800, 800));
 
-    drawTones(g, toneSet);
+    this.drawTones(g);
 
-    // draw: the horizontal lines
-//    int horLineY = 20;
-//    for (int i = 0; i < toneSet.size(); i++) {
-//      g.drawLine(10, horLineY, song.songLength() * 5, horLineY);
-//      horLineY += 20;
-//    }
+    this.drawNumbers(g);
 
-    // draw: the vertical lines
-//    int vertLineX = 20;
-//    for (int i = 0; i < toneSet.size(); i++) {
-//      g.drawLine(vertLineX, 20, vertLineX, song.songLength() * 5);
-//      vertLineX += 20;
-//    }
+    this.drawRect(g);
 
+    this.drawHoriz(g);
 
-
-
+    this.drawVert(g);
   }
 
-  private void drawTones(Graphics g, List<ITone> tones) {
+  private void drawTones(Graphics g) {
     // draw: the list of tones
-    int toneY = 20; //starting gap
-    for (ITone t : tones) {
+    int toneY = TOPOFFSET + SQUARE; //starting gap
+    for (ITone t : toneSet) {
       g.drawString(t.toString(), 2, toneY); //string, int x, int y
-      toneY += 20;
+      toneY += SQUARE;
     }
   }
 
-  private void drawRect(Graphics g, List<ITone> tones) {
-    //draw: the rectangles , 5 is the height/width
-    for (int i = 0; i < song.songLength(); i++) { 
-      if (song.allStartsAt(i).size() > 0) { 
-        for (INote n : song.allStartsAt(i)) { 
-          int y = tones.indexOf(n.getTone()); 
-          g.fillRect((i * 5) + 2, (y * 10), 5, 5); 
-          g.setColor(Color.black);  
+  private void drawRect(Graphics g) {
+    for (Integer i : starts.keySet()) {
+      if (starts.get(i).size() > 0) {
+        for (INote n : starts.get(i)) {
+          int y = toneSet.indexOf(n.getTone());
+          g.setColor(Color.black);
+          g.fillRect((i * SQUARE) + SQUARE * 2, (y * SQUARE) + TOPOFFSET, SQUARE, SQUARE);
           if (n.getDuration() > 1) {
-            g.fillRect(((i * 5) + 2) + 5, (y * 10), (n.getDuration() * 5), 5);
             g.setColor(Color.green);
+            g.fillRect(((i * SQUARE) + SQUARE * 2) + SQUARE, (y * SQUARE) + TOPOFFSET,
+                    (n.getDuration() * SQUARE), SQUARE);
           }
         }
-      } 
-    } 
+      }
+    }
   }
+
+  private void drawNumbers(Graphics g) {
+    int current = 0;
+    for (int i = 0; i <= this.beatsCeil(); i++) {
+      g.drawString(String.valueOf(i * BEATS), i * BEATS * SQUARE + SQUARE * 2, TOPOFFSET); //string, int x, int y
+      current += BEATS;
+    }
+  }
+
+  private void drawHoriz(Graphics g) {
+    int songLength = this.beatsCeil() * 4;
+    int horLineY = TOPOFFSET;
+    for (int i = 0; i <= toneSet.size(); i++) {
+      g.setColor(Color.black);
+      g.drawLine(SQUARE * 2, horLineY, ((songLength + 2 + BEATS) * SQUARE), horLineY);
+      horLineY += SQUARE;
+    }
+  }
+
+  private void drawVert(Graphics g) {
+    // draw: the vertical lines
+    int toneLength = this.toneSet.size();
+    int totalBeats = this.beatsCeil() + 1;
+    int vertLineX = SQUARE * 2;
+    for (int i = 0; i <= totalBeats; i++) {
+      g.setColor(Color.black);
+      g.drawLine(vertLineX, TOPOFFSET, vertLineX, TOPOFFSET + toneLength * SQUARE);
+      vertLineX += SQUARE * BEATS;
+    }
+  }
+
+  private int beatsCeil() {
+    int songLength = this.ends.lastKey();
+    if (songLength % BEATS == 0) {
+      return songLength / BEATS;
+    } else {
+      return (songLength / BEATS) + 1;
+    }
+  }
+
+  public TreeMap<Integer, List<INote>> getStarts() {
+    return starts;
+  }
+
+  public TreeMap<Integer, List<INote>> getEnds() {
+    return ends;
+  }
+
+  public int getTempo() { return this.tempo; }
 }

@@ -1,46 +1,44 @@
 package cs3500.music.view;
 
 import javax.swing.*;
+import java.awt.*;
 
 import cs3500.music.model.ISong;
 
-import java.awt.*;
+public class GUIView extends JFrame implements IMusicView {
 
-/**
- * Created by andrew on 01/11/2016.
- */
-public class GUIView extends javax.swing.JFrame implements IMusicView {
+  private final JScrollPane scroller;
+  final GuiViewPanel panel;
 
-  private GuiViewPanel displayPanel; // You may want to refine this to a subtype of JPanel
-
-  /**
-   * Creates new GuiView
-   */
   public GUIView() {
-    this.displayPanel = new GuiViewPanel();
-    this.setSize(800, 300);
-    this.setResizable(false);
-    this.getContentPane().add(displayPanel);
-    this.pack();
+    super();
 
-    this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-  }
+    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//    this.setSize(this.getPreferredSize());
 
-  public void render(ISong s) {
-    this.displayPanel.initialize(s);
+    this.panel = new GuiViewPanel();
+
+    this.scroller = new JScrollPane(this.panel,
+            JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+            JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+    this.getContentPane().add(scroller);
+
     this.pack();
     this.repaint();
   }
 
-  //  @Override
-  public void initialize() {
-    this.pack();
+  @Override
+  public Dimension getPreferredSize() {
+    return new Dimension(800, 300);
+  }
+
+
+  @Override
+  public void render() {
     this.setVisible(true);
   }
 
-//  @Override //TODO what dis for
-//  public Dimension getPreferredSize(){
-//    return new Dimension(100, 100);
-//  }
-
+  public void setUp(ISong s) {
+    this.panel.setSong(s);
+  }
 }

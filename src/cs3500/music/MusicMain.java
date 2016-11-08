@@ -12,6 +12,7 @@ import cs3500.music.util.MusicReader;
 import cs3500.music.util.SongBuilder;
 import cs3500.music.view.GUIView;
 import cs3500.music.view.IMusicView;
+import cs3500.music.view.MidiView;
 
 /**
  * Created by soapyho on 11/3/16.
@@ -19,7 +20,7 @@ import cs3500.music.view.IMusicView;
 public class MusicMain {
   public static void main(String[] args) throws IOException, InvalidMidiDataException{
     ISong model = MusicReader.parseFile(new FileReader("songs/mary-little-lamb.txt"), new SongBuilder());
-    IMusicView view = new GUIView();
+    IMusicView view = new MidiView();
     IMusicController controller = new MusicController(model, view);
     controller.go();
   }

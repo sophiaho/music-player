@@ -27,13 +27,7 @@ public class MusicController implements IMusicController{
   }
 
   public void go() {
-    view.render(model);
+    this.view.setUp(model);
+    this.view.render();
   }
-
-  // TODO i believe this is next week's assignment
-  @Override
-  public String processCommand(String command) {
-    return "";
-  }
-
 }
