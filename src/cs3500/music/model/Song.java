@@ -72,17 +72,6 @@ public class Song implements ISong {
   }
 
   /**
-   * Edit note, changes an input note to anther one.
-   * @param input note to change.
-   * @param changeTo what to change the note into.
-   */
-  @Override
-  public void editNote(INote input, INote changeTo) {
-    this.deleteNote(input);
-    this.addNote(changeTo);
-  }
-
-  /**
    * Returns the header of the song state (needed notes).
    *
    * @param indexDigits number of digits needed for padding

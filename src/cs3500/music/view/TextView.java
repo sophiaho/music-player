@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import cs3500.music.model.ISong;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * Created by andrew on 07/11/2016.
  */
@@ -28,6 +30,6 @@ public class TextView implements IMusicView {
 
   @Override
   public void setUp(ISong s) {
-    output = s.toString();
+    output = requireNonNull(s).toString();
   }
 }

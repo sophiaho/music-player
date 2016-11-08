@@ -9,7 +9,6 @@ import javax.sound.midi.Receiver;
 import javax.sound.midi.ShortMessage;
 import javax.sound.midi.Synthesizer;
 
-import cs3500.music.model.ISong;
 import cs3500.music.model.INote;
 
 /**
@@ -64,5 +63,9 @@ public class MidiView extends GUIView {
         e.printStackTrace();
       }
     }
+  }
+
+  public void setReceiver(Receiver r) {
+    this.receiver = r;
   }
 }
