@@ -18,8 +18,6 @@ public interface ISong {
 
   void deleteNote(INote n);
 
-  void editNote(INote input, INote changeTo);
-
   TreeMap<Integer, List<INote>> starts();
 
   TreeMap<Integer, List<INote>> ends();

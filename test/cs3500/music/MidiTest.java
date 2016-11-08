@@ -12,12 +12,12 @@ import java.io.PrintStream;
 
 import javax.sound.midi.InvalidMidiDataException;
 
-import cs3500.music.controller.GuiController;
 import cs3500.music.controller.IMusicController;
+import cs3500.music.controller.MusicController;
 import cs3500.music.model.ISong;
 import cs3500.music.util.MusicReader;
 import cs3500.music.util.SongBuilder;
-import cs3500.music.mock.MockReceiver;
+import cs3500.music.mock.*;
 import cs3500.music.view.IMusicView;
 import cs3500.music.view.IMusicViewFactory;
 import cs3500.music.view.MidiView;
@@ -35,8 +35,8 @@ public class MidiTest {
               new SongBuilder());
       MidiView view = new MidiView();
       view.setReceiver(new MockReceiver(ap));
-      IMusicController controller = new GuiController(model, view);
-      controller.start();
+      IMusicController controller = new MusicController(model, view);
+      controller.go();
     } catch (IOException e) {
       System.out.println("Not a valid song.");
     } catch (IllegalArgumentException ie) {
@@ -91,8 +91,8 @@ public class MidiTest {
       ISong model = MusicReader.parseFile(new FileReader("songs/mary-little-lamb.txt"),
               new SongBuilder());
       IMusicView text = IMusicViewFactory.make("console");
-      IMusicController controller = new GuiController(model, text);
-      controller.start();
+      IMusicController controller = new MusicController(model, text);
+      controller.go();
     } catch (IOException e) {
       System.out.println("Not a valid song.");
     } catch (IllegalArgumentException ie) {
@@ -252,7 +252,7 @@ public class MidiTest {
   }
 
   @Test
-  public void testWrongViewArgs() throws IOException, InvalidMidiDataException {
+  public void testWrongViewArgs() {
     // checks for if it handles having the wrong view type
     OutputStream out = new ByteArrayOutputStream();
     PrintStream p = new PrintStream(out);

@@ -9,7 +9,7 @@ import javax.sound.midi.Receiver;
 import javax.sound.midi.ShortMessage;
 
 /**
- * Mocks the receiver.
+ * Created by andrew on 07/11/2016.
  */
 public class MockReceiver implements Receiver {
 

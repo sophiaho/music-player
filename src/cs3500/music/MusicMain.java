@@ -18,27 +18,23 @@ import cs3500.music.view.IMusicViewFactory;
  */
 public class MusicMain {
   public static void main(String[] args) throws IOException, InvalidMidiDataException {
-    String[] ars = new String[2];
-    ars[0] = "songs/lnl.txt";
-    ars[1] = "midi";
-    if (ars.length != 2) {
-      System.out.println("Should only have two arguments");
-      return;
+    if (args.length != 2) {
+//      System.out.println("Should only have two arguments");
+//      return;
     }
     try {
-      ISong model = MusicReader.parseFile(new FileReader(ars[0]), new SongBuilder());
-      IMusicView view = IMusicViewFactory.make(ars[1]);
+      ISong model = MusicReader.parseFile(new FileReader("songs/lnl.txt"), new SongBuilder());
+      IMusicView view = IMusicViewFactory.make("midi");
       IMusicController controller = new MusicController(model, view);
       controller.go();
     } catch (IOException e) {
       System.out.println("Not a valid song.");
     } catch (IllegalArgumentException ie) {
+      ie.printStackTrace();
       System.out.print("Not a valid view type.");
     }
   }
 }
 
-//TODO need to do the note parser
 
-//TODO check out to see how ugly sophia's view is
 
