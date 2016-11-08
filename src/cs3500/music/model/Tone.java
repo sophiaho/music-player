@@ -218,7 +218,7 @@ public class Tone implements ITone {
    */
   @Override
   public int numeric() {
-    return 12 * (1 + this.octave) +
+    return 12 * this.octave +
             this.pitch.getNoteValue();
   }
 }

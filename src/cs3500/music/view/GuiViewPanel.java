@@ -64,26 +64,24 @@ public class GuiViewPanel extends JPanel {
 
   private void drawRect(Graphics g) {
     for (Integer i : starts.keySet()) {
-      if (starts.get(i).size() > 0) {
-        for (INote n : starts.get(i)) {
-          int y = toneSet.indexOf(n.getTone());
-          g.setColor(Color.black);
-          g.fillRect((i * SQUARE) + SQUARE * 2, (y * SQUARE) + TOPOFFSET, SQUARE, SQUARE);
-          if (n.getDuration() > 1) {
-            g.setColor(Color.green);
-            g.fillRect(((i * SQUARE) + SQUARE * 2) + SQUARE, (y * SQUARE) + TOPOFFSET,
-                    (n.getDuration() * SQUARE), SQUARE);
-          }
+      for (INote n : starts.get(i)) {
+        int y = toneSet.indexOf(n.getTone());
+        g.setColor(Color.black);
+        g.fillRect((i * SQUARE) + SQUARE * 2, (y * SQUARE) + TOPOFFSET, SQUARE, SQUARE);
+        if (n.getDuration() > 1) {
+          g.setColor(Color.green);
+          g.fillRect(((i * SQUARE) + SQUARE * 2) + SQUARE, (y * SQUARE) + TOPOFFSET,
+                  (n.getDuration() * SQUARE), SQUARE);
         }
       }
     }
   }
 
+
   private void drawNumbers(Graphics g) {
-    int current = 0;
     for (int i = 0; i <= this.beatsCeil(); i++) {
-      g.drawString(String.valueOf(i * BEATS), i * BEATS * SQUARE + SQUARE * 2, TOPOFFSET); //string, int x, int y
-      current += BEATS;
+      g.drawString(String.valueOf(i * BEATS), i * BEATS * SQUARE + SQUARE * 2,
+              TOPOFFSET - SQUARE / 2);
     }
   }
 
@@ -126,5 +124,11 @@ public class GuiViewPanel extends JPanel {
     return ends;
   }
 
-  public int getTempo() { return this.tempo; }
+  public int getTempo() {
+    return this.tempo;
+  }
+
+  public Dimension preferred() {
+    return new Dimension(SQUARE * (beatsCeil() + 3), TOPOFFSET + SQUARE * toneSet.size());
+  }
 }
