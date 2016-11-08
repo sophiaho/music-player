@@ -27,6 +27,9 @@ public class MusicController implements IMusicController{
     this.view = view;
   }
 
+  /**
+   * Start the program, i.e. give control to the controller
+   */
   @Override
   public void go() {
     this.view.setUp(model);

@@ -202,36 +202,71 @@ public class Note implements INote {
     }
   }
 
+  /**
+   * Returns instrument key.
+   *
+   * @return the int that corresponds to the instrument
+   */
   @Override
   public int getInstrument() {
     return this.instrument;
   }
 
+  /**
+   * Returns the end of the note.
+   *
+   * @return the beat that the note ends on
+   */
   @Override
   public int getEnd() {
     return this.start + this.duration;
   }
 
+  /**
+   * Returns the start of the note.
+   *
+   * @return the beat that the note starts on
+   */
   @Override
   public int getStart() {
     return this.start;
   }
 
+  /**
+   * Returns the volume.
+   *
+   * @return the volume of the note
+   */
   @Override
   public int getVolume() {
     return this.volume;
   }
 
+  /**
+   * Returns the midi numeric.
+   *
+   * @return the numerical value for the Tone
+   */
   @Override
   public int getMidi() {
     return this.tone.numeric();
   }
 
+  /**
+   * Returns the tone.
+   *
+   * @return the tone of the note.
+   */
   @Override
   public ITone getTone() {
     return this.tone;
   }
 
+  /**
+   * Returns the duration of the note.
+   *
+   * @return the duration
+   */
   @Override
   public int getDuration() {
     return this.duration;

@@ -13,15 +13,30 @@ public class Tone implements ITone {
   private Pitch pitch;
   private int octave;
 
+  /**
+   * A constructor for the Tone
+   * @param pitch   the pitch of the sound
+   * @param octave  the octave of the sound
+   */
   Tone(Pitch pitch, int octave) {
     this.pitch = pitch;
     this.octave = octave;
   }
 
+  /**
+   * Gets the pitch of the Tone
+   *
+   * @return the Pitch
+   */
   public Pitch getPitch() {
     return pitch;
   }
 
+  /**
+   * Gets the octave of the Tone
+   *
+   * @return an int for the octave
+   */
   public int getOctave() {
     return octave;
   }
@@ -37,6 +52,11 @@ public class Tone implements ITone {
   }
 
 
+  /**
+   * All of the tones that are in the tone range to the upper bound, inclusive
+   * @param upperBound
+   * @return a list of tones in the tone range
+   */
   @Override
   public List<ITone> toneRange(ITone upperBound) {
     List<ITone> output = new ArrayList<>();
@@ -209,6 +229,11 @@ public class Tone implements ITone {
   }
 
 
+  /**
+   * Returns the numeric value of the pitch and octave.
+   *
+   * @return an int that represents the numeric value of the tone.
+   */
   @Override
   public int numeric() {
     return 12 * this.octave +

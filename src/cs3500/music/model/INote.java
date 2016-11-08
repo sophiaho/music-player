@@ -21,14 +21,14 @@ public interface INote extends Comparable {
   int getInstrument();
 
   /**
-   * Returns the end of the note.
+   * Returns the end of the Inote.
    *
    * @return the beat that the note ends on
    */
   int getEnd();
 
   /**
-   * Returns the start of the note.
+   * Returns the start of the Inote.
    *
    * @return the beat that the note starts on
    */
@@ -49,7 +49,7 @@ public interface INote extends Comparable {
   int getMidi();
 
   /**
-   * Returns the duration of the note.
+   * Returns the duration of the Inote.
    *
    * @return the duration
    */
@@ -58,7 +58,7 @@ public interface INote extends Comparable {
   /**
    * Returns the tone.
    *
-   * @return the tone of the note.
+   * @return the tone of the Inote.
    */
   ITone getTone();
 }
