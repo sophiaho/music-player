@@ -36,11 +36,7 @@ public class Tone implements ITone {
     return this.pitch.toString() + String.valueOf(this.octave);
   }
 
-  /**
-   * Returns the whole set of tones in between the two values.
-   *
-   * @return List of all tones in between this and upperBound, inclusive
-   */
+
   @Override
   public List<ITone> toneRange(ITone upperBound) {
     List<ITone> output = new ArrayList<>();
@@ -212,10 +208,7 @@ public class Tone implements ITone {
     }
   }
 
-  /**
-   * Returns the value of this as a midi int.
-   * @return
-   */
+
   @Override
   public int numeric() {
     return 12 * (this.octave + 1) +

@@ -17,6 +17,7 @@ public class MusicController implements IMusicController{
   IMusicView view;
 
   /**
+   *  Constructor for the MusicController
    *
    * @param model
    * @param view
@@ -26,6 +27,7 @@ public class MusicController implements IMusicController{
     this.view = view;
   }
 
+  @Override
   public void go() {
     this.view.setUp(model);
     this.view.render();

@@ -202,11 +202,6 @@ public class Note implements INote {
     }
   }
 
-  /**
-   * Returns instrument key.
-   *
-   * @return
-   */
   @Override
   public int getInstrument() {
     return this.instrument;

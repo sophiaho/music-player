@@ -31,7 +31,6 @@ public class Song implements ISong {
       return "";
     }
 
-    // TODO check to see if the new method works the way you want it to and then you can just delete this part and change it
     int totalLength = 0;
     for (NoteSet n : this.contents.values()) {
       totalLength = Math.max(totalLength, n.endTime());
@@ -136,9 +135,6 @@ public class Song implements ISong {
     return output;
   }
 
-  /**
-   * //TODO write these javadocs
-   */
   private List<INote> allStartsAt(int time) {
     List<INote> output = new ArrayList<>();
     for (ITone t : this.contents.keySet()) {
@@ -173,10 +169,12 @@ public class Song implements ISong {
     return totalLength;
   }
 
+  @Override
   public void setTempo(int tempo) {
     this.tempo = tempo;
   }
 
+  @Override
   public TreeMap<Integer, List<INote>> starts() {
     TreeMap<Integer, List<INote>> output = new TreeMap<>();
     for (int i = 0; i <= this.songLength(); i++) {
@@ -200,6 +198,7 @@ public class Song implements ISong {
     return output;
   }
 
+  @Override
   public int getTempo() {
     return this.tempo;
   }

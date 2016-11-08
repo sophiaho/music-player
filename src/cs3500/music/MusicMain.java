@@ -14,7 +14,7 @@ import cs3500.music.view.IMusicView;
 import cs3500.music.view.IMusicViewFactory;
 
 /**
- * Created by soapyho on 11/3/16.
+ * A main class for the music player.
  */
 public class MusicMain {
   public static void main(String[] args) throws IOException, InvalidMidiDataException {

@@ -1,7 +1,7 @@
 package cs3500.music.controller;
 
 /**
- * Created by soapyho on 11/3/16.
+ * Created by andrew on 04/11/2016.
  */
 public interface IMusicController {
 
