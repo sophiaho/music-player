@@ -1,8 +1,9 @@
 package cs3500.music.view;
 
-import java.awt.*;
+import java.awt.Dimension;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 
 import cs3500.music.model.ISong;
 
@@ -13,7 +14,6 @@ import static java.util.Objects.requireNonNull;
  */
 public class GUIView extends JFrame implements IMusicView {
 
-  private final JScrollPane scroller;
   final GuiViewPanel panel;
 
   /**
@@ -27,7 +27,7 @@ public class GUIView extends JFrame implements IMusicView {
 
     this.panel = new GuiViewPanel();
 
-    this.scroller = new JScrollPane(this.panel);
+    JScrollPane scroller = new JScrollPane(this.panel);
     this.getContentPane().add(scroller);
 
     this.pack();

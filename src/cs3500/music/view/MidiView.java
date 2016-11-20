@@ -15,9 +15,8 @@ import cs3500.music.model.INote;
  * A class representation of the MidiView.
  */
 public class MidiView extends GUIView {
-  private Synthesizer synth;
   private Receiver receiver;
-  private int OFFSET = 100000;
+  private static final int OFFSET = 100000;
 
   /**
    * A constructor for the MidiView.
@@ -31,10 +30,8 @@ public class MidiView extends GUIView {
       trySynth.open();
     } catch (MidiUnavailableException e) {
       e.printStackTrace();
-      trySynth = null;
       tryRec = null;
     }
-    this.synth = trySynth;
     this.receiver = tryRec;
   }
 
@@ -42,9 +39,9 @@ public class MidiView extends GUIView {
    * Renders the MidiView to be played.
    */
   public void render() {
-    super.render();
+    //super.render();
 
-    for (int i = 0; i < this.panel.getEnds().lastKey(); i++) {
+    for (int i = 0; i < this.panel.getLength(); i++) {
       try {
         if (this.panel.getStarts().containsKey(i)) {
           List<INote> startsNow = this.panel.getStarts().get(i);
@@ -65,6 +62,10 @@ public class MidiView extends GUIView {
     }
   }
 
+  /**
+   * Sets what the receiver of this is from default. Used for mock testing.
+   * @param r whatever mock you want to write notes to.
+   */
   public void setReceiver(Receiver r) {
     this.receiver = r;
   }

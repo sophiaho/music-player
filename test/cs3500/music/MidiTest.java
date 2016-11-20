@@ -17,7 +17,7 @@ import cs3500.music.controller.MusicController;
 import cs3500.music.model.ISong;
 import cs3500.music.util.MusicReader;
 import cs3500.music.util.SongBuilder;
-import cs3500.music.mock.*;
+import cs3500.music.mock.MockReceiver;
 import cs3500.music.view.IMusicView;
 import cs3500.music.view.IMusicViewFactory;
 import cs3500.music.view.MidiView;
@@ -36,7 +36,7 @@ public class MidiTest {
       MidiView view = new MidiView();
       view.setReceiver(new MockReceiver(ap));
       IMusicController controller = new MusicController(model, view);
-      controller.go();
+      controller.start();
     } catch (IOException e) {
       System.out.println("Not a valid song.");
     } catch (IllegalArgumentException ie) {
@@ -92,7 +92,7 @@ public class MidiTest {
               new SongBuilder());
       IMusicView text = IMusicViewFactory.make("console");
       IMusicController controller = new MusicController(model, text);
-      controller.go();
+      controller.start();
     } catch (IOException e) {
       System.out.println("Not a valid song.");
     } catch (IllegalArgumentException ie) {
@@ -252,7 +252,7 @@ public class MidiTest {
   }
 
   @Test
-  public void testWrongViewArgs() {
+  public void testWrongViewArgs() throws IOException, InvalidMidiDataException {
     // checks for if it handles having the wrong view type
     OutputStream out = new ByteArrayOutputStream();
     PrintStream p = new PrintStream(out);

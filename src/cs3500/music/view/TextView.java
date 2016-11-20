@@ -7,7 +7,7 @@ import cs3500.music.model.ISong;
 import static java.util.Objects.requireNonNull;
 
 /**
- * Created by andrew on 07/11/2016.
+ * Text view that returns a console output for the song.
  */
 public class TextView implements IMusicView {
   String output;

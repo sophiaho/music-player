@@ -1,10 +1,16 @@
 package cs3500.music.view;
 
 /**
- * Created by andrew on 07/11/2016.
+ * Static class to create view implementations.
  */
 public final class IMusicViewFactory {
 
+  /**
+   * Returns an empty view given the type of view.
+   * @param s represents what kind of view is wanted.
+   * @return the view implementation that is desired.
+   * @throws IllegalArgumentException when not a valid view argument.
+   */
   public static IMusicView make(String s) throws IllegalArgumentException {
     switch (s) {
       case "console": return new TextView(System.out);
