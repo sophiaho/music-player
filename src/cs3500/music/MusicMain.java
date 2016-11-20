@@ -17,20 +17,25 @@ import cs3500.music.view.IMusicViewFactory;
  * Created by soapyho on 11/3/16.
  */
 public class MusicMain {
+  /**
+   * Main public static void method, runs the music editor on the console.
+   * @param args arguments from console.
+   * @throws IOException when inputs are wrong and not in directory.
+   * @throws InvalidMidiDataException when malformed midis are imported.
+   */
   public static void main(String[] args) throws IOException, InvalidMidiDataException {
-    if (args.length != 2) {
+//    if (args.length != 2) {
 //      System.out.println("Should only have two arguments");
 //      return;
-    }
+//    }
     try {
-      ISong model = MusicReader.parseFile(new FileReader("songs/lnl.txt"), new SongBuilder());
-      IMusicView view = IMusicViewFactory.make("midi");
+      ISong model = MusicReader.parseFile(new FileReader("songs/mystery-1.txt"), new SongBuilder());
+      IMusicView view = IMusicViewFactory.make("visual");
       IMusicController controller = new MusicController(model, view);
-      controller.go();
+      controller.start();
     } catch (IOException e) {
       System.out.println("Not a valid song.");
     } catch (IllegalArgumentException ie) {
-      ie.printStackTrace();
       System.out.print("Not a valid view type.");
     }
   }
