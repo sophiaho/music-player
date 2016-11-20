@@ -11,18 +11,35 @@ import cs3500.music.model.ISong;
 import cs3500.music.util.MusicReader;
 import cs3500.music.util.SongBuilder;
 import cs3500.music.view.IMusicView;
-import cs3500.music.view.MidiView;
+import cs3500.music.view.IMusicViewFactory;
 
 /**
  * A main class for the music player.
  */
 public class MusicMain {
-  public static void main(String[] args) throws IOException, InvalidMidiDataException{
-    ISong model = MusicReader.parseFile(new FileReader("songs/zoot-lw.txt"), new SongBuilder());
-    IMusicView view = new MidiView();
-    IMusicController controller = new MusicController(model, view);
-    controller.go();
+  /**
+   * Main public static void method, runs the music editor on the console.
+   * @param args arguments from console.
+   * @throws IOException when inputs are wrong and not in directory.
+   * @throws InvalidMidiDataException when malformed midis are imported.
+   */
+  public static void main(String[] args) throws IOException, InvalidMidiDataException {
+//    if (args.length != 2) {
+//      System.out.println("Should only have two arguments");
+//      return;
+//    }
+    try {
+      ISong model = MusicReader.parseFile(new FileReader("songs/mystery-1.txt"), new SongBuilder());
+      IMusicView view = IMusicViewFactory.make("visual");
+      IMusicController controller = new MusicController(model, view);
+      controller.start();
+    } catch (IOException e) {
+      System.out.println("Not a valid song.");
+    } catch (IllegalArgumentException ie) {
+      System.out.print("Not a valid view type.");
+    }
   }
 }
+
 
 

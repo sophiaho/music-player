@@ -19,3 +19,16 @@ Measures are not used in this implementation since a note can be longer than a m
 measures are depicted visually in the GUI view.
 
 There are different styles of view, including a GUI view, a MIDI view, and the textual view.
+
+The textual view is the music piece produced using ascii characters where beat numbers run down
+the left side and the rendering is made with text that can be shown in the console.
+
+The GUI View is a view that is more likely to be what the client is used to, with a more graphical
+interface that contains green notes with a black note head and measures that run along the x-axis,
+similarly to a sheet of music.
+
+The MIDI view is an audible view that allows the client to hear the music being played. MIDI will
+play back the compositions in the txt files and parse them to play them as notes.
+
+These three views can be toggled using the IMusicViewFactory that allows the player to select
+between different views.

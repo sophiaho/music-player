@@ -3,19 +3,18 @@ package cs3500.music.view;
 import cs3500.music.model.ISong;
 
 /**
- * An interface representation of the IMusicView.
+ * Created by andrew on 01/11/2016.
  */
 public interface IMusicView {
 
   /**
-   * Renders the view for the music player.
+   * Starts the actual rendering (text, music, or gui).
    */
   void render();
 
   /**
-   * Sets up the song for the view.
-   *
-   * @param s ISong
+   * Sets up the view before using render, splits the ISong into its components.
+   * @param s ISong being processed.
    */
   void setUp(ISong s);
 }

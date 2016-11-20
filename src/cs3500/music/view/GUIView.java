@@ -1,17 +1,19 @@
 package cs3500.music.view;
 
-import java.awt.*;
+import java.awt.Dimension;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 
 import cs3500.music.model.ISong;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * A class implementation of the music view.
  */
 public class GUIView extends JFrame implements IMusicView {
 
-  private final JScrollPane scroller;
   final GuiViewPanel panel;
 
   /**
@@ -24,20 +26,14 @@ public class GUIView extends JFrame implements IMusicView {
     this.setPreferredSize(new Dimension(800, 300));
 
     this.panel = new GuiViewPanel();
-    //this.panel.setPreferredSize(new Dimension(2000, 400));
 
-
-
-    this.scroller = new JScrollPane(this.panel);
+    JScrollPane scroller = new JScrollPane(this.panel);
     this.getContentPane().add(scroller);
 
     this.pack();
     this.repaint();
   }
 
-  /**
-   * Renders the view.
-   */
   @Override
   public void render() {
     this.setVisible(true);
@@ -46,10 +42,10 @@ public class GUIView extends JFrame implements IMusicView {
   /**
    * Sets up the view with the song.
    *
-   * @param s ISong
+   * @param s  ISong
    */
   public void setUp(ISong s) {
-    this.panel.setSong(s);
+    this.panel.setSong(requireNonNull(s));
     this.panel.setPreferredSize(this.panel.preferred());
   }
 }

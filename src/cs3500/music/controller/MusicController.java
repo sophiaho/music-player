@@ -1,26 +1,21 @@
 package cs3500.music.controller;
 
-import java.io.IOException;
-import java.util.NoSuchElementException;
-import java.util.Objects;
-import java.util.Scanner;
-
-import cs3500.music.model.*;
+import cs3500.music.model.ISong;
 import cs3500.music.view.IMusicView;
 
 /**
  * A class representation of the Music Controller.
  */
-public class MusicController implements IMusicController{
+public class MusicController implements IMusicController {
 
   ISong model;
   IMusicView view;
 
   /**
-   *  Constructor for the MusicController
+   *  Constructor for the MusicController using a view and a model.
    *
-   * @param model
-   * @param view
+   * @param model model, must be an ISong implementation.
+   * @param view view implementation, should work for ISong.
    */
   public MusicController(ISong model, IMusicView view) {
     this.model = model;
@@ -28,7 +23,7 @@ public class MusicController implements IMusicController{
   }
 
   @Override
-  public void go() {
+  public void start() {
     this.view.setUp(model);
     this.view.render();
   }
