@@ -1,13 +1,16 @@
 package cs3500.music.util;
 
-import cs3500.music.model.*;
+import cs3500.music.model.ISong;
+import cs3500.music.model.ITone;
+import cs3500.music.model.Note;
+import cs3500.music.model.Song;
 
 /**
- * Created by soapyho on 11/4/16.
+ * Creates a song using the reader.
  */
 public class SongBuilder implements CompositionBuilder<ISong> {
 
-  private final ISong comp = new Song();
+  private final ISong comp = new Song(); // Song to build up
 
   @Override
   public ISong build() {

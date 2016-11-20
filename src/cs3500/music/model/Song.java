@@ -1,190 +1,148 @@
 package cs3500.music.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
 
 /**
- * Class for Song, main music model.
+ * Song class stores all the notes with the same tone, it extends TreeMap so that it's
+ * sorted and can allow easy access for times.
  */
 public class Song implements ISong {
-  private TreeMap<ITone, NoteSet> contents;
+  private HashMap<Integer, List<INote>> contents;
   private int tempo;
+  private ITone lowest;
+  private ITone highest;
 
-  public Song() { // CHANGE: made public
-    this.contents = new TreeMap<>();
+  public Song() {
+    this.contents = new HashMap<>();
     this.tempo = 0;
   }
 
   public Song(int tempo) {
-    this.contents = new TreeMap<>();
+    this.contents = new HashMap<>();
     this.tempo = tempo;
   }
 
   @Override
-  /**
-   * Completes toString for this.contents, using delegated toString methods.
-   * @return this.contents song as a string that looks like a table
-   */
-  public String toString() {
-    if (this.contents.keySet().size() == 0) {
-      return "";
+  public void addNote(INote note) {
+    if (lowest == null && highest == null) {
+      this.lowest = note.getTone();
+      this.highest = note.getTone();
+    }
+    if (lowest.compareTo(note.getTone()) > 0) {
+      this.lowest = note.getTone();
+    }
+    if (highest.compareTo(note.getTone()) < 0) {
+      this.highest = note.getTone();
     }
 
-    int totalLength = 0;
-    for (NoteSet n : this.contents.values()) {
-      totalLength = Math.max(totalLength, n.endTime());
+
+    if ((this.contents.keySet().contains(note.getStart())) &&
+            (this.contents.get(note.getStart())).contains(note)) {
+      throw new IllegalArgumentException("Can't add duplicate notes.");
+    } else if (!this.contents.keySet().contains(note.getStart())) {
+      this.contents.put(note.getStart(), new ArrayList<>());
     }
-    int indexDigits = (int) Math.log10(totalLength) + 1;
 
-    List<ITone> toneSet = this.getRange();
-
-    String output = header(indexDigits, toneSet);
-    output += songVis(totalLength, indexDigits, toneSet);
-
-    return output;
+    this.contents.get(note.getStart()).add(note);
   }
 
-  /**
-   * Adds a note to the song.
-   * @param n note to add to song.
-   */
   @Override
-  public void addNote(INote n) {
-    if (this.contents.keySet().contains(n.getTone())) {
-      this.contents.get(n.getTone()).addSafe(n);
-    } else {
-      this.contents.put(n.getTone(), new NoteSet(n));
+  public int songLength() {
+    Integer d = 0;
+    for (List<INote> n : this.contents.values()) {
+      for (INote c : n) {
+        d = Math.max(c.getEnd(), d);
+      }
     }
+    return d;
   }
 
   /**
-   * Deletes a note.
-   * @param n note to add to song.
-   */
-  @Override
-  public void deleteNote(INote n) {
-    if (this.contents.keySet().contains(n.getTone())) {
-      this.contents.get(n.getTone()).remove(n);
-    } else {
-      throw new IllegalArgumentException("Song does not contain that note.");
-    }
-  }
-
-  /**
-   * Returns the header of the song state (needed notes).
+   * return all notes that start at a given time.
    *
-   * @param indexDigits number of digits needed for padding
-   * @param toneSet     set of tones to write out
-   * @return the notes in the song
+   * @param time time wanted the start notes at in beats.
+   * @return a list of notes that start at a specific time.
    */
-  private String header(int indexDigits, List<ITone> toneSet) {
-    String output = String.format("%" + indexDigits + "s", "");
-    for (ITone t : toneSet) {
-      output += String.format("%5s", t.toString());
+  public List<INote> notesStartAt(int time) {
+    if (!this.contents.keySet().contains(time)) {
+      return new ArrayList<>();
     }
-    output += "\n";
-    return output;
+    return this.contents.get(time);
   }
 
   /**
-   * Returns the table with the notes and visualization.
+   * Retruns all notes that end at a given time.
    *
-   * @param totalLength length of the whole song
-   * @param indexDigits number of digits for index
-   * @param toneSet     set of tones to render
+   * @param time time of the notes in beats.
+   * @return a list of notes that end at a specific time
    */
-  private String songVis(int totalLength, int indexDigits, List<ITone> toneSet) {
-    String output = "";
-    int ind = 0;
-    for (int i = 0; i < totalLength; i++) {
-      output += String.format("%" + indexDigits + "s", String.valueOf(ind)) + " ";
-      for (ITone t : toneSet) {
-        if (!this.contents.keySet().contains(t)) {
-          output += "     ";
-        } else {
-          switch (this.contents.get(t).whatPlaying(i)) {
-            case REST:
-              output += "     ";
-              break;
-            case HEAD:
-              output += "  X  ";
-              break;
-            case SUSTAIN:
-              output += "  |  ";
-              break;
-            default:
-              throw new IllegalArgumentException("Not a valid playing type.");
+  public List<INote> notesEndAt(int time) {
+    int currentTime = 0;
+    ArrayList<INote> output = new ArrayList<>();
+
+    while (currentTime <= time) {
+      if (this.contents.keySet().contains(currentTime)) {
+        for (INote n : this.contents.get(currentTime)) {
+          if (n.getEnd() == time) {
+            output.add(n);
           }
         }
       }
-      output += "\n";
-      ind += 1;
+
+      currentTime += 1;
     }
     return output;
   }
 
-  private List<INote> allStartsAt(int time) {
-    List<INote> output = new ArrayList<>();
-    for (ITone t : this.contents.keySet()) {
-      output.addAll(this.contents.get(t).notesStartAt(time));
+
+  @Override
+  public void deleteNote(INote n) {
+    if (this.contents.get(n.getStart()).contains(n)) {
+      this.contents.get(n.getStart()).remove(n);
+    } else {
+      throw new IllegalArgumentException("Note not in song.");
+    }
+  }
+
+  @Override
+  public HashMap<Integer, List<INote>> starts() {
+    HashMap<Integer, List<INote>> output = new HashMap<>();
+    for (int i = 0; i <= this.songLength(); i++) {
+      List<INote> s = this.notesStartAt(i);
+      if (s.size() > 0) {
+        output.put(i, s);
+      }
     }
     return output;
   }
 
-  private List<INote> allEndsAt(int time) {
-    List<INote> output = new ArrayList<>();
-    for (ITone t : this.contents.keySet()) {
-      output.addAll(this.contents.get(t).notesEndAt(time));
+  @Override
+  public HashMap<Integer, List<INote>> ends() {
+    HashMap<Integer, List<INote>> output = new HashMap<>();
+    for (int i = 0; i <= this.songLength(); i++) {
+      List<INote> s = this.notesEndAt(i);
+      if (s.size() > 0) {
+        output.put(i, s);
+      }
     }
     return output;
   }
 
   @Override
   public List<ITone> getRange() {
-    return this.contents.firstKey().toneRange(this.contents.lastKey());
-  }
-
-  /**
-   * Gets the length of the song.
-   *
-   * @return int of the position
-   */
-  public int songLength() {
-    int totalLength = 0;
-    for (NoteSet n : this.contents.values()) {
-      totalLength = Math.max(totalLength, n.endTime());
+    if (this.lowest == null) {
+      throw new IllegalArgumentException("No notes yet.");
+    } else {
+      return this.lowest.toneRange(this.highest);
     }
-    return totalLength;
   }
 
   @Override
   public void setTempo(int tempo) {
     this.tempo = tempo;
-  }
-
-  @Override
-  public TreeMap<Integer, List<INote>> starts() {
-    TreeMap<Integer, List<INote>> output = new TreeMap<>();
-    for (int i = 0; i <= this.songLength(); i++) {
-      List<INote> s = this.allStartsAt(i);
-      if (s.size() > 0) {
-        output.put(i, s);
-      }
-    }
-    return output;
-  }
-
-  @Override
-  public TreeMap<Integer, List<INote>> ends() {
-    TreeMap<Integer, List<INote>> output = new TreeMap<>();
-    for (int i = 0; i <= this.songLength(); i++) {
-      List<INote> s = this.allEndsAt(i);
-      if (s.size() > 0) {
-        output.put(i, s);
-      }
-    }
-    return output;
   }
 
   @Override
