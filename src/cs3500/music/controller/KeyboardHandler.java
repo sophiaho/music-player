@@ -35,13 +35,13 @@ public class KeyboardHandler implements KeyListener {
 
   @Override
   public void keyPressed(KeyEvent e) {
-    if (pressed.containsKey(e.getKeyChar()))
+    if (pressed.containsKey(e.getKeyCode()))
       pressed.get(e.getKeyCode()).run();
   }
 
   @Override
   public void keyReleased(KeyEvent e) {
-    if (released.containsKey(e.getKeyChar()))
+    if (released.containsKey(e.getKeyCode()))
       released.get(e.getKeyCode()).run();
   }
 }

@@ -19,10 +19,10 @@ public class GuiController implements IMusicController, ActionListener {
   IGUIView view;
 
   /**
-   *  Constructor for the GuiController using a view and a model.
+   * Constructor for the GuiController using a view and a model.
    *
    * @param model model, must be an ISong implementation.
-   * @param view view implementation, should work for ISong.
+   * @param view  view implementation, should work for ISong.
    */
   public GuiController(ISong model, IGUIView view) {
     this.model = model;
@@ -48,13 +48,12 @@ public class GuiController implements IMusicController, ActionListener {
     pressed.put(KeyEvent.VK_HOME, new Runnable() {
       @Override
       public void run() {
-                view.home();
-              }
+        view.home();
+      }
     });
     pressed.put(KeyEvent.VK_END, new Runnable() {
       @Override
       public void run() {
-
         view.end();
       }
     });
@@ -65,10 +64,10 @@ public class GuiController implements IMusicController, ActionListener {
       }
     });
     released.put(KeyEvent.VK_LEFT, new Runnable() {
-        @Override
-        public void run() {
-          view.left();
-        }
+      @Override
+      public void run() {
+        view.left();
+      }
     });
     released.put(KeyEvent.VK_UP, new Runnable() {
       @Override
@@ -89,14 +88,15 @@ public class GuiController implements IMusicController, ActionListener {
     handler.setReleasedMap(released);
     view.addKeyListener(handler);
   }
+
   @Override
   public void actionPerformed(ActionEvent e) {
-    switch(e.getActionCommand()) {
+    switch (e.getActionCommand()) {
       case "Exit Button":
         System.exit(0);
         break;
     }
   }
 
-  }
+}
 
