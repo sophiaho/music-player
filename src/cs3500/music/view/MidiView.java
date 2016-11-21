@@ -23,7 +23,7 @@ import cs3500.music.model.INote;
 public class MidiView extends GUIView {
   private Receiver receiver;
   private static final int OFFSET = 1;
-  private final Sequencer sequencer;
+  private Sequencer sequencer;
   private Sequence sequence;
 
   public MidiView() {
@@ -44,7 +44,7 @@ public class MidiView extends GUIView {
 
     try {
       tempSequencer = MidiSystem.getSequencer();
-      tempSequence = new Sequence(Sequence.PPQ, 4);
+      tempSequence = new Sequence(Sequence.PPQ, 6);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -79,7 +79,7 @@ public class MidiView extends GUIView {
           List<INote> endsNow = this.panel.getEnds().get(i);
           for (INote n : endsNow) {
             MidiEvent addEnd = new MidiEvent(new ShortMessage(ShortMessage.NOTE_OFF, n.getInstrument() - 1,
-                    n.getMidi(), n.getVolume()), i - 1);
+                    n.getMidi(), n.getVolume()), (i - 1));
             song.add(addEnd);
           }
         }
@@ -97,8 +97,7 @@ public class MidiView extends GUIView {
       }
 
       this.sequencer.open();
-      sequencer.start();
-      System.out.print("hi");
+      this.sequencer.start();
     } catch (MidiUnavailableException e) {
       e.printStackTrace();
     } catch (InvalidMidiDataException e) {

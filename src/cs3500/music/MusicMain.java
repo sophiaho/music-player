@@ -29,7 +29,7 @@ public class MusicMain {
 //      return;
 //    }
     try {
-      ISong model = MusicReader.parseFile(new FileReader("songs/mary-little-lamb.txt"), new SongBuilder());
+      ISong model = MusicReader.parseFile(new FileReader("songs/lnl.txt"), new SongBuilder());
       IMusicView view = IMusicViewFactory.make("midi");
       IMusicController controller = new MusicController(model, view);
       controller.start();
