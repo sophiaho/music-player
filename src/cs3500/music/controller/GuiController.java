@@ -39,7 +39,7 @@ public class GuiController implements IMusicController, ActionListener {
 
   @Override
   public void start() {
-    this.timer = new Timer(30, this);
+    this.timer = new Timer(20, this);
     this.timer.setActionCommand("Tick");
     this.timer.start();
     this.view.setUp(model);
@@ -150,6 +150,7 @@ public class GuiController implements IMusicController, ActionListener {
           view.incrementBeat();
           view.repaint();
         } else {
+          System.out.println("stopped");
           view.switchPP();
         }
     }

@@ -61,14 +61,6 @@ public interface IGUIView extends IMusicView {
   void left();
 
   /**
-   * Allows Space to be pressed to stop the song.
-   */
-  void pause();
-
-  //change later!!
-  void play();
-
-  /**
    * Switches the space bar and the key P
    */
   void switchPP();

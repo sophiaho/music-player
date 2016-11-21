@@ -33,7 +33,6 @@ public class CompositeView implements IGUIView {
   public void render() {
     midi.render();
     gui.render();
-    midi.restart();
   }
 
   @Override
@@ -54,7 +53,6 @@ public class CompositeView implements IGUIView {
   @Override
   public void right() {
     gui.right();
-    midi.pause();
   }
 
   @Override
@@ -79,12 +77,6 @@ public class CompositeView implements IGUIView {
   }
 
   @Override
-  public void pause() {
-    gui.pause();
-    midi.pause();
-  }
-
-  @Override
   public void setCurrBeat(int currBeat) {
     gui.setCurrBeat(currBeat);
   }
@@ -97,13 +89,6 @@ public class CompositeView implements IGUIView {
   @Override
   public int getClickedBeat(int x) {
     return gui.getClickedBeat(x);
-  }
-
-  @Override
-  public void play() {
-//    midi.restart();
-    midi.pause();
-    gui.play();
   }
 
   @Override
@@ -139,6 +124,7 @@ public class CompositeView implements IGUIView {
   @Override
   public void incrementBeat() {
     gui.setCurrBeat(midi.getTick());
+    System.out.println(midi.getTick());
     gui.repaint();
   }
 }

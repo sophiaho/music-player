@@ -68,7 +68,6 @@ public class GUIView extends JFrame implements IGUIView {
   public void render() {
     scroller.addMouseListener(this.getMouseListeners()[0]);
     this.setVisible(true);
-    play();
   }
 
   /**
@@ -149,12 +148,6 @@ public class GUIView extends JFrame implements IGUIView {
   }
 
   @Override
-  public void pause() {
-    //TODO the pause is now linked to the spacebar, but idk how you did pause so
-    render();
-  }
-
-  @Override
   public void setEchoText(String s) {
     display.setText(s);
   }
@@ -186,10 +179,6 @@ public class GUIView extends JFrame implements IGUIView {
   }
 
   @Override
-  public void play() {
-  }
-
-  @Override
   public void switchPP() {
   }
 
@@ -215,5 +204,6 @@ public class GUIView extends JFrame implements IGUIView {
   @Override
   public void incrementBeat() {
     this.curr += 1;
+    this.panel.setCurrBeat(curr);
   }
 }

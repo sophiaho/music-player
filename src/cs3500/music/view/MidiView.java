@@ -25,6 +25,7 @@ public class MidiView extends GUIView {
   private static final int OFFSET = 0;
   private Sequencer sequencer;
   private Sequence sequence;
+  private int songLength;
 
   public MidiView() {
     Synthesizer trySynth;
@@ -63,9 +64,8 @@ public class MidiView extends GUIView {
     //super.render();
 
     Track song = this.sequence.createTrack();
-    int len = this.panel.getLength();
 
-    for (int i = 0; i < this.panel.getLength(); i++) {
+    for (int i = 0; i <= this.panel.getLength(); i++) {
       try {
         if (this.panel.getStarts().containsKey(i)) {
           List<INote> startsNow = this.panel.getStarts().get(i);
@@ -89,30 +89,14 @@ public class MidiView extends GUIView {
     }
 
     try {
-      for (int n = 0; n < panel.getLength(); n++) {
-        byte[] bytes = ByteBuffer.allocate(4).putInt(n).array();
-        MidiEvent buffer = new MidiEvent(
-                new MetaMessage(1, ByteBuffer.allocate(4).putInt(n).array(), bytes.length), n);
-        song.add(buffer);
-      }
       this.sequencer.open();
       this.sequencer.setTempoInMPQ(this.panel.getTempo());
       this.sequencer.start();
+      this.songLength = this.panel.getLength();
     } catch (MidiUnavailableException e) {
-      e.printStackTrace();
-    } catch (InvalidMidiDataException e) {
       e.printStackTrace();
     }
 
-  }
-
-  public void pause() {
-    this.sequencer.stop();
-  }
-
-  public void restart() {
-    this.sequencer.setTempoInMPQ(this.panel.getTempo());
-    this.sequencer.start();
   }
 
   /**
@@ -129,6 +113,9 @@ public class MidiView extends GUIView {
   }
 
   public int getTick() {
+    if (this.sequencer.getTickPosition() >= this.songLength * this.panel.getTempo()) {
+      sequencer.close();
+    }
     return (int) this.sequencer.getTickPosition();
   }
 }
