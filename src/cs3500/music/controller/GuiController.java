@@ -118,7 +118,18 @@ public class GuiController implements IMusicController, ActionListener {
         int beat = view.getClickedBeat(mhandler.x);
         ITone tone = view.getClickedTone(mhandler.y);
         view.setEchoText(tone.toString() + " " + String.valueOf(beat) +
-                "Numeric Version: " + tone.numeric());
+                ", Numeric Note Version: " + tone.numeric());
+      }
+    });
+    mhandler.setRightClick(new Runnable() {
+      @Override
+      public void run() {
+        int beat = view.getClickedBeat(mhandler.x);
+        ITone tone = view.getClickedTone(mhandler.y);
+        view.setEchoText(tone.toString() + " " + String.valueOf(beat) +
+                ", Numeric Note Version: " + tone.numeric());
+        model.deleteNoteAtX(tone, beat);
+        view.repaint();
       }
     });
 
@@ -129,7 +140,6 @@ public class GuiController implements IMusicController, ActionListener {
   public void actionPerformed(ActionEvent e) {
     switch (e.getActionCommand()) {
       case "Add Note Button":
-      //TODO after you enter something into the text field, which is in the line it has all the information needed to add a note, but idk how to String --> Note
         String noteAdd = view.getInputString();
         model.addNote(INote.fromString(noteAdd));
         this.view.repaint();
@@ -137,7 +147,6 @@ public class GuiController implements IMusicController, ActionListener {
         view.resetFocus();
         break;
       case "Remove Note Button":
-      //TODO same issue here
         String[] toDelete = view.getInputString().split(" ");
         model.deleteNoteAtX(ITone.fromInt(Integer.valueOf(toDelete[0])),
                 Integer.valueOf(toDelete[1]));

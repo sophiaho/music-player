@@ -33,7 +33,7 @@ public class MouseHandler implements MouseListener {
     if (MouseEvent.BUTTON1 == e.getButton()) {
       leftClick.run();
     }
-    if (MouseEvent.BUTTON2 == e.getButton()) {
+    if (MouseEvent.BUTTON3 == e.getButton()) {
       rightClick.run();
     }
   }

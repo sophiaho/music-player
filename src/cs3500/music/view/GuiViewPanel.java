@@ -191,6 +191,11 @@ public class GuiViewPanel extends JPanel {
     }
   }
 
+  /**
+   * Draws the red bar that moves along with the music playing.
+   *
+   * @param     g Graphics
+   */
   private void drawBar(Graphics g) {
     Graphics2D g2d = (Graphics2D) g;
     double set = this.currBeat;

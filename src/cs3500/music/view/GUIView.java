@@ -190,17 +190,6 @@ public class GUIView extends JFrame implements IGUIView {
     this.panel.repaint();
   }
 
-//  @Override
-//  public void addKeyListener(KeyListener listener) {
-//
-//  }
-//
-//  @Override
-//  public void addMouseListener(MouseListener listener) {
-//
-//  }
-
-
   @Override
   public void incrementBeat() {
     this.curr += 1;
