@@ -58,7 +58,7 @@ public class GuiController implements IMusicController, ActionListener {
         view.end();
       }
     });
-    pressed.put(KeyEvent.VK_SPACE, new Runnable() {
+    pressed.put(KeyEvent.VK_P, new Runnable() {
       @Override
       public void run() {
         view.play();
