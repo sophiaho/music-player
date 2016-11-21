@@ -27,6 +27,7 @@ public class GuiController implements IMusicController, ActionListener {
   public GuiController(ISong model, IGUIView view) {
     this.model = model;
     this.view = view;
+    this.configureKeyboardHandler();
   }
 
   @Override
@@ -45,14 +46,15 @@ public class GuiController implements IMusicController, ActionListener {
     Map<Integer, Runnable> released = new HashMap<>();
 
     pressed.put(KeyEvent.VK_HOME, new Runnable() {
-              @Override
-              public void run() {
+      @Override
+      public void run() {
                 view.home();
               }
-            });
+    });
     pressed.put(KeyEvent.VK_END, new Runnable() {
       @Override
       public void run() {
+
         view.end();
       }
     });
@@ -89,7 +91,11 @@ public class GuiController implements IMusicController, ActionListener {
   }
   @Override
   public void actionPerformed(ActionEvent e) {
-
+    switch(e.getActionCommand()) {
+      case "Exit Button":
+        System.exit(0);
+        break;
+    }
   }
 
   }

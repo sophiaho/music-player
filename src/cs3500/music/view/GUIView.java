@@ -13,7 +13,7 @@ import static java.util.Objects.requireNonNull;
  */
 public class GUIView extends JFrame implements IGUIView {
 
-  final GuiViewPanel panel;
+  GuiViewPanel panel;
   final JScrollPane scroller;
 
   /**
@@ -72,12 +72,13 @@ public class GUIView extends JFrame implements IGUIView {
 
   @Override
   public void right() {
-    JScrollBar hbar = scroller.getHorizontalScrollBar();
-    if (hbar.getBlockIncrement() + hbar.getValue() < hbar.getMaximum()) {
-      hbar.setValue(hbar.getBlockIncrement() + hbar.getValue());
-    } else {
-      hbar.setValue(hbar.getMaximum());
-    }
+    this.panel = new GuiViewPanel();
+//    JScrollBar hbar = scroller.getHorizontalScrollBar();
+//    if (hbar.getBlockIncrement() + hbar.getValue() < hbar.getMaximum()) {
+//      hbar.setValue(hbar.getBlockIncrement() + hbar.getValue());
+//    } else {
+//      hbar.setValue(hbar.getMaximum());
+//    }
   }
 
   @Override
