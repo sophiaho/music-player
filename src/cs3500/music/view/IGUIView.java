@@ -1,5 +1,6 @@
 package cs3500.music.view;
 
+import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 
@@ -25,4 +26,10 @@ public interface IGUIView extends IMusicView {
   void down();
 
   void left();
+
+  void addActionListener(ActionListener listener);
+
+  String getInputString();
+
+  void clearInputString();
 }
