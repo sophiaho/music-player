@@ -92,6 +92,17 @@ public class GuiViewPanel extends JPanel {
   }
 
   /**
+   * Finds the Tone of the Note given a y value, to be used with mouse clicks.
+   *
+   * @param y    y value provided by mouse handler
+   * @return     ITone that is the Tone of note clicked
+   */
+  public ITone findTone(int y) {
+    int line = y - (TOPOFFSET + SQUARE ) / SQUARE;
+    return toneSet.get(line);
+  }
+
+  /**
    * Draws the notes of the song, with black for the first beat, and green for the sustains.
    *
    * @param g Graphics
@@ -122,6 +133,16 @@ public class GuiViewPanel extends JPanel {
       g.drawString(String.valueOf(i * BEATS), i * BEATS * SQUARE + SQUARE * 2,
               TOPOFFSET - SQUARE / 2);
     }
+  }
+
+  /**
+   * Finds the beat of the clicked note.
+   *
+   * @param x     x value provided by mouse handler
+   * @return      int beat value
+   */
+  public int findBeat(int x) {
+     return x - (TOPOFFSET + SQUARE);
   }
 
   /**
@@ -224,6 +245,11 @@ public class GuiViewPanel extends JPanel {
             TOPOFFSET + SQUARE * toneSet.size() + 50);
   }
 
+  /**
+   * Finds the length of the song.
+   *
+   * @return     int length value
+   */
   public int getLength() {
     return length;
   }
