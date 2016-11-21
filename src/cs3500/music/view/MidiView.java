@@ -122,4 +122,12 @@ public class MidiView extends GUIView {
   public void setReceiver(Receiver r) {
     this.receiver = r;
   }
+
+  public void switchPP() {
+    if (this.sequencer.isRunning()) {
+      this.pause();
+    } else {
+      this.restart();
+    }
+  }
 }

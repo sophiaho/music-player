@@ -99,8 +99,8 @@ public class GUIView extends JFrame implements IGUIView {
 
   @Override
   public void resetFocus() {
-    this.setFocusable(true);
-    this.requestFocus();
+    this.panel.setFocusable(true);
+    this.panel.requestFocus();
   }
 
   @Override
@@ -207,6 +207,11 @@ public class GUIView extends JFrame implements IGUIView {
   public void play() {
     this.playing = true;
     render();
+  }
+
+  @Override
+  public void switchPP() {
+    this.playing = !this.playing;
   }
 
   private int sleepTime() {

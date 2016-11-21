@@ -61,7 +61,7 @@ public class GuiController implements IMusicController, ActionListener {
     pressed.put(KeyEvent.VK_P, new Runnable() {
       @Override
       public void run() {
-        view.play();
+        view.switchPP();
       }
     });
     released.put(KeyEvent.VK_RIGHT, new Runnable() {
@@ -112,16 +112,17 @@ public class GuiController implements IMusicController, ActionListener {
 
   @Override
   public void actionPerformed(ActionEvent e) {
-    String note = view.getInputString();
     switch (e.getActionCommand()) {
       case "Add Note Button":
-      //TODO after you enter something into the text field, which is in the line above it has all the information needed to add a note, but idk how to String --> Note
+      //TODO after you enter something into the text field, which is in the line it has all the information needed to add a note, but idk how to String --> Note
+        String noteAdd = view.getInputString();
         //model.addNote();
         view.clearInputString();
         view.resetFocus();
         break;
       case "Remove Note Button":
       //TODO same issue here
+        String noteRemove = view.getInputString();
         //model.deleteNote();
         view.clearInputString();
         view.resetFocus();

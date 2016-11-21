@@ -31,7 +31,10 @@ public interface IGUIView extends IMusicView {
 
   void pause();
 
+  //change later!!
   void play();
+
+  void switchPP();
 
   void addActionListener(ActionListener listener);
 

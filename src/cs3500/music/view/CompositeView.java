@@ -107,21 +107,26 @@ public class CompositeView implements IGUIView {
 
   @Override
   public void addActionListener(ActionListener listener) {
-
+    gui.addActionListener(listener);
   }
 
   @Override
   public void setEchoText(String s) {
-
+    gui.setEchoText(s);
   }
 
   @Override
   public String getInputString() {
-    return null;
+    return gui.getInputString();
   }
 
   @Override
   public void clearInputString() {
+    gui.clearInputString();
+  }
 
+  public void switchPP() {
+    gui.switchPP();
+    midi.switchPP();
   }
 }
