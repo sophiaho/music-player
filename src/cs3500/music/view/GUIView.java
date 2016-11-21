@@ -7,7 +7,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 
 import cs3500.music.model.ISong;
 import cs3500.music.model.ITone;
@@ -62,7 +61,6 @@ public class GUIView extends JFrame implements IGUIView {
     interactions.add(display, BorderLayout.NORTH);
 
     this.add(interactions, BorderLayout.SOUTH);
-
 
     this.pack();
     this.repaint();
@@ -218,13 +216,13 @@ public class GUIView extends JFrame implements IGUIView {
     return (int) Math.round((double) this.panel.getTempo() / (1000 * this.panel.getSQUARE()));
   }
 
-  @Override
-  public void addKeyListener(KeyListener listener) {
-
-  }
-
-  @Override
-  public void addMouseListener(MouseListener listener) {
-
-  }
+//  @Override
+//  public void addKeyListener(KeyListener listener) {
+//
+//  }
+//
+//  @Override
+//  public void addMouseListener(MouseListener listener) {
+//
+//  }
 }
