@@ -227,4 +227,5 @@ public class GuiViewPanel extends JPanel {
   public int getLength() {
     return length;
   }
+
 }

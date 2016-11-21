@@ -1,6 +1,7 @@
 package cs3500.music.view;
 
 import java.awt.Dimension;
+import java.awt.event.ActionListener
 
 import javax.swing.*;
 
@@ -12,9 +13,10 @@ import static java.util.Objects.requireNonNull;
  * A class implementation of the music view.
  */
 public class GUIView extends JFrame implements IGUIView {
-
   GuiViewPanel panel;
   final JScrollPane scroller;
+  JTextField input;
+  JButton addNote, removeNote;
 
   /**
    * A constructor for the GUIView.
@@ -22,13 +24,34 @@ public class GUIView extends JFrame implements IGUIView {
   public GUIView() {
     super();
 
+    this.setLayout(new BorderLayout());
+
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setPreferredSize(new Dimension(800, 300));
 
     this.panel = new GuiViewPanel();
 
+    this.add(this.panel, BorderLayout.CENTER);
+
     this.scroller = new JScrollPane(this.panel);
     this.getContentPane().add(scroller);
+
+    this.input = new JTextField(50);
+
+    addNote = new JButton("Add Note");
+    addNote.setActionCommand("Add Note Button");
+
+    removeNote = new JButton("Remove Note");
+    removeNote.setActionCommand("Remove Note Button");
+
+    JPanel interactions = new JPanel();
+    interactions.setLayout(new FlowLayout());
+    interactions.add(this.input);
+    interactions.add(addNote);
+    interactions.add(removeNote);
+
+    this.add(interactions, BorderLayout.SOUTH);
+
 
     this.pack();
     this.repaint();
@@ -51,7 +74,8 @@ public class GUIView extends JFrame implements IGUIView {
 
   @Override
   public void resetFocus() {
-
+    this.setFocusable(true);
+    this.requestFocus();
   }
 
   @Override
@@ -94,8 +118,8 @@ public class GUIView extends JFrame implements IGUIView {
   @Override
   public void up() {
     JScrollBar vbar = scroller.getVerticalScrollBar();
-    if (vbar.getValue() + vbar.getBlockIncrement() < vbar.getBlockIncrement()) {
-      vbar.setValue(vbar.getValue() + vbar.getBlockIncrement());
+    if (vbar.getValue() + vbar.getBlockIncrement() > vbar.getBlockIncrement()) {
+      vbar.setValue(vbar.getValue() - vbar.getBlockIncrement());
     } else {
       vbar.setValue(vbar.getMaximum());
     }
@@ -104,8 +128,8 @@ public class GUIView extends JFrame implements IGUIView {
   @Override
   public void down() {
     JScrollBar vbar = scroller.getVerticalScrollBar();
-    if (vbar.getValue() - vbar.getBlockIncrement() > vbar.getMinimum()) {
-      vbar.setValue(vbar.getValue() - vbar.getBlockIncrement());
+    if (vbar.getValue() - vbar.getBlockIncrement() < vbar.getMinimum()) {
+      vbar.setValue(vbar.getValue() + vbar.getBlockIncrement());
     } else {
       vbar.setValue(vbar.getMinimum());
     }
@@ -114,5 +138,21 @@ public class GUIView extends JFrame implements IGUIView {
   public void setCurrBeat(int currBeat) {
     this.panel.setCurrBeat(currBeat);
     this.repaint();
+  }
+
+  @Override
+  public String getInputString() {
+    return input.getText();
+  }
+
+  @Override
+  public void clearInputString() {
+    input.setText("");
+  }
+
+  @Override
+  public void addActionListener(ActionListener listener) {
+    addNote.addActionListener(listener);
+    removeNote.addActionListener(listener);
   }
 }

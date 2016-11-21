@@ -28,7 +28,8 @@ public class GuiController implements IMusicController, ActionListener {
   public GuiController(ISong model, IGUIView view) {
     this.model = model;
     this.view = view;
-    this.configureKeyboardHandler();
+    this.configureHandlers();
+    this.view.addActionListener(this);
     this.playing = true;
   }
 
@@ -43,7 +44,7 @@ public class GuiController implements IMusicController, ActionListener {
    * spacebar to pause/start, left right arrow keys to scroll,
    * character inputs into the text box
    */
-  private void configureKeyboardHandler() {
+  private void configureHandlers() {
     Map<Character, Runnable> typed = new HashMap<>();
     Map<Integer, Runnable> pressed = new HashMap<>();
     Map<Integer, Runnable> released = new HashMap<>();
@@ -96,9 +97,17 @@ public class GuiController implements IMusicController, ActionListener {
 
   @Override
   public void actionPerformed(ActionEvent e) {
+    String note = view.getInputString();
     switch (e.getActionCommand()) {
-      case "Exit Button":
-        System.exit(0);
+      case "Add Note Button":
+
+        //model.addNote();
+        view.clearInputString();
+        break;
+      case "Remove Note Button":
+
+        //model.deleteNote();
+        view.clearInputString();
         break;
     }
   }
