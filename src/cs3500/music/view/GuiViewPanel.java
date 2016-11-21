@@ -22,7 +22,7 @@ public class GuiViewPanel extends JPanel {
   private HashMap<Integer, List<INote>> ends;
   private int length;
   private int tempo;
-  private int currBeat;
+  private double currBeat;
 
   private final int SQUARE = 20;
   private final int BEATS = 4;
@@ -193,17 +193,17 @@ public class GuiViewPanel extends JPanel {
 
   private void drawBar(Graphics g) {
     Graphics2D g2d = (Graphics2D) g;
-    int set = this.currBeat;
+    double set = this.currBeat;
     g2d.setColor(Color.RED);
     g2d.setStroke(new BasicStroke(2));
 
-    g2d.drawLine(set + SQUARE * 2,
+    g2d.drawLine((int) Math.round(set + SQUARE * 2),
             TOPOFFSET,
-            (set + SQUARE * 2),
+            (int) Math.round(set + SQUARE * 2),
             SQUARE * this.toneSet.size() + TOPOFFSET);
   }
 
-  public void setCurrBeat(int currBeat) {
+  public void setCurrBeat(double currBeat) {
     this.currBeat = currBeat;
     this.repaint();
   }
@@ -254,4 +254,7 @@ public class GuiViewPanel extends JPanel {
     return length;
   }
 
+  public int getSQUARE() {
+    return SQUARE;
+  }
 }

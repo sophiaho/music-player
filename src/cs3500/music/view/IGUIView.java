@@ -31,6 +31,8 @@ public interface IGUIView extends IMusicView {
 
   void pause();
 
+  void play();
+
   void addActionListener(ActionListener listener);
 
   void setEchoText(String s);
@@ -39,7 +41,7 @@ public interface IGUIView extends IMusicView {
 
   void clearInputString();
 
-  void setCurrBeat(int currBeat);
+  void setCurrBeat(double currBeat);
 
   ITone getClickedTone(int y);
 

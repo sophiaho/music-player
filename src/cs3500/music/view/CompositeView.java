@@ -1,9 +1,11 @@
 package cs3500.music.view;
 
+import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 
 import cs3500.music.model.ISong;
+import cs3500.music.model.ITone;
 
 /**
  * Created by andrew on 21/11/2016.
@@ -74,11 +76,52 @@ public class CompositeView implements IGUIView {
   @Override
   public void left() {
     gui.left();
+  }
+
+  @Override
+  public void pause() {
+    gui.pause();
+    midi.pause();
+  }
+
+  @Override
+  public void setCurrBeat(double currBeat) {
+    gui.setCurrBeat(currBeat);
+  }
+
+  @Override
+  public ITone getClickedTone(int y) {
+    return null;
+  }
+
+  @Override
+  public int getClickedBeat(int x) {
+    return 0;
+  }
+
+  @Override
+  public void play() {
+    gui.play();
     midi.restart();
   }
 
   @Override
-  public void setCurrBeat(int currBeat) {
-    gui.setCurrBeat(currBeat);
+  public void addActionListener(ActionListener listener) {
+
+  }
+
+  @Override
+  public void setEchoText(String s) {
+
+  }
+
+  @Override
+  public String getInputString() {
+    return null;
+  }
+
+  @Override
+  public void clearInputString() {
+
   }
 }

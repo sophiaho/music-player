@@ -1,14 +1,14 @@
 package cs3500.music.view;
 
 import java.awt.Dimension;
-import java.awt.event.ActionListener
+import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 
 import cs3500.music.model.ISong;
 import cs3500.music.model.ITone;
-import cs3500.music.model.Note;
 
 import static java.util.Objects.requireNonNull;
 
@@ -21,6 +21,7 @@ public class GUIView extends JFrame implements IGUIView {
   private JTextField input;
   private JButton addNote, removeNote;
   private JLabel display;
+  private boolean playing;
 
   /**
    * A constructor for the GUIView.
@@ -41,6 +42,7 @@ public class GUIView extends JFrame implements IGUIView {
     this.getContentPane().add(scroller);
 
     this.input = new JTextField(50);
+    this.playing = true;
 
     addNote = new JButton("Add Note");
     addNote.setActionCommand("Add Note Button");
@@ -67,6 +69,20 @@ public class GUIView extends JFrame implements IGUIView {
   @Override
   public void render() {
     this.setVisible(true);
+    int sleepy = this.sleepTime();
+    int curr = 0;
+    while(true) {
+      if (this.playing) {
+        this.setCurrBeat(curr);
+        this.repaint();
+        curr += 1;
+        try {
+          Thread.sleep(sleepy);
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+      }
+    }
   }
 
   /**
@@ -142,7 +158,7 @@ public class GUIView extends JFrame implements IGUIView {
     }
   }
 
-  public void setCurrBeat(int currBeat) {
+  public void setCurrBeat(double currBeat) {
     this.panel.setCurrBeat(currBeat);
     this.repaint();
   }
@@ -150,6 +166,8 @@ public class GUIView extends JFrame implements IGUIView {
   @Override
   public void pause() {
     //TODO the pause is now linked to the spacebar, but idk how you did pause so
+    this.playing = false;
+    render();
   }
 
   @Override
@@ -181,5 +199,15 @@ public class GUIView extends JFrame implements IGUIView {
   @Override
   public int getClickedBeat(int x) {
     return panel.findBeat(x);
+  }
+
+  @Override
+  public void play() {
+    this.playing = true;
+    render();
+  }
+
+  private int sleepTime() {
+    return (int) Math.round((double) this.panel.getTempo() / (1000 * this.panel.getSQUARE()));
   }
 }

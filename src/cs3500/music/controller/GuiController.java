@@ -61,7 +61,7 @@ public class GuiController implements IMusicController, ActionListener {
     pressed.put(KeyEvent.VK_SPACE, new Runnable() {
       @Override
       public void run() {
-        view.pause();
+        view.play();
       }
     });
     released.put(KeyEvent.VK_RIGHT, new Runnable() {
@@ -123,23 +123,6 @@ public class GuiController implements IMusicController, ActionListener {
         //model.deleteNote();
         view.clearInputString();
         break;
-    }
-  }
-
-  private void increment() {
-    int time = 0;
-    this.view.render();
-    while (true) {
-      if (playing) {
-        this.view.render();
-        this.view.setCurrBeat(time);
-        time += 1;
-        try {
-          Thread.sleep(20);
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
-      }
     }
   }
 }
