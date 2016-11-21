@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cs3500.music.model.ISong;
+import cs3500.music.model.ITone;
 import cs3500.music.view.IGUIView;
-import cs3500.music.view.IMusicView;
 
 /**
  * A class representation of the Music Controller.
@@ -58,6 +58,12 @@ public class GuiController implements IMusicController, ActionListener {
         view.end();
       }
     });
+    pressed.put(KeyEvent.VK_SPACE, new Runnable() {
+      @Override
+      public void run() {
+        view.pause();
+      }
+    });
     released.put(KeyEvent.VK_RIGHT, new Runnable() {
       @Override
       public void run() {
@@ -83,13 +89,24 @@ public class GuiController implements IMusicController, ActionListener {
       }
     });
 
-    KeyboardHandler handler = new KeyboardHandler();
-    handler.setTypedMap(typed);
-    handler.setPressedMap(pressed);
-    handler.setReleasedMap(released);
-    view.addKeyListener(handler);
+    KeyboardHandler khandler = new KeyboardHandler();
+    khandler.setTypedMap(typed);
+    khandler.setPressedMap(pressed);
+    khandler.setReleasedMap(released);
+    view.addKeyListener(khandler);
 
+    MouseHandler mhandler = new MouseHandler();
 
+    mhandler.setLeftClick(new Runnable() {
+      @Override
+      public void run() {
+        int beat = view.getClickedBeat(mhandler.x);
+        ITone tone = view.getClickedTone(mhandler.y);
+        view.setEchoText(tone.toString() + " " + String.valueOf(beat));
+      }
+    });
+
+    view.addMouseListener(mhandler);
   }
 
   @Override
@@ -97,12 +114,12 @@ public class GuiController implements IMusicController, ActionListener {
     String note = view.getInputString();
     switch (e.getActionCommand()) {
       case "Add Note Button":
-
+      //TODO after you enter something into the text field, which is in the line above it has all the information needed to add a note, but idk how to String --> Note
         //model.addNote();
         view.clearInputString();
         break;
       case "Remove Note Button":
-
+      //TODO same issue here
         //model.deleteNote();
         view.clearInputString();
         break;

@@ -4,8 +4,11 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 
 import cs3500.music.model.ISong;
+import cs3500.music.model.ITone;
+import cs3500.music.model.Note;
 
 import static java.util.Objects.requireNonNull;
 
@@ -14,9 +17,10 @@ import static java.util.Objects.requireNonNull;
  */
 public class GUIView extends JFrame implements IGUIView {
   GuiViewPanel panel;
-  final JScrollPane scroller;
-  JTextField input;
-  JButton addNote, removeNote;
+  private final JScrollPane scroller;
+  private JTextField input;
+  private JButton addNote, removeNote;
+  private JLabel display;
 
   /**
    * A constructor for the GUIView.
@@ -44,11 +48,14 @@ public class GUIView extends JFrame implements IGUIView {
     removeNote = new JButton("Remove Note");
     removeNote.setActionCommand("Remove Note Button");
 
+    display = new JLabel("Enter a note below.");
+
     JPanel interactions = new JPanel();
-    interactions.setLayout(new FlowLayout());
-    interactions.add(this.input);
-    interactions.add(addNote);
-    interactions.add(removeNote);
+    interactions.setLayout(new BorderLayout());
+    interactions.add(this.input, BorderLayout.CENTER);
+    interactions.add(addNote, BorderLayout.SOUTH);
+    interactions.add(removeNote, BorderLayout.EAST);
+    interactions.add(display, BorderLayout.NORTH);
 
     this.add(interactions, BorderLayout.SOUTH);
 
@@ -136,6 +143,16 @@ public class GUIView extends JFrame implements IGUIView {
   }
 
   @Override
+  public void pause() {
+    //TODO the pause is now linked to the spacebar, but idk how you did pause so
+  }
+
+  @Override
+  public void setEchoText(String s) {
+    display.setText(s);
+  }
+
+  @Override
   public String getInputString() {
     return input.getText();
   }
@@ -149,5 +166,15 @@ public class GUIView extends JFrame implements IGUIView {
   public void addActionListener(ActionListener listener) {
     addNote.addActionListener(listener);
     removeNote.addActionListener(listener);
+  }
+
+  @Override
+  public ITone getClickedTone(int y) {
+    return panel.findTone(y);
+  }
+
+  @Override
+  public int getClickedBeat(int x) {
+    return panel.findBeat(x);
   }
 }
