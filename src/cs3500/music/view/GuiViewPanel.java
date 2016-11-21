@@ -98,8 +98,7 @@ public class GuiViewPanel extends JPanel {
    * @return     ITone that is the Tone of note clicked
    */
   public ITone findTone(int y) {
-    int line = y - (TOPOFFSET + SQUARE ) / SQUARE;
-    System.out.println(toneSet.get(line));
+    int line = (((y - (TOPOFFSET + SQUARE )) / SQUARE) + 1);
     return toneSet.get(line);
   }
 
@@ -143,8 +142,7 @@ public class GuiViewPanel extends JPanel {
    * @return      int beat value
    */
   public int findBeat(int x) {
-    System.out.println(x - (TOPOFFSET + SQUARE));
-     return x - (TOPOFFSET + SQUARE);
+     return ((x - (TOPOFFSET + SQUARE)) / SQUARE);
   }
 
   /**

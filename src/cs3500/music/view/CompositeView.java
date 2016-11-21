@@ -91,12 +91,12 @@ public class CompositeView implements IGUIView {
 
   @Override
   public ITone getClickedTone(int y) {
-    return null;
+    return gui.getClickedTone(y);
   }
 
   @Override
   public int getClickedBeat(int x) {
-    return 0;
+    return gui.getClickedBeat(x);
   }
 
   @Override
@@ -125,6 +125,7 @@ public class CompositeView implements IGUIView {
     gui.clearInputString();
   }
 
+  @Override
   public void switchPP() {
     gui.switchPP();
     midi.switchPP();

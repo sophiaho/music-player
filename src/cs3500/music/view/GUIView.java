@@ -68,6 +68,7 @@ public class GUIView extends JFrame implements IGUIView {
 
   @Override
   public void render() {
+    scroller.addMouseListener(this.getMouseListeners()[0]);
     this.setVisible(true);
     int sleepy = this.sleepTime();
     int curr = 0;
