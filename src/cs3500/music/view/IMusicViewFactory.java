@@ -11,9 +11,9 @@ public final class IMusicViewFactory {
    * @return the view implementation that is desired.
    * @throws IllegalArgumentException when not a valid view argument.
    */
-  public static IMusicView make(String s) throws IllegalArgumentException {
+  public static IGUIView make(String s) throws IllegalArgumentException {
     switch (s) {
-      case "console": return new TextView(System.out);
+      //case "console": return new TextView(System.out);
       case "midi": return new MidiView();
       case "visual": return new GUIView();
       default: throw new IllegalArgumentException("Not a valid view type.");
