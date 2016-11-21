@@ -6,7 +6,7 @@ import java.io.IOException;
 import javax.sound.midi.InvalidMidiDataException;
 
 import cs3500.music.controller.IMusicController;
-import cs3500.music.controller.MusicController;
+import cs3500.music.controller.GuiController;
 import cs3500.music.model.ISong;
 import cs3500.music.util.MusicReader;
 import cs3500.music.util.SongBuilder;
@@ -31,7 +31,7 @@ public class MusicMain {
     try {
       ISong model = MusicReader.parseFile(new FileReader("songs/mystery-1.txt"), new SongBuilder());
       IMusicView view = IMusicViewFactory.make("visual");
-      IMusicController controller = new MusicController(model, view);
+      IMusicController controller = new GuiController(model, view);
       controller.start();
     } catch (IOException e) {
       System.out.println("Not a valid song.");
