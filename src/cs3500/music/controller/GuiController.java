@@ -16,7 +16,7 @@ import cs3500.music.view.IMusicView;
 public class GuiController implements IMusicController, ActionListener {
 
   ISong model;
-  IMusicView view;
+  IGUIView view;
 
   /**
    *  Constructor for the GuiController using a view and a model.
