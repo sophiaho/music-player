@@ -25,4 +25,6 @@ public interface IGUIView extends IMusicView {
   void down();
 
   void left();
+
+  void setCurrBeat(int currBeat);
 }

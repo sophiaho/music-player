@@ -98,7 +98,7 @@ public class MidiView extends GUIView {
 
       this.sequencer.open();
       this.sequencer.setTempoInMPQ(this.panel.getTempo());
-      this.sequencer.start();
+//      this.sequencer.start();
     } catch (MidiUnavailableException e) {
       e.printStackTrace();
     }

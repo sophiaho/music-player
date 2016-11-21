@@ -110,4 +110,9 @@ public class GUIView extends JFrame implements IGUIView {
       vbar.setValue(vbar.getMinimum());
     }
   }
+
+  public void setCurrBeat(int currBeat) {
+    this.panel.setCurrBeat(currBeat);
+    this.repaint();
+  }
 }

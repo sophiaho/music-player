@@ -17,6 +17,7 @@ public class GuiController implements IMusicController, ActionListener {
 
   ISong model;
   IGUIView view;
+  boolean playing;
 
   /**
    * Constructor for the GuiController using a view and a model.
@@ -28,12 +29,14 @@ public class GuiController implements IMusicController, ActionListener {
     this.model = model;
     this.view = view;
     this.configureKeyboardHandler();
+    this.playing = true;
   }
 
   @Override
   public void start() {
     this.view.setUp(model);
-    this.view.render();
+//    this.view.render();
+    increment();
   }
 
   /**
@@ -61,12 +64,14 @@ public class GuiController implements IMusicController, ActionListener {
       @Override
       public void run() {
         view.right();
+        playing = false;
       }
     });
     released.put(KeyEvent.VK_LEFT, new Runnable() {
       @Override
       public void run() {
         view.left();
+        playing = true;
       }
     });
     released.put(KeyEvent.VK_UP, new Runnable() {
@@ -98,5 +103,21 @@ public class GuiController implements IMusicController, ActionListener {
     }
   }
 
+  private void increment() {
+    int time = 0;
+    this.view.render();
+    while (true) {
+      if (playing) {
+        this.view.render();
+        this.view.setCurrBeat(time);
+        time += 1;
+        try {
+          Thread.sleep(20);
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+  }
 }
 
