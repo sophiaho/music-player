@@ -2,6 +2,8 @@ package cs3500.music.view;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -176,5 +178,15 @@ public class GUIView extends JFrame implements IGUIView {
   @Override
   public int getClickedBeat(int x) {
     return panel.findBeat(x);
+  }
+
+  @Override
+  public void addKeyListener(KeyListener listener) {
+
+  }
+
+  @Override
+  public void addMouseListener(MouseListener listener) {
+
   }
 }

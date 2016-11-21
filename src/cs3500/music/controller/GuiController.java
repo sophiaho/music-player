@@ -93,7 +93,6 @@ public class GuiController implements IMusicController, ActionListener {
     khandler.setTypedMap(typed);
     khandler.setPressedMap(pressed);
     khandler.setReleasedMap(released);
-    view.addKeyListener(khandler);
 
     MouseHandler mhandler = new MouseHandler();
 
@@ -102,10 +101,12 @@ public class GuiController implements IMusicController, ActionListener {
       public void run() {
         int beat = view.getClickedBeat(mhandler.x);
         ITone tone = view.getClickedTone(mhandler.y);
+        System.out.println(tone.toString() + " " + String.valueOf(beat));
         view.setEchoText(tone.toString() + " " + String.valueOf(beat));
       }
     });
 
+    view.addKeyListener(khandler);
     view.addMouseListener(mhandler);
   }
 
@@ -117,11 +118,13 @@ public class GuiController implements IMusicController, ActionListener {
       //TODO after you enter something into the text field, which is in the line above it has all the information needed to add a note, but idk how to String --> Note
         //model.addNote();
         view.clearInputString();
+        view.resetFocus();
         break;
       case "Remove Note Button":
       //TODO same issue here
         //model.deleteNote();
         view.clearInputString();
+        view.resetFocus();
         break;
     }
   }
