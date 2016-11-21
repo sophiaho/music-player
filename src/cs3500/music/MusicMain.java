@@ -11,6 +11,7 @@ import cs3500.music.controller.MusicController;
 import cs3500.music.model.ISong;
 import cs3500.music.util.MusicReader;
 import cs3500.music.util.SongBuilder;
+import cs3500.music.view.CompositeView;
 import cs3500.music.view.IGUIView;
 import cs3500.music.view.IMusicView;
 import cs3500.music.view.IMusicViewFactory;
@@ -31,8 +32,9 @@ public class MusicMain {
 //      return;
 //    }
     try {
-      ISong model = MusicReader.parseFile(new FileReader("songs/lnl.txt"), new SongBuilder());
-      IGUIView view = IMusicViewFactory.make("visual");
+      ISong model = MusicReader.parseFile(new FileReader("songs/mary-little-lamb.txt"), new SongBuilder());
+//      IGUIView view = IMusicViewFactory.make("visual");
+      IGUIView view = new CompositeView();
       IMusicController controller = new GuiController(model, view);
       controller.start();
     } catch (IOException e) {

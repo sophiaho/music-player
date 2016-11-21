@@ -7,7 +7,7 @@ import java.awt.event.MouseListener;
 import cs3500.music.model.ITone;
 
 /**
- * An interface for the
+ * An interface for the GUIView.
  */
 public interface IGUIView extends IMusicView {
 
@@ -31,6 +31,8 @@ public interface IGUIView extends IMusicView {
 
   void pause();
 
+  void play();
+
   void addActionListener(ActionListener listener);
 
   void setEchoText(String s);
@@ -38,6 +40,8 @@ public interface IGUIView extends IMusicView {
   String getInputString();
 
   void clearInputString();
+
+  void setCurrBeat(double currBeat);
 
   ITone getClickedTone(int y);
 

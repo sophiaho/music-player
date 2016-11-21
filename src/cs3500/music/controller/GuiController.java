@@ -61,7 +61,7 @@ public class GuiController implements IMusicController, ActionListener {
     pressed.put(KeyEvent.VK_SPACE, new Runnable() {
       @Override
       public void run() {
-        view.pause();
+        view.play();
       }
     });
     released.put(KeyEvent.VK_RIGHT, new Runnable() {
@@ -128,6 +128,5 @@ public class GuiController implements IMusicController, ActionListener {
         break;
     }
   }
-
 }
 

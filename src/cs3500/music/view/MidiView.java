@@ -22,7 +22,7 @@ import cs3500.music.model.INote;
  */
 public class MidiView extends GUIView {
   private Receiver receiver;
-  private static final int OFFSET = 1;
+  private static final int OFFSET = 0;
   private Sequencer sequencer;
   private Sequence sequence;
 
@@ -44,7 +44,7 @@ public class MidiView extends GUIView {
 
     try {
       tempSequencer = MidiSystem.getSequencer();
-      tempSequence = new Sequence(Sequence.PPQ, 36);
+      tempSequence = new Sequence(Sequence.PPQ, 2);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -71,7 +71,7 @@ public class MidiView extends GUIView {
           List<INote> startsNow = this.panel.getStarts().get(i);
           for (INote n : startsNow) {
             MidiEvent addStart = new MidiEvent(new ShortMessage(ShortMessage.NOTE_ON, n.getInstrument() - 1,
-                    n.getMidi(), n.getVolume()), i * 36);
+                    n.getMidi(), n.getVolume()), i * 2);
             song.add(addStart);
           }
         }
@@ -79,7 +79,7 @@ public class MidiView extends GUIView {
           List<INote> endsNow = this.panel.getEnds().get(i);
           for (INote n : endsNow) {
             MidiEvent addEnd = new MidiEvent(new ShortMessage(ShortMessage.NOTE_OFF, n.getInstrument() - 1,
-                    n.getMidi(), n.getVolume()), (i * 36 - 1));
+                    n.getMidi(), n.getVolume()), i * 2 - 1);
             song.add(addEnd);
           }
         }
@@ -89,17 +89,18 @@ public class MidiView extends GUIView {
     }
 
     try {
-//      for (int n = 0; n < panel.getLength(); n++) {
-//        byte[] bytes = ByteBuffer.allocate(4).putInt(n).array();
-//        MidiEvent buffer = new MidiEvent(
-//                new MetaMessage(1, ByteBuffer.allocate(4).putInt(n).array(), bytes.length), n);
-//        song.add(buffer);
-//      }
-
+      for (int n = 0; n < panel.getLength(); n++) {
+        byte[] bytes = ByteBuffer.allocate(4).putInt(n).array();
+        MidiEvent buffer = new MidiEvent(
+                new MetaMessage(1, ByteBuffer.allocate(4).putInt(n).array(), bytes.length), n);
+        song.add(buffer);
+      }
       this.sequencer.open();
       this.sequencer.setTempoInMPQ(this.panel.getTempo());
       this.sequencer.start();
     } catch (MidiUnavailableException e) {
+      e.printStackTrace();
+    } catch (InvalidMidiDataException e) {
       e.printStackTrace();
     }
 

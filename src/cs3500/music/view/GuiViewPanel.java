@@ -1,8 +1,6 @@
 package cs3500.music.view;
 
-import java.awt.Graphics;
-import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -24,8 +22,9 @@ public class GuiViewPanel extends JPanel {
   private HashMap<Integer, List<INote>> ends;
   private int length;
   private int tempo;
+  private double currBeat;
 
-  private final int SQUARE = 10;
+  private final int SQUARE = 20;
   private final int BEATS = 4;
   private final int TOPOFFSET = 10 + SQUARE;
 
@@ -52,6 +51,7 @@ public class GuiViewPanel extends JPanel {
     this.ends = s.ends();
     this.tempo = s.getTempo();
     this.length = s.songLength();
+    this.currBeat = 0;
   }
 
   @Override
@@ -73,6 +73,8 @@ public class GuiViewPanel extends JPanel {
     this.drawHoriz(g);
 
     this.drawVert(g);
+
+    this.drawBar(g);
   }
 
   /**
@@ -191,6 +193,23 @@ public class GuiViewPanel extends JPanel {
     }
   }
 
+  private void drawBar(Graphics g) {
+    Graphics2D g2d = (Graphics2D) g;
+    double set = this.currBeat;
+    g2d.setColor(Color.RED);
+    g2d.setStroke(new BasicStroke(2));
+
+    g2d.drawLine((int) Math.round(set + SQUARE * 2),
+            TOPOFFSET,
+            (int) Math.round(set + SQUARE * 2),
+            SQUARE * this.toneSet.size() + TOPOFFSET);
+  }
+
+  public void setCurrBeat(double currBeat) {
+    this.currBeat = currBeat;
+    this.repaint();
+  }
+
   /**
    * Gets the notes that start at a certain beat.
    *
@@ -237,4 +256,7 @@ public class GuiViewPanel extends JPanel {
     return length;
   }
 
+  public int getSQUARE() {
+    return SQUARE;
+  }
 }
