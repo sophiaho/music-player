@@ -100,6 +100,26 @@ public class Song implements ISong {
 
   @Override
   public void deleteNote(INote n) {
+    // linear time delete allows for constant access and constant add,
+    // since likely it is going to be the least used of the three.
+    if (this.highest == n.getTone()) {
+      for (Integer i : this.contents.keySet()) {
+        for (INote toCheck : this.contents.get(i)) {
+          if (highest.compareTo(toCheck) < 0) {
+            highest = toCheck.getTone();
+          }
+        }
+      }
+    } else if (this.lowest == n.getTone()) {
+      for (Integer i : this.contents.keySet()) {
+        for (INote toCheck : this.contents.get(i)) {
+          if (lowest.compareTo(toCheck) > 0) {
+            lowest = toCheck.getTone();
+          }
+        }
+      }
+    }
+
     if (this.contents.get(n.getStart()).contains(n)) {
       this.contents.get(n.getStart()).remove(n);
     } else {
