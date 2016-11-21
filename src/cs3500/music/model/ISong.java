@@ -35,4 +35,6 @@ public interface ISong {
   void setTempo(int tempo);
 
   int getTempo();
+
+  void deleteNoteAtX(ITone tone, int time);
 }

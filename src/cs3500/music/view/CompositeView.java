@@ -85,7 +85,7 @@ public class CompositeView implements IGUIView {
   }
 
   @Override
-  public void setCurrBeat(double currBeat) {
+  public void setCurrBeat(int currBeat) {
     gui.setCurrBeat(currBeat);
   }
 
@@ -101,8 +101,9 @@ public class CompositeView implements IGUIView {
 
   @Override
   public void play() {
+//    midi.restart();
+    midi.pause();
     gui.play();
-    midi.restart();
   }
 
   @Override
@@ -127,7 +128,17 @@ public class CompositeView implements IGUIView {
 
   @Override
   public void switchPP() {
-    gui.switchPP();
     midi.switchPP();
+  }
+
+  @Override
+  public void repaint() {
+    gui.repaint();
+  }
+
+  @Override
+  public void incrementBeat() {
+    gui.setCurrBeat(midi.getTick());
+    gui.repaint();
   }
 }

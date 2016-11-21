@@ -104,7 +104,7 @@ public interface IGUIView extends IMusicView {
    *
    * @param currBeat   double
    */
-  void setCurrBeat(double currBeat);
+  void setCurrBeat(int currBeat);
 
   /**
    * Gets the tone that the mouse clicked.
@@ -121,4 +121,9 @@ public interface IGUIView extends IMusicView {
    * @return     int beat
    */
   int getClickedBeat(int x);
+
+
+  void repaint();
+
+  void incrementBeat();
 }

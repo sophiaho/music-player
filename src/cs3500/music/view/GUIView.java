@@ -3,8 +3,6 @@ package cs3500.music.view;
 import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
 
 import javax.swing.*;
 
@@ -22,7 +20,7 @@ public class GUIView extends JFrame implements IGUIView {
   private JTextField input;
   private JButton addNote, removeNote;
   private JLabel display;
-  private boolean playing;
+  private int curr;
 
   /**
    * A constructor for the GUIView.
@@ -43,7 +41,7 @@ public class GUIView extends JFrame implements IGUIView {
     this.getContentPane().add(scroller);
 
     this.input = new JTextField(50);
-    this.playing = true;
+    this.curr = 0;
 
     addNote = new JButton("Add Note");
     addNote.setActionCommand("Add Note Button");
@@ -70,26 +68,13 @@ public class GUIView extends JFrame implements IGUIView {
   public void render() {
     scroller.addMouseListener(this.getMouseListeners()[0]);
     this.setVisible(true);
-    int sleepy = this.sleepTime();
-    int curr = 0;
-    while(true) {
-      if (this.playing) {
-        this.setCurrBeat(curr);
-        this.repaint();
-        curr += 1;
-        try {
-          Thread.sleep(sleepy);
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
-      }
-    }
+    play();
   }
 
   /**
    * Sets up the view with the song.
    *
-   * @param s  ISong
+   * @param s ISong
    */
   public void setUp(ISong s) {
     this.panel.setSong(requireNonNull(s));
@@ -133,8 +118,7 @@ public class GUIView extends JFrame implements IGUIView {
     JScrollBar hbar = scroller.getHorizontalScrollBar();
     if (hbar.getValue() - hbar.getBlockIncrement() > hbar.getMinimum()) {
       hbar.setValue(hbar.getValue() - hbar.getBlockIncrement());
-    }
-    else {
+    } else {
       hbar.setValue(hbar.getMinimum());
     }
   }
@@ -159,7 +143,7 @@ public class GUIView extends JFrame implements IGUIView {
     }
   }
 
-  public void setCurrBeat(double currBeat) {
+  public void setCurrBeat(int currBeat) {
     this.panel.setCurrBeat(currBeat);
     this.repaint();
   }
@@ -167,7 +151,6 @@ public class GUIView extends JFrame implements IGUIView {
   @Override
   public void pause() {
     //TODO the pause is now linked to the spacebar, but idk how you did pause so
-    this.playing = false;
     render();
   }
 
@@ -204,17 +187,18 @@ public class GUIView extends JFrame implements IGUIView {
 
   @Override
   public void play() {
-    this.playing = true;
-    render();
   }
 
   @Override
   public void switchPP() {
-    this.playing = !this.playing;
   }
 
   private int sleepTime() {
-    return (int) Math.round((double) this.panel.getTempo() / (1000 * this.panel.getSQUARE()));
+    return this.panel.getTempo() / (1000 * this.panel.getSQUARE());
+  }
+
+  public void repaint() {
+    this.panel.repaint();
   }
 
 //  @Override
@@ -226,4 +210,10 @@ public class GUIView extends JFrame implements IGUIView {
 //  public void addMouseListener(MouseListener listener) {
 //
 //  }
+
+
+  @Override
+  public void incrementBeat() {
+    this.curr += 1;
+  }
 }

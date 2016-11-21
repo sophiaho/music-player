@@ -61,4 +61,11 @@ public interface INote extends Comparable {
    * @return the tone of the note.
    */
   ITone getTone();
+
+  static INote fromString(String input) {
+    String[] arr = input.split(" ");
+
+    return new Note(Integer.valueOf(arr[0]), ITone.fromInt(Integer.valueOf(arr[1])),
+    Integer.valueOf(arr[2]), Integer.valueOf(arr[3]), Integer.valueOf(arr[4]));
+  }
 }

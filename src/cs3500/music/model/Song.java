@@ -169,4 +169,19 @@ public class Song implements ISong {
   public int getTempo() {
     return this.tempo;
   }
+
+  @Override
+  public void deleteNoteAtX(ITone tone, int time) {
+    for (int i = 0; i < time; i++) {
+      if (this.contents.keySet().contains(i)) {
+        for (INote n : this.contents.get(i)) {
+          if (n.getTone().equals(tone)
+                  && n.getStart() <= time
+                  && n.getEnd() >= time) {
+            this.deleteNote(n);
+          }
+        }
+      }
+    }
+  }
 }

@@ -6,6 +6,9 @@ import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.Timer;
+
+import cs3500.music.model.INote;
 import cs3500.music.model.ISong;
 import cs3500.music.model.ITone;
 import cs3500.music.view.IGUIView;
@@ -17,6 +20,8 @@ public class GuiController implements IMusicController, ActionListener {
 
   ISong model;
   IGUIView view;
+  boolean playing;
+  private Timer timer;
 
   /**
    * Constructor for the GuiController using a view and a model.
@@ -29,10 +34,14 @@ public class GuiController implements IMusicController, ActionListener {
     this.view = view;
     this.configureHandlers();
     this.view.addActionListener(this);
+    this.playing = true;
   }
 
   @Override
   public void start() {
+    this.timer = new Timer(30, this);
+    this.timer.setActionCommand("Tick");
+    this.timer.start();
     this.view.setUp(model);
     this.view.render();
   }
@@ -58,15 +67,19 @@ public class GuiController implements IMusicController, ActionListener {
         view.end();
       }
     });
-    pressed.put(KeyEvent.VK_P, new Runnable() {
+    released.put(KeyEvent.VK_SPACE, new Runnable() {
       @Override
       public void run() {
         view.switchPP();
+        changePlaying();
+        view.right();
       }
     });
     released.put(KeyEvent.VK_RIGHT, new Runnable() {
       @Override
       public void run() {
+        view.switchPP();
+        playing = !playing;
         view.right();
       }
     });
@@ -80,6 +93,8 @@ public class GuiController implements IMusicController, ActionListener {
       @Override
       public void run() {
         view.up();
+        printsomething();
+        changePlaying();
       }
     });
     released.put(KeyEvent.VK_DOWN, new Runnable() {
@@ -102,7 +117,8 @@ public class GuiController implements IMusicController, ActionListener {
       public void run() {
         int beat = view.getClickedBeat(mhandler.x);
         ITone tone = view.getClickedTone(mhandler.y);
-        view.setEchoText(tone.toString() + " " + String.valueOf(beat));
+        view.setEchoText(tone.toString() + " " + String.valueOf(beat) +
+                "Numeric Version: " + tone.numeric());
       }
     });
 
@@ -115,18 +131,36 @@ public class GuiController implements IMusicController, ActionListener {
       case "Add Note Button":
       //TODO after you enter something into the text field, which is in the line it has all the information needed to add a note, but idk how to String --> Note
         String noteAdd = view.getInputString();
-        //model.addNote();
+        model.addNote(INote.fromString(noteAdd));
+        this.view.repaint();
         view.clearInputString();
         view.resetFocus();
         break;
       case "Remove Note Button":
       //TODO same issue here
-        String noteRemove = view.getInputString();
-        //model.deleteNote();
+        String[] toDelete = view.getInputString().split(" ");
+        model.deleteNoteAtX(ITone.fromInt(Integer.valueOf(toDelete[0])),
+                Integer.valueOf(toDelete[1]));
+        this.view.repaint();
         view.clearInputString();
         view.resetFocus();
         break;
+      case "Tick":
+        if (playing) {
+          view.incrementBeat();
+          view.repaint();
+        } else {
+          view.switchPP();
+        }
     }
+  }
+
+  private void printsomething() {
+    System.out.println("CHANGE");
+  }
+
+  private void changePlaying() {
+    this.playing = !playing;
   }
 }
 

@@ -44,7 +44,7 @@ public class MidiView extends GUIView {
 
     try {
       tempSequencer = MidiSystem.getSequencer();
-      tempSequence = new Sequence(Sequence.PPQ, 2);
+      tempSequence = new Sequence(Sequence.PPQ, 20);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -71,7 +71,7 @@ public class MidiView extends GUIView {
           List<INote> startsNow = this.panel.getStarts().get(i);
           for (INote n : startsNow) {
             MidiEvent addStart = new MidiEvent(new ShortMessage(ShortMessage.NOTE_ON, n.getInstrument() - 1,
-                    n.getMidi(), n.getVolume()), i * 2);
+                    n.getMidi(), n.getVolume()), i * this.panel.getSQUARE());
             song.add(addStart);
           }
         }
@@ -79,7 +79,7 @@ public class MidiView extends GUIView {
           List<INote> endsNow = this.panel.getEnds().get(i);
           for (INote n : endsNow) {
             MidiEvent addEnd = new MidiEvent(new ShortMessage(ShortMessage.NOTE_OFF, n.getInstrument() - 1,
-                    n.getMidi(), n.getVolume()), i * 2 - 1);
+                    n.getMidi(), n.getVolume()), i * this.panel.getSQUARE() - 1);
             song.add(addEnd);
           }
         }
@@ -117,6 +117,7 @@ public class MidiView extends GUIView {
 
   /**
    * Sets what the receiver of this is from default. Used for mock testing.
+   *
    * @param r whatever mock you want to write notes to.
    */
   public void setReceiver(Receiver r) {
@@ -124,10 +125,10 @@ public class MidiView extends GUIView {
   }
 
   public void switchPP() {
-    if (this.sequencer.isRunning()) {
-      this.pause();
-    } else {
-      this.restart();
-    }
+    this.sequencer.stop();
+  }
+
+  public int getTick() {
+    return (int) this.sequencer.getTickPosition();
   }
 }
