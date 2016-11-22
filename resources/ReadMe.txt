@@ -32,3 +32,23 @@ play back the compositions in the txt files and parse them to play them as notes
 
 These three views can be toggled using the IMusicViewFactory that allows the player to select
 between different views.
+
+In this week's assignment, one of the design changes that we made were tree map —> hashmap because
+to get our list of notes, it would take O(log n) time vs. switching to hash map where it would
+take O(1) to access the list of notes. Furthermore, there is now a composite view that can play
+the midi song and render the visual view at the same time.
+
+Improved functionality inlcudes the ability to use the keyboard and mouse to perform different
+tasks. The mappings are listed below:
+
+Right Arrow - Scrolls the window to the right
+Left Arrow - Scrolls the window to the left
+Up Arrow - Scrolls the window up
+Down Arrow - Scrolls the window down
+Space - Play/Pause the song
+
+Left Click - Obtain the Pitch, Octave, and Beat of the note, as well as its numerical value that
+can be entered into the text field to add/delete
+Right Click - Obtain the Pitch, Octave, and Beat of the note as well as delete the note that was
+clicked.
+
