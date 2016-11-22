@@ -46,6 +46,7 @@ Left Arrow - Scrolls the window to the left
 Up Arrow - Scrolls the window up
 Down Arrow - Scrolls the window down
 Space - Play/Pause the song
+R - Restarts the song
 
 Left Click - Obtain the Pitch, Octave, and Beat of the note, as well as its numerical value that
 can be entered into the text field to add/delete

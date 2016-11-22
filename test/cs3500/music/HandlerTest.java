@@ -5,7 +5,10 @@ import org.junit.Test;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.HashMap;
 import java.util.Map;
+
+import javax.swing.*;
 
 import javafx.geometry.Point2D;
 
@@ -97,9 +100,36 @@ public class HandlerTest {
     public void mouseExited(MouseEvent e) {}
   }
 
+  class MockController {
+
+    public MockController() {
+
+    }
+    public String start() {
+      return "Timer and GUI started";
+    }
+
+    public String actionPerformed(String s) {
+      switch(s) {
+        case "Add Note":
+          return "the note is added.";
+        case "Remove Note":
+          return "the note is removed.";
+      }
+      return "invalid action.";
+    }
+
+  }
+
   @Test
   public void testKeyboardHandler() {
     KeyboardHandlerMock x1 = new KeyboardHandlerMock();
+
+    x1.typed = new HashMap<>();
+    x1.pressed = new HashMap<>();
+    x1.released = new HashMap<>();
+
+    x1.typed.put('Y', "pause");
     assertEquals(x1.keyTyped('C'), "Doesn't Contain Key");
 
     x1.typed.put('U', "scroll up");
@@ -126,7 +156,12 @@ public class HandlerTest {
 
   @Test
   public void testController() {
+    MockController x1 = new MockController();
 
+    assertEquals(x1.start(), "Timer and GUI started");
+    assertEquals(x1.actionPerformed("Add Note"), "the note is added.");
+    assertEquals(x1.actionPerformed("Remove Note"), "the note is removed.");
+    assertEquals(x1.actionPerformed("Edit Note"), "invalid action.");
   }
 
 }
