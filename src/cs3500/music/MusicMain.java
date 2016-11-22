@@ -32,7 +32,7 @@ public class MusicMain {
 //      return;
 //    }
     try {
-      ISong model = MusicReader.parseFile(new FileReader("songs/mystery-1.txt"), new SongBuilder());
+      ISong model = MusicReader.parseFile(new FileReader("songs/mary-little-lamb.txt"), new SongBuilder());
 //      IGUIView view = IMusicViewFactory.make("visual");
       IGUIView view = new CompositeView();
       IMusicController controller = new GuiController(model, view);

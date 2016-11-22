@@ -61,6 +61,10 @@ public interface IGUIView extends IMusicView {
   void left();
 
   /**
+   * When the red bar reaches the end of the window, the window will scroll to fit.
+   */
+  void autoScroll();
+  /**
    * Switches the space bar and the key P
    */
   void switchPP();

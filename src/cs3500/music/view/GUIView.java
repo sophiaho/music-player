@@ -113,6 +113,15 @@ public class GUIView extends JFrame implements IGUIView {
   }
 
   @Override
+  public void autoScroll() {
+    JScrollBar hbar = scroller.getHorizontalScrollBar();
+    hbar.setUnitIncrement(700);
+    if (this.panel.currBeat > (hbar.getValue() + hbar.getUnitIncrement())) {
+      hbar.setValue(hbar.getValue() + hbar.getUnitIncrement());
+    }
+  }
+
+  @Override
   public void left() {
     JScrollBar hbar = scroller.getHorizontalScrollBar();
     if (hbar.getValue() - hbar.getBlockIncrement() > hbar.getMinimum()) {

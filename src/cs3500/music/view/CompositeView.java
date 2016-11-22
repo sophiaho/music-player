@@ -77,6 +77,11 @@ public class CompositeView implements IGUIView {
   }
 
   @Override
+  public void autoScroll() {
+    gui.autoScroll();
+  }
+
+  @Override
   public void setCurrBeat(int currBeat) {
     gui.setCurrBeat(currBeat);
   }
@@ -126,5 +131,6 @@ public class CompositeView implements IGUIView {
     gui.setCurrBeat(midi.getTick());
     System.out.println(midi.getTick());
     gui.repaint();
+    gui.autoScroll();
   }
 }

@@ -22,7 +22,7 @@ public class GuiViewPanel extends JPanel {
   private HashMap<Integer, List<INote>> ends;
   private int length;
   private int tempo;
-  private double currBeat;
+  double currBeat;
 
   private final int SQUARE = 20;
   private final int BEATS = 4;
