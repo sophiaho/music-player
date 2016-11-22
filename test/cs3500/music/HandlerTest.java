@@ -2,17 +2,14 @@ package cs3500.music;
 
 import org.junit.Test;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.*;
 
 import javafx.geometry.Point2D;
 
 import static org.junit.Assert.assertEquals;
+
 /**
  * Testing for both the Keyboard and Mouse Handlers.
  */
@@ -24,19 +21,7 @@ public class HandlerTest {
     Map<Integer, String> released;
 
     public KeyboardHandlerMock() {
-
-    }
-
-    void setTypedMap(Map<Character, String> map) {
-      typed = map;
-    }
-
-    void setPressedMap(Map<Integer, String> map) {
-      pressed = map;
-    }
-
-    void setReleasedMap(Map<Integer, String> map) {
-      released = map;
+      // this is empty because it is a mock class
     }
 
     public String keyTyped(char e) {
@@ -64,16 +49,20 @@ public class HandlerTest {
   class MouseHandlerMock {
     String leftClick;
     String rightClick;
-    int x, y;
+    int x;
+    int y;
 
     public MouseHandlerMock() {
+      // this is empty because it is a mock class
     }
 
     public void setLeftClick(String left) {
       this.leftClick = left;
     }
 
-    public void setRightClick(String right) { this.rightClick = right; }
+    public void setRightClick(String right) {
+      this.rightClick = right;
+    }
 
     public void setXY(int x, int y) {
       this.x = x;
@@ -81,36 +70,30 @@ public class HandlerTest {
     }
 
     public String mouseClicked(Point2D e, String s) {
-      this.setXY((int)e.getX(), (int)e.getY());
-      if ("Left Click" == s) {
+      this.setXY((int) e.getX(), (int) e.getY());
+      if ("Left Click".equals(s)) {
         return leftClick;
       }
-      if ("Right Click" == s) {
+      if ("Right Click".equals(s)) {
         return rightClick;
       }
       return "No Click";
     }
 
-    public void mousePressed(MouseEvent e) {}
-
-    public void mouseReleased(MouseEvent e) {}
-
-    public void mouseEntered(MouseEvent e) {}
-
-    public void mouseExited(MouseEvent e) {}
   }
 
   class MockController {
 
     public MockController() {
-
+      // this is empty because it is a mock class
     }
+
     public String start() {
       return "Timer and GUI started";
     }
 
     public String actionPerformed(String s) {
-      switch(s) {
+      switch (s) {
         case "Add Note":
           return "the note is added.";
         case "Remove Note":
