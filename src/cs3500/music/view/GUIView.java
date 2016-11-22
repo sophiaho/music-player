@@ -18,7 +18,8 @@ public class GUIView extends JFrame implements IGUIView {
   GuiViewPanel panel;
   private final JScrollPane scroller;
   private JTextField input;
-  private JButton addNote, removeNote;
+  private JButton addNote;
+  private JButton removeNote;
   private JLabel display;
   private int curr;
 
@@ -71,7 +72,7 @@ public class GUIView extends JFrame implements IGUIView {
   }
 
   /**
-   * Sets up the view with the song.
+   * Sets upPress the view with the song.
    *
    * @param s ISong
    */
@@ -132,7 +133,7 @@ public class GUIView extends JFrame implements IGUIView {
   }
 
   @Override
-  public void up() {
+  public void upPress() {
     JScrollBar vbar = scroller.getVerticalScrollBar();
     if (vbar.getValue() + vbar.getBlockIncrement() > vbar.getBlockIncrement()) {
       vbar.setValue(vbar.getValue() - vbar.getBlockIncrement());
@@ -189,6 +190,7 @@ public class GUIView extends JFrame implements IGUIView {
 
   @Override
   public void switchPP() {
+    // does nothing since it's linked to Midi.
   }
 
   private int sleepTime() {
@@ -203,5 +205,10 @@ public class GUIView extends JFrame implements IGUIView {
   public void incrementBeat() {
     this.curr += 1;
     this.panel.setCurrBeat(curr);
+  }
+
+  public void restart() {
+    this.panel.setCurrBeat(curr);
+    this.repaint();
   }
 }

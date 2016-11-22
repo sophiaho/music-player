@@ -56,8 +56,8 @@ public class CompositeView implements IGUIView {
   }
 
   @Override
-  public void up() {
-    gui.up();
+  public void upPress() {
+    gui.upPress();
   }
 
   @Override
@@ -119,6 +119,7 @@ public class CompositeView implements IGUIView {
   @Override
   public void switchPP() {
     midi.switchPP();
+    gui.switchPP();
   }
 
   @Override
@@ -129,8 +130,14 @@ public class CompositeView implements IGUIView {
   @Override
   public void incrementBeat() {
     gui.setCurrBeat(midi.getTick());
-    System.out.println(midi.getTick());
     gui.repaint();
     gui.autoScroll();
+  }
+
+  @Override
+  public void restart() {
+    midi.restart();
+    gui.restart();
+    gui.repaint();
   }
 }

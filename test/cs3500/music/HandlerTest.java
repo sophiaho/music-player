@@ -132,8 +132,8 @@ public class HandlerTest {
     x1.typed.put('Y', "pause");
     assertEquals(x1.keyTyped('C'), "Doesn't Contain Key");
 
-    x1.typed.put('U', "scroll up");
-    assertEquals("scroll up", x1.keyTyped('U'));
+    x1.typed.put('U', "scroll upPress");
+    assertEquals("scroll upPress", x1.keyTyped('U'));
 
     x1.pressed.put(1, "scroll down");
     assertEquals("scroll down", x1.keyPressed(1));

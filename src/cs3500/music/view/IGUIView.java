@@ -46,9 +46,9 @@ public interface IGUIView extends IMusicView {
   void right();
 
   /**
-   * Allows the arrow keys to be pressed to move up.
+   * Allows the arrow keys to be pressed to move upPress.
    */
-  void up();
+  void upPress();
 
   /**
    * Allows the the arrow keys to be pressed to move down.
@@ -65,7 +65,7 @@ public interface IGUIView extends IMusicView {
    */
   void autoScroll();
   /**
-   * Switches the space bar and the key P
+   * Switches the space bar and the key P.
    */
   void switchPP();
 
@@ -118,8 +118,18 @@ public interface IGUIView extends IMusicView {
    */
   int getClickedBeat(int x);
 
-
+  /**
+   * Call repaint for the view in this.
+   */
   void repaint();
 
+  /**
+   * For non-composite view, automatically increment beats.
+   */
   void incrementBeat();
+
+  /**
+   * Restarts the whole song.
+   */
+  void restart();
 }

@@ -35,6 +35,7 @@ public class GuiController implements IMusicController, ActionListener {
     this.configureHandlers();
     this.view.addActionListener(this);
     this.playing = true;
+    this.timer = new Timer(20, this);
   }
 
   @Override
@@ -47,8 +48,8 @@ public class GuiController implements IMusicController, ActionListener {
   }
 
   /**
-   * spacebar to pause/start, left right arrow keys to scroll,
-   * character inputs into the text box
+   * Spacebar to pause/start, left right arrow keys to scroll,
+   * character inputs into the text box.
    */
   private void configureHandlers() {
     Map<Character, Runnable> typed = new HashMap<>();
@@ -67,14 +68,7 @@ public class GuiController implements IMusicController, ActionListener {
         view.end();
       }
     });
-    pressed.put(KeyEvent.VK_SPACE, new Runnable() {
-      @Override
-      public void run() {
-        view.switchPP();
-        changePlaying();
-        view.right();
-      }
-    });
+    released.put(KeyEvent.VK_SPACE, new PauseRun(view));
     released.put(KeyEvent.VK_RIGHT, new Runnable() {
       @Override
       public void run() {
@@ -92,15 +86,19 @@ public class GuiController implements IMusicController, ActionListener {
     released.put(KeyEvent.VK_UP, new Runnable() {
       @Override
       public void run() {
-        view.up();
-        printsomething();
-        changePlaying();
+        view.upPress();
       }
     });
     released.put(KeyEvent.VK_DOWN, new Runnable() {
       @Override
       public void run() {
         view.down();
+      }
+    });
+    released.put(KeyEvent.VK_R, new Runnable() {
+      @Override
+      public void run() {
+        view.restart();
       }
     });
 
@@ -159,18 +157,11 @@ public class GuiController implements IMusicController, ActionListener {
           view.incrementBeat();
           view.repaint();
         } else {
-          System.out.println("stopped");
           view.switchPP();
         }
+        break;
+      default: break;
     }
-  }
-
-  private void printsomething() {
-    System.out.println("CHANGE");
-  }
-
-  private void changePlaying() {
-    this.playing = !playing;
   }
 }
 

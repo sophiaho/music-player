@@ -1,7 +1,5 @@
 package cs3500.music.controller;
 
-import java.awt.event.ActionEvent;
-
 import cs3500.music.model.ISong;
 import cs3500.music.view.IMusicView;
 
@@ -14,10 +12,10 @@ public class MusicController implements IMusicController {
   IMusicView view;
 
   /**
-   *  Constructor for the MusicController using a view and a model.
+   * Constructor for the MusicController using a view and a model.
    *
    * @param model model, must be an ISong implementation.
-   * @param view view implementation, should work for ISong.
+   * @param view  view implementation, should work for ISong.
    */
   public MusicController(ISong model, IMusicView view) {
     this.model = model;

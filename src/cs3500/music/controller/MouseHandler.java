@@ -12,6 +12,7 @@ public class MouseHandler implements MouseListener {
   int x, y;
 
   public MouseHandler() {
+    // doesn't have anything set because it has setters.
   }
 
   public void setLeftClick(Runnable left) {
@@ -39,14 +40,22 @@ public class MouseHandler implements MouseListener {
   }
 
   @Override
-  public void mousePressed(MouseEvent e) {}
+  public void mousePressed(MouseEvent e) {
+    // doesn't need to do anything
+  }
 
   @Override
-  public void mouseReleased(MouseEvent e) {}
+  public void mouseReleased(MouseEvent e) {
+    // doesn't need to do anything
+  }
 
   @Override
-  public void mouseEntered(MouseEvent e) {}
+  public void mouseEntered(MouseEvent e) {
+    // doesn't need to do anything
+  }
 
   @Override
-  public void mouseExited(MouseEvent e) {}
+  public void mouseExited(MouseEvent e) {
+    // doesn't need to do anything
+  }
 }

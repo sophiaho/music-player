@@ -1,10 +1,8 @@
 package cs3500.music.view;
 
-import java.nio.ByteBuffer;
 import java.util.List;
 
 import javax.sound.midi.InvalidMidiDataException;
-import javax.sound.midi.MetaMessage;
 import javax.sound.midi.MidiEvent;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
@@ -18,7 +16,7 @@ import javax.sound.midi.Track;
 import cs3500.music.model.INote;
 
 /**
- * Created by andrew on 01/11/2016.
+ * Plays the song.
  */
 public class MidiView extends GUIView {
   private Receiver receiver;
@@ -27,6 +25,9 @@ public class MidiView extends GUIView {
   private Sequence sequence;
   private int songLength;
 
+  /**
+   * Constructor for MidiView, starts the sequencer.
+   */
   public MidiView() {
     Synthesizer trySynth;
     Receiver tryRec;
@@ -70,7 +71,8 @@ public class MidiView extends GUIView {
         if (this.panel.getStarts().containsKey(i)) {
           List<INote> startsNow = this.panel.getStarts().get(i);
           for (INote n : startsNow) {
-            MidiEvent addStart = new MidiEvent(new ShortMessage(ShortMessage.NOTE_ON, n.getInstrument() - 1,
+            MidiEvent addStart = new MidiEvent(new ShortMessage(ShortMessage.NOTE_ON,
+                    n.getInstrument() - 1,
                     n.getMidi(), n.getVolume()), i * this.panel.getSQUARE());
             song.add(addStart);
           }
@@ -78,7 +80,8 @@ public class MidiView extends GUIView {
         if (this.panel.getEnds().containsKey(i)) {
           List<INote> endsNow = this.panel.getEnds().get(i);
           for (INote n : endsNow) {
-            MidiEvent addEnd = new MidiEvent(new ShortMessage(ShortMessage.NOTE_OFF, n.getInstrument() - 1,
+            MidiEvent addEnd = new MidiEvent(new ShortMessage(ShortMessage.NOTE_OFF,
+                    n.getInstrument() - 1,
                     n.getMidi(), n.getVolume()), i * this.panel.getSQUARE() - 1);
             song.add(addEnd);
           }
@@ -93,6 +96,7 @@ public class MidiView extends GUIView {
       this.sequencer.setTempoInMPQ(this.panel.getTempo());
       this.sequencer.start();
       this.songLength = this.panel.getLength();
+      this.receiver = this.sequencer.getReceiver();
     } catch (MidiUnavailableException e) {
       e.printStackTrace();
     }
@@ -109,13 +113,33 @@ public class MidiView extends GUIView {
   }
 
   public void switchPP() {
-    this.sequencer.stop();
+    if (this.sequencer.isRunning()) {
+      this.sequencer.stop();
+    } else {
+      this.sequencer.start();
+    }
   }
 
+  /**
+   * Returns the time that midi is at right now from the sequencer.
+   * @return int time in ticks.
+   */
   public int getTick() {
     if (this.sequencer.getTickPosition() >= this.songLength * this.panel.getTempo()) {
       sequencer.close();
     }
     return (int) this.sequencer.getTickPosition();
+  }
+
+  /**
+   * Restarts the whole midi from the beginning.
+   */
+  public void restart() {
+    try {
+      this.sequencer.setSequence(sequence);
+    } catch (InvalidMidiDataException e) {
+      e.printStackTrace();
+    }
+    this.sequencer.start();
   }
 }

@@ -27,14 +27,13 @@ public class MusicMain {
    * @throws InvalidMidiDataException when malformed midis are imported.
    */
   public static void main(String[] args) throws IOException, InvalidMidiDataException {
-//    if (args.length != 2) {
-//      System.out.println("Should only have two arguments");
-//      return;
-//    }
+    if (args.length != 2) {
+      System.out.println("Should only have two arguments");
+      return;
+    }
     try {
-      ISong model = MusicReader.parseFile(new FileReader("songs/mystery-2.txt"), new SongBuilder());
-//      IGUIView view = IMusicViewFactory.make("visual");
-      IGUIView view = new CompositeView();
+      ISong model = MusicReader.parseFile(new FileReader(args[0]), new SongBuilder());
+      IGUIView view = IMusicViewFactory.make(args[1]);
       IMusicController controller = new GuiController(model, view);
       controller.start();
     } catch (IOException e) {

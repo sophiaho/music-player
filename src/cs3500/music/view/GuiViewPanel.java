@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.TreeMap;
 
 import javax.swing.JPanel;
 
@@ -94,11 +93,11 @@ public class GuiViewPanel extends JPanel {
   /**
    * Finds the Tone of the Note given a y value, to be used with mouse clicks.
    *
-   * @param y    y value provided by mouse handler
-   * @return     ITone that is the Tone of note clicked
+   * @param y y value provided by mouse handler
+   * @return ITone that is the Tone of note clicked
    */
   public ITone findTone(int y) {
-    int line = (((y - (TOPOFFSET + SQUARE )) / SQUARE) + 1);
+    int line = (((y - (TOPOFFSET + SQUARE)) / SQUARE) + 1);
     return toneSet.get(line);
   }
 
@@ -138,11 +137,11 @@ public class GuiViewPanel extends JPanel {
   /**
    * Finds the beat of the clicked note.
    *
-   * @param x     x value provided by mouse handler
-   * @return      int beat value
+   * @param x x value provided by mouse handler
+   * @return int beat value
    */
   public int findBeat(int x) {
-     return ((x - (TOPOFFSET + SQUARE)) / SQUARE);
+    return ((x - (TOPOFFSET + SQUARE)) / SQUARE);
   }
 
   /**
@@ -194,7 +193,7 @@ public class GuiViewPanel extends JPanel {
   /**
    * Draws the red bar that moves along with the music playing.
    *
-   * @param     g Graphics
+   * @param g Graphics
    */
   private void drawBar(Graphics g) {
     Graphics2D g2d = (Graphics2D) g;
@@ -253,7 +252,7 @@ public class GuiViewPanel extends JPanel {
   /**
    * Finds the length of the song.
    *
-   * @return     int length value
+   * @return int length value
    */
   public int getLength() {
     return length;

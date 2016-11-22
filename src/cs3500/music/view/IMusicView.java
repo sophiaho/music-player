@@ -13,7 +13,7 @@ public interface IMusicView {
   void render();
 
   /**
-   * Sets up the view before using render, splits the ISong into its components.
+   * Sets upPress the view before using render, splits the ISong into its components.
    * @param s ISong being processed.
    */
   void setUp(ISong s);

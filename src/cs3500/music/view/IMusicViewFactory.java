@@ -14,8 +14,9 @@ public final class IMusicViewFactory {
   public static IGUIView make(String s) throws IllegalArgumentException {
     switch (s) {
       //case "console": return new TextView(System.out);
-      case "midi": return new MidiView();
+      //case "midi": return new MidiView();
       case "visual": return new GUIView();
+      case "composite": return new CompositeView();
       default: throw new IllegalArgumentException("Not a valid view type.");
     }
   }

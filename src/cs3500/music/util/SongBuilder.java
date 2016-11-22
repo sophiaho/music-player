@@ -10,7 +10,7 @@ import cs3500.music.model.Song;
  */
 public class SongBuilder implements CompositionBuilder<ISong> {
 
-  private final ISong comp = new Song(); // Song to build up
+  private final ISong comp = new Song(); // Song to build upPress
 
   @Override
   public ISong build() {
