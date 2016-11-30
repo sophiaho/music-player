@@ -98,8 +98,9 @@ public class HandlerTest {
           return "the note is added.";
         case "Remove Note":
           return "the note is removed.";
+        default:
+          return "invalid action";
       }
-      return "invalid action.";
     }
 
   }

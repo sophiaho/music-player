@@ -9,7 +9,8 @@ import java.awt.event.MouseListener;
 public class MouseHandler implements MouseListener {
   Runnable leftClick;
   Runnable rightClick;
-  int x, y;
+  int x;
+  int y;
 
   public MouseHandler() {
     // doesn't have anything set because it has setters.

@@ -7,9 +7,8 @@ import cs3500.music.view.IGUIView;
  */
 class PauseRun implements Runnable {
   IGUIView song;
-  PauseRun(IGUIView song) {
-    this.song = song;
-  }
+
+  PauseRun(IGUIView song) { this.song = song; }
 
   @Override
   public void run() {

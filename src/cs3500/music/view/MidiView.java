@@ -112,6 +112,7 @@ public class MidiView extends GUIView {
     this.receiver = r;
   }
 
+  @Override
   public void switchPP() {
     if (this.sequencer.isRunning()) {
       this.sequencer.stop();
@@ -140,6 +141,7 @@ public class MidiView extends GUIView {
     } catch (InvalidMidiDataException e) {
       e.printStackTrace();
     }
+    this.sequencer.setTickPosition(0);
     this.sequencer.start();
   }
 }

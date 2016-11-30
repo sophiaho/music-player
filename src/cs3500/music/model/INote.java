@@ -62,6 +62,11 @@ public interface INote extends Comparable {
    */
   ITone getTone();
 
+  /**
+   * Creates an INote from string format.
+   * @param input string in right format.
+   * @return INote corresponding to input.
+   */
   static INote fromString(String input) {
     String[] arr = input.split(" ");
 

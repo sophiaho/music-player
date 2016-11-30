@@ -13,6 +13,7 @@ public class KeyboardHandler implements KeyListener {
   private Map<Integer, Runnable> released;
 
   public KeyboardHandler() {
+    // already gets set by setters.
   }
 
   void setTypedMap(Map<Character, Runnable> map) {
@@ -29,19 +30,22 @@ public class KeyboardHandler implements KeyListener {
 
   @Override
   public void keyTyped(KeyEvent e) {
-    if (typed.containsKey(e.getKeyChar()))
+    if (typed.containsKey(e.getKeyChar())) {
       typed.get(e.getKeyChar()).run();
+    }
   }
 
   @Override
   public void keyPressed(KeyEvent e) {
-    if (pressed.containsKey(e.getKeyCode()))
+    if (pressed.containsKey(e.getKeyCode())) {
       pressed.get(e.getKeyCode()).run();
+    }
   }
 
   @Override
   public void keyReleased(KeyEvent e) {
-    if (released.containsKey(e.getKeyCode()))
+    if (released.containsKey(e.getKeyCode())) {
       released.get(e.getKeyCode()).run();
+    }
   }
 }

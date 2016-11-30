@@ -31,7 +31,7 @@ The MIDI view is an audible view that allows the client to hear the music being 
 play back the compositions in the txt files and parse them to play them as notes.
 
 These three views can be toggled using the IMusicViewFactory that allows the player to select
-between different views.
+between different views. Now, it only allows for “composite” and “visual”.
 
 In this week's assignment, one of the design changes that we made were tree map —> hashmap because
 to get our list of notes, it would take O(log n) time vs. switching to hash map where it would

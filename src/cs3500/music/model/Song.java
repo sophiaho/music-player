@@ -3,7 +3,6 @@ package cs3500.music.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.TreeMap;
 
 /**
  * Song class stores all the notes with the same tone, it extends TreeMap so that it's

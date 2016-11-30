@@ -7,13 +7,10 @@ import javax.sound.midi.InvalidMidiDataException;
 
 import cs3500.music.controller.GuiController;
 import cs3500.music.controller.IMusicController;
-import cs3500.music.controller.MusicController;
 import cs3500.music.model.ISong;
 import cs3500.music.util.MusicReader;
 import cs3500.music.util.SongBuilder;
-import cs3500.music.view.CompositeView;
 import cs3500.music.view.IGUIView;
-import cs3500.music.view.IMusicView;
 import cs3500.music.view.IMusicViewFactory;
 
 /**

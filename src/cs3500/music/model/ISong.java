@@ -2,7 +2,6 @@ package cs3500.music.model;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.TreeMap;
 
 /**
  * Created by andrew on 02/11/2016.
