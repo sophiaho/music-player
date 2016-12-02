@@ -6,8 +6,8 @@ import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.Color;
 
-import cs3500.music.model.Note;
-import cs3500.music.model.Piece;
+import cs3500.music.adapter.Note;
+import cs3500.music.adapter.Piece;
 
 
 /**

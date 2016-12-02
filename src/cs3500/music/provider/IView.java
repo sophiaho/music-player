@@ -1,7 +1,7 @@
 package cs3500.music.provider;
 
 
-import cs3500.music.model.IMusicEditorModelView;
+import cs3500.music.adapter.IMusicEditorModelView;
 
 /**
  * interface for a view of any kind.

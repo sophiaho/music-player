@@ -28,6 +28,12 @@ public interface ITone extends Comparable {
   boolean equals(Object obj);
 
   /**
+   * Getter method for the octave of the tone.
+   * @return int ordinal of the tone.
+   */
+  int getOctave();
+
+  /**
    * Returns the value of this as a midi int.
    *
    * @return a number that corresponds to a tone's pitch and octave

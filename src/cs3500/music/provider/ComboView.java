@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 import javax.sound.midi.MetaEventListener;
 import javax.sound.midi.MetaMessage;
 
-import cs3500.music.model.IMusicEditorModelView;
+import cs3500.music.adapter.IMusicEditorModelView;
 
 
 /**

@@ -16,8 +16,8 @@ import javax.sound.midi.ShortMessage;
 import javax.sound.midi.Track;
 import javax.sound.midi.Transmitter;
 
-import cs3500.music.model.IMusicEditorModelView;
-import cs3500.music.model.Note;
+import cs3500.music.adapter.IMusicEditorModelView;
+import cs3500.music.adapter.Note;
 
 /**
  * class for a midi view.

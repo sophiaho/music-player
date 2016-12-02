@@ -8,18 +8,23 @@ import java.util.Map;
 
 import javax.swing.Timer;
 
-import cs3500.music.model.INote;
+import cs3500.music.adapter.IMusicEditorModelView;
+import cs3500.music.adapter.MusicEditorAdapter;
+import cs3500.music.adapter.Note;
+import cs3500.music.adapter.Piece;
+import cs3500.music.adapter.PieceAdapter;
+import cs3500.music.adapter.Pitch;
 import cs3500.music.model.ISong;
-import cs3500.music.model.ITone;
-import cs3500.music.view.IGUIView;
+import cs3500.music.provider.IGuiView;
+import cs3500.music.provider.KeyboardHandler;
 
 /**
  * A class representation of the Music Controller.
  */
 public class GuiController implements IMusicController, ActionListener {
 
-  ISong model;
-  IGUIView view;
+  IMusicEditorModelView model;
+  IGuiView view;
   boolean playing;
   private Timer timer;
 
@@ -29,11 +34,11 @@ public class GuiController implements IMusicController, ActionListener {
    * @param model model, must be an ISong implementation.
    * @param view  view implementation, should work for ISong.
    */
-  public GuiController(ISong model, IGUIView view) {
-    this.model = model;
+  public GuiController(ISong model, IGuiView view) {
+    this.model = new MusicEditorAdapter(model);
     this.view = view;
-    this.configureHandlers();
-    this.view.addActionListener(this);
+    //this.configureHandlers();
+    this.view.setListeners(this, new KeyboardHandler());
     this.playing = true;
     this.timer = new Timer(20, this);
   }
@@ -43,14 +48,15 @@ public class GuiController implements IMusicController, ActionListener {
     this.timer = new Timer(20, this);
     this.timer.setActionCommand("Tick");
     this.timer.start();
-    this.view.setUp(model);
-    this.view.render();
+    this.view.setModel(model);
+    this.view.makeVisible();
   }
 
   /**
    * Spacebar to pause/start, left right arrow keys to scroll,
    * character inputs into the text box.
    */
+  /*
   private void configureHandlers() {
     Map<Character, Runnable> typed = new HashMap<>();
     Map<Integer, Runnable> pressed = new HashMap<>();
@@ -133,13 +139,15 @@ public class GuiController implements IMusicController, ActionListener {
 
     view.addMouseListener(mhandler);
   }
+  */
 
   @Override
   public void actionPerformed(ActionEvent e) {
     switch (e.getActionCommand()) {
+      /*
       case "Add Note Button":
         String noteAdd = view.getInputString();
-        model.addNote(INote.fromString(noteAdd));
+        model.addNote(IMusicEditorModelView.fromString(noteAdd));
         this.view.repaint();
         view.clearInputString();
         view.resetFocus();
@@ -152,12 +160,12 @@ public class GuiController implements IMusicController, ActionListener {
         view.clearInputString();
         view.resetFocus();
         break;
+        */
       case "Tick":
         if (playing) {
-          view.incrementBeat();
-          view.repaint();
+          view.refreshGui();
         } else {
-          view.switchPP();
+          view.pause();
         }
         break;
       default: break;

@@ -6,7 +6,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 
-import cs3500.music.model.IMusicEditorModelView;
+import cs3500.music.adapter.IMusicEditorModelView;
 
 /**
  * A skeleton Frame (i.e., a window) in Swing

@@ -80,4 +80,9 @@ public class Tone implements ITone {
     return 12 * (this.octave + 1) +
             this.pitch.getNoteValue();
   }
+
+  @Override
+  public int getOctave() {
+    return octave;
+  }
 }

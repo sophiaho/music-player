@@ -4,7 +4,7 @@ package cs3500.music.provider;
 import java.io.IOException;
 
 
-import cs3500.music.model.IMusicEditorModelView;
+import cs3500.music.adapter.IMusicEditorModelView;
 
 /**
  * A dummy view that simply draws a string.
