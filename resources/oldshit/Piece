@@ -1,0 +1,341 @@
+import java.util.ArrayList;
+
+
+/**
+ * class to represent a piece of cs3500.music.
+ */
+public class Piece {
+  private ArrayList<Note> piece;
+  private int measure;
+
+  /**
+   * convinence constructor to make a new empty piece with a measure of 4.
+   */
+  public Piece() {
+    this.piece = new ArrayList<Note>();
+    this.measure = 4;
+  }
+
+  /**
+   * constructs piece from given array.
+   *
+   * @param piece the array to start.
+   */
+  public Piece(ArrayList<Note> piece, int measure) {
+    this.piece = piece;
+    if (measure < 1) {
+      throw new IllegalArgumentException("measure must be 1 beat or longer");
+    } else {
+      this.measure = measure;
+    }
+  }
+
+  /**
+   * returns the piece.
+   *
+   * @return the piece.
+   */
+  public ArrayList<Note> getPiece() {
+    return this.piece;
+  }
+
+  /**
+   * adds note to correctly sorted spot.
+   *
+   * @param n the note to be added.
+   * @return the cs3500.music.Model.Piece with the note correctly added.
+   */
+  Piece addNote(Note n) {
+    for (int i = 0; i < this.piece.size(); i++) {
+      if (n.getOctave() <= this.piece.get(i).getOctave()) {
+        if (n.getOctave() == this.piece.get(i).getOctave()
+                && n.getPitch().ordinal() <= this.piece.get(i).getPitch().ordinal()) {
+          this.piece.add(i, n);
+          return new Piece(this.piece, this.measure);
+        } else if (n.getOctave() < this.piece.get(i).getOctave()) {
+          this.piece.add(i, n);
+          return new Piece(this.piece, this.measure);
+        }
+      }
+    }
+    this.piece.add(n);
+    return new Piece(this.piece, this.measure);
+  }
+
+  /**
+   * removes the given note from the piece.
+   *
+   * @param n the note to be removed.
+   */
+  Piece remove(Note n) {
+    for (int i = 0; i < this.piece.size(); i++) {
+      if (this.piece.get(i).equalsNote(n)) {
+        this.piece.remove(i);
+      }
+    }
+    return this;
+  }
+
+  /**
+   * a method to sort the piece if a piece is given out of order.
+   */
+  void sortPiece() {
+    Piece temp = new Piece(new ArrayList<Note>(), this.measure);
+    for (int i = 0; i < this.piece.size(); i++) {
+      temp.addNote(this.piece.get(i));
+    }
+    this.piece = temp.piece;
+  }
+
+  /**
+   * converts a number to a pitch.
+   *
+   * @param n the number corresponding to a pitch enum.
+   * @return the pitch.
+   */
+  public static Pitch numToPitch(int n) {
+    Pitch p = null;
+    if (n > 11 || n < 0) {
+      throw new IllegalArgumentException("not a valid pitch");
+    }
+    switch (n) {
+      case 0:
+        p = Pitch.C;
+        break;
+      case 1:
+        p = Pitch.CSHARP;
+        break;
+      case 2:
+        p = Pitch.D;
+        break;
+      case 3:
+        p = Pitch.DSHARP;
+        break;
+      case 4:
+        p = Pitch.E;
+        break;
+      case 5:
+        p = Pitch.F;
+        break;
+      case 6:
+        p = Pitch.FSHARP;
+        break;
+      case 7:
+        p = Pitch.G;
+        break;
+      case 8:
+        p = Pitch.GSHARP;
+        break;
+      case 9:
+        p = Pitch.A;
+        break;
+      case 10:
+        p = Pitch.ASHARP;
+        break;
+      case 11:
+        p = Pitch.B;
+        break;
+      default:
+        break;
+    }
+    return p;
+  }
+
+  /**
+   * figures out how long the piece is.
+   *
+   * @return the last beat.
+   */
+  public int getMaxBeat() {
+    int maxBeat = 0;
+    if (this.piece.size() > 0) {
+      maxBeat = this.piece.get(0).getBeats() +
+              this.piece.get(0).getStartTime();
+    }
+    for (int i = 0; i < this.piece.size(); i++) {
+      if (this.piece.get(i).getBeats() +
+              this.piece.get(i).getStartTime() > maxBeat) {
+        maxBeat = this.piece.get(i).getBeats() +
+                this.piece.get(i).getStartTime();
+
+      }
+
+    }
+
+    return maxBeat;
+  }
+
+  /**
+   * gets the start point of the earliest note.
+   *
+   * @return the earliest note start time.
+   */
+  int getMinBeat() {
+    int minBeat = 0;
+    if (this.piece.size() > 0) {
+      minBeat = this.piece.get(0).getStartTime();
+    }
+    for (int i = 0; i < this.piece.size(); i++) {
+      if (this.piece.get(i).getStartTime() < minBeat) {
+        minBeat = this.piece.get(i).getStartTime();
+      }
+
+    }
+    return minBeat;
+  }
+
+  /**
+   * gets the max pitch of this piece.
+   *
+   * @return the max pitch.
+   */
+  public int getMaxPitch() {
+    return (12 * this.piece.get(this.piece.size() - 1).getOctave())
+            + (this.piece.get(this.piece.size() - 1).getPitch().ordinal());
+  }
+
+  /**
+   * gets the minimum pitch of this piece.
+   *
+   * @return the minimum pitch.
+   */
+  public int getMinPitch() {
+    return (12 * this.piece.get(0).getOctave())
+            + (this.piece.get(0).getPitch().ordinal());
+  }
+
+  /**
+   * creates a string to depict the piece.
+   *
+   * @return a string to depict the piece.
+   */
+  public String displayPiece() {
+    String acc = "";
+    int totalBeats = getMaxBeat();
+    int maxPitch = getMaxPitch();
+    int minPitch = getMinPitch();
+    int minPitchStart = this.piece.get(0).getPitch().ordinal();
+    int count = 0;
+    int pitchCycle = 0;
+    int octaveCycle = this.piece.get(0).getPitch().ordinal();
+    int octaveCount = this.piece.get(0).getOctave() - 1;
+    int length = String.valueOf(totalBeats).length();
+    for (int i = 0; i < length; i++) {
+      acc += " ";
+    }
+    while (count < (maxPitch - minPitch) + 1) {
+      Pitch p = null;
+      p = numToPitch((pitchCycle + minPitchStart) % 12);
+      switch (p.toString().length() + String.valueOf(octaveCount).length()) {
+        case 2:
+          acc += "  " + p.toString() + octaveCount + " ";
+          break;
+        case 3:
+          acc += " " + p.toString() + octaveCount + " ";
+          break;
+        case 4:
+          acc += " " + p.toString() + octaveCount + "";
+          break;
+        case 5:
+          acc += p.toString() + octaveCount;
+          break;
+        default:
+          break;
+      }
+
+      count++;
+      pitchCycle = (pitchCycle + 1) % 12;
+      octaveCycle = (octaveCycle + 1) % 12;
+      if (octaveCycle == 0) {
+        octaveCount++;
+      }
+    }
+    acc += "\n";
+
+
+    boolean hasSet = false;
+    for (int currentBeat = 0; currentBeat < totalBeats + 1; currentBeat++) {
+      acc += currentBeat + 1;
+      for (int i = String.valueOf(currentBeat + 1).length(); i < length; i++) {
+        acc += " ";
+      }
+      int currentPitch = minPitch;
+
+      for (int i = 0; i < maxPitch - minPitch + 1; i++) {
+        for (int j = 0; j < this.piece.size(); j++) {
+          if (this.piece.get(j).getOctave() * 12
+                  + this.piece.get(j).getPitch().ordinal()
+                  == currentPitch) {
+            if (this.piece.get(j).getStartTime() == currentBeat) {
+              acc += "  X  ";
+              hasSet = true;
+            } else if (this.piece.get(j).getStartTime() + this.piece.get(j).getBeats()
+                    >= currentBeat
+                    && this.piece.get(j).getStartTime() < currentBeat) {
+              acc += "  |  ";
+              hasSet = true;
+            }
+          }
+        }
+        if (!hasSet) {
+          acc += "     ";
+        }
+        hasSet = false;
+        currentPitch++;
+      }
+      acc += "\n";
+    }
+    return acc;
+  }
+
+  /**
+   * combines 2 pieces one after the other.
+   *
+   * @param p1 the piece to go after "this" piece.
+   */
+  public Piece combinePieceSimul(Piece p1) {
+    for (int i = 0; i < p1.piece.size(); i++) {
+      this.addNote(p1.piece.get(i));
+    }
+    return this;
+  }
+
+  /**
+   * combines 2 pieces over the same period.
+   *
+   * @param p1 the piece being put into the new piece.
+   */
+  public Piece combinePieceConsec(Piece p1) {
+    for (int i = 0; i < p1.piece.size(); i++) {
+      this.addNote(new Note(p1.piece.get(i).getPitch(),
+              p1.piece.get(i).getOctave(),
+              p1.piece.get(i).getBeats(),
+              p1.piece.get(i).getStartTime()
+                      + this.piece.get(this.piece.size() - 1).getStartTime() +
+                      this.piece.get(this.piece.size() - 1).getBeats()));
+    }
+    return this;
+  }
+
+  /**
+   * removes n1 adds n2.
+   *
+   * @param n1 gets removed.
+   * @param n2 gets added.
+   */
+  public void editPiece(Note n1, Note n2) {
+    this.piece.remove(n1);
+    this.piece.add(n2);
+  }
+
+  /**
+   * gets the measure for this piece.
+   *
+   * @return the measure of this piece.
+   */
+  public int getMeasure() {
+    return this.measure;
+  }
+
+
+}
