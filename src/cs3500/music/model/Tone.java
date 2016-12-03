@@ -85,4 +85,9 @@ public class Tone implements ITone {
   public int getOctave() {
     return octave;
   }
+
+  @Override
+  public Pitch getPitch() {
+    return pitch;
+  }
 }

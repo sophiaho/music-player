@@ -24,7 +24,7 @@ public class NoteAdapter implements Note {
 
   @Override
   public Pitch getPitch() {
-    return new PitchAdapter(toAdapt.getTone());
+    return new PitchAdapter(toAdapt.getTone().getPitch());
   }
 
   @Override
@@ -40,5 +40,10 @@ public class NoteAdapter implements Note {
   @Override
   public int getInstrument() {
     return toAdapt.getInstrument();
+  }
+
+  @Override
+  public int getOrdinal() {
+    return toAdapt.getTone().numeric();
   }
 }

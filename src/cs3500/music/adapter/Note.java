@@ -15,4 +15,6 @@ public interface Note {
   int getVolume();
 
   int getInstrument();
+
+  int getOrdinal();
 }

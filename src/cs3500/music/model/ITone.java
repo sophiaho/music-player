@@ -41,6 +41,13 @@ public interface ITone extends Comparable {
   int numeric();
 
   /**
+   * Returns the pitch of this note. Getter method.
+   *
+   * @return pitch of the note.
+   */
+  Pitch getPitch();
+
+  /**
    * A static method that translates the numeric to a tone.
    *
    * @param value the numeric

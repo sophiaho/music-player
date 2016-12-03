@@ -23,7 +23,7 @@ import cs3500.music.provider.KeyboardHandler;
  */
 public class GuiController implements IMusicController, ActionListener {
 
-  IMusicEditorModelView model;
+  ISong model;
   IGuiView view;
   boolean playing;
   private Timer timer;
@@ -35,7 +35,7 @@ public class GuiController implements IMusicController, ActionListener {
    * @param view  view implementation, should work for ISong.
    */
   public GuiController(ISong model, IGuiView view) {
-    this.model = new MusicEditorAdapter(model);
+    this.model = model;
     this.view = view;
     //this.configureHandlers();
     this.view.setListeners(this, new KeyboardHandler());
@@ -48,7 +48,8 @@ public class GuiController implements IMusicController, ActionListener {
     this.timer = new Timer(20, this);
     this.timer.setActionCommand("Tick");
     this.timer.start();
-    this.view.setModel(model);
+    this.view.setModel(new MusicEditorAdapter(model));
+    this.view.refresh();
     this.view.makeVisible();
   }
 
@@ -162,11 +163,12 @@ public class GuiController implements IMusicController, ActionListener {
         break;
         */
       case "Tick":
-        if (playing) {
-          view.refreshGui();
-        } else {
-          view.pause();
-        }
+//        if (playing) {
+//          view.refreshGui();
+//        } else {
+////          view.pause();
+//        }
+        view.refreshGui();
         break;
       default: break;
     }

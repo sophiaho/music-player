@@ -5,7 +5,7 @@ import java.util.HashMap;
 /**
  * Pitch enum, represents the letter value of the Tone, which is the sound of a Note.
  */
-enum Pitch {
+public enum Pitch {
   C(1), CS(2), D(3), DS(4), E(5), F(6), FS(7), G(8), GS(9), A(10), AS(11), B(12);
 
   private int noteValue;
