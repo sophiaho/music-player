@@ -48,6 +48,9 @@ public class KeyboardHandler implements KeyListener {
     }
   }
 
+  //TODO change from our implementation to fit to their implementation
+
+
   /**
    * adds a runnable to the map.
    *

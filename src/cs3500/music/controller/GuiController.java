@@ -37,7 +37,7 @@ public class GuiController implements IMusicController, ActionListener {
   public GuiController(ISong model, IGuiView view) {
     this.model = model;
     this.view = view;
-    //this.configureHandlers();
+    this.configureHandlers();
     this.view.setListeners(this, new KeyboardHandler());
     this.playing = true;
     this.timer = new Timer(20, this);
@@ -57,90 +57,127 @@ public class GuiController implements IMusicController, ActionListener {
    * Spacebar to pause/start, left right arrow keys to scroll,
    * character inputs into the text box.
    */
-  /*
-  private void configureHandlers() {
-    Map<Character, Runnable> typed = new HashMap<>();
-    Map<Integer, Runnable> pressed = new HashMap<>();
-    Map<Integer, Runnable> released = new HashMap<>();
 
-    pressed.put(KeyEvent.VK_HOME, new Runnable() {
+  private void configureHandlers() {
+
+    KeyboardHandler khandler = new KeyboardHandler();
+    khandler.addPressedRunnable(KeyEvent.VK_RIGHT, new Runnable() {
       @Override
       public void run() {
-        view.home();
+        view.editXScroll(1);
       }
     });
-    pressed.put(KeyEvent.VK_END, new Runnable() {
+
+    khandler.addPressedRunnable(KeyEvent.VK_LEFT, new Runnable() {
       @Override
       public void run() {
-        view.end();
+        view.editXScroll(-1);
       }
     });
-    released.put(KeyEvent.VK_SPACE, new PauseRun(view));
-    released.put(KeyEvent.VK_RIGHT, new Runnable() {
+
+    khandler.addPressedRunnable(KeyEvent.VK_UP, new Runnable() {
       @Override
       public void run() {
-        view.switchPP();
-        playing = !playing;
-        view.right();
+        view.editYScroll(1);
       }
     });
-    released.put(KeyEvent.VK_LEFT, new Runnable() {
+
+    khandler.addPressedRunnable(KeyEvent.VK_DOWN, new Runnable() {
       @Override
       public void run() {
-        view.left();
+        view.editXScroll(-1);
       }
     });
-    released.put(KeyEvent.VK_UP, new Runnable() {
-      @Override
-      public void run() {
-        view.upPress();
-      }
-    });
-    released.put(KeyEvent.VK_DOWN, new Runnable() {
-      @Override
-      public void run() {
-        view.down();
-      }
-    });
-    released.put(KeyEvent.VK_R, new Runnable() {
+
+    khandler.addPressedRunnable(KeyEvent.VK_R, new Runnable() {
       @Override
       public void run() {
         view.restart();
       }
     });
 
-    KeyboardHandler khandler = new KeyboardHandler();
-    khandler.setTypedMap(typed);
-    khandler.setPressedMap(pressed);
-    khandler.setReleasedMap(released);
-    view.addKeyListener(khandler);
+    view.setListeners(this, khandler);
 
-    MouseHandler mhandler = new MouseHandler();
 
-    mhandler.setLeftClick(new Runnable() {
-      @Override
-      public void run() {
-        int beat = view.getClickedBeat(mhandler.x);
-        ITone tone = view.getClickedTone(mhandler.y);
-        view.setEchoText(tone.toString() + " " + String.valueOf(beat) +
-                ", Numeric Note Version: " + tone.numeric());
-      }
-    });
-    mhandler.setRightClick(new Runnable() {
-      @Override
-      public void run() {
-        int beat = view.getClickedBeat(mhandler.x);
-        ITone tone = view.getClickedTone(mhandler.y);
-        view.setEchoText(tone.toString() + " " + String.valueOf(beat) +
-                ", Numeric Note Version: " + tone.numeric());
-        model.deleteNoteAtX(tone, beat);
-        view.repaint();
-      }
-    });
-
-    view.addMouseListener(mhandler);
+//    pressed.put(KeyEvent.VK_HOME, new Runnable() {
+//      @Override
+//      public void run() {
+//        view.home();
+//      }
+//    });
+//
+//    pressed.put(KeyEvent.VK_END, new Runnable() {
+//      @Override
+//      public void run() {
+//        view.end();
+//      }
+//    });
+//    released.put(KeyEvent.VK_SPACE, new PauseRun(view));
+//    released.put(KeyEvent.VK_RIGHT, new Runnable() {
+//      @Override
+//      public void run() {
+//        view.switchPP();
+//        playing = !playing;
+//        view.right();
+//      }
+//    });
+//    released.put(KeyEvent.VK_LEFT, new Runnable() {
+//      @Override
+//      public void run() {
+//        view.left();
+//      }
+//    });
+//    released.put(KeyEvent.VK_UP, new Runnable() {
+//      @Override
+//      public void run() {
+//        view.upPress();
+//      }
+//    });
+//    released.put(KeyEvent.VK_DOWN, new Runnable() {
+//      @Override
+//      public void run() {
+//        view.down();
+//      }
+//    });
+//    released.put(KeyEvent.VK_R, new Runnable() {
+//      @Override
+//      public void run() {
+//        view.restart();
+//      }
+//    });
+//
+//
+//    khandler.setTypedMap(typed);
+//    khandler.setPressedMap(pressed);
+//    khandler.setReleasedMap(released);
+//    view.addKeyListener(khandler);
+//
+//    MouseHandler mhandler = new MouseHandler();
+//
+//    mhandler.setLeftClick(new Runnable() {
+//      @Override
+//      public void run() {
+//        int beat = view.getClickedBeat(mhandler.x);
+//        ITone tone = view.getClickedTone(mhandler.y);
+//        view.setEchoText(tone.toString() + " " + String.valueOf(beat) +
+//                ", Numeric Note Version: " + tone.numeric());
+//      }
+//    });
+//    mhandler.setRightClick(new Runnable() {
+//      @Override
+//      public void run() {
+//        int beat = view.getClickedBeat(mhandler.x);
+//        ITone tone = view.getClickedTone(mhandler.y);
+//        view.setEchoText(tone.toString() + " " + String.valueOf(beat) +
+//                ", Numeric Note Version: " + tone.numeric());
+//        model.deleteNoteAtX(tone, beat);
+//        view.repaint();
+//      }
+//    });
+//
+//    view.addMouseListener(mhandler);
   }
-  */
+
 
   @Override
   public void actionPerformed(ActionEvent e) {
