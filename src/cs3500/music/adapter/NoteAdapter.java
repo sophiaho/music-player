@@ -3,7 +3,7 @@ package cs3500.music.adapter;
 import cs3500.music.model.INote;
 
 /**
- * Created by andrew on 01/12/2016.
+ * Implementation adapting INote to a Note.
  */
 public class NoteAdapter implements Note {
   private INote toAdapt;
@@ -19,7 +19,7 @@ public class NoteAdapter implements Note {
 
   @Override
   public int getBeats() {
-    return toAdapt.getEnd();
+    return toAdapt.getEnd() - toAdapt.getStart();
   }
 
   @Override
@@ -29,7 +29,7 @@ public class NoteAdapter implements Note {
 
   @Override
   public int getOctave() {
-    return toAdapt.getTone().getOctave();
+    return toAdapt.getTone().getOctave() + 1;
   }
 
   @Override
@@ -40,10 +40,5 @@ public class NoteAdapter implements Note {
   @Override
   public int getInstrument() {
     return toAdapt.getInstrument();
-  }
-
-  @Override
-  public int getOrdinal() {
-    return toAdapt.getTone().numeric();
   }
 }

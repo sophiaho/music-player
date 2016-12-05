@@ -1,7 +1,7 @@
 package cs3500.music.adapter;
 
 /**
- * Created by andrew on 01/12/2016.
+ * Note Interface.
  */
 public interface Note {
   int getStartTime();
@@ -15,6 +15,4 @@ public interface Note {
   int getVolume();
 
   int getInstrument();
-
-  int getOrdinal();
 }

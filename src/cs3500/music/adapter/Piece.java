@@ -3,10 +3,8 @@ package cs3500.music.adapter;
 import java.util.HashMap;
 import java.util.List;
 
-import cs3500.music.model.ITone;
-
 /**
- * Created by andrew on 01/12/2016.
+ * Interface for Piece in provider.
  */
 public interface Piece {
   List<Note> getPiece();

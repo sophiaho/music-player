@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import javax.sound.midi.InvalidMidiDataException;
 
+import cs3500.music.adapter.GuiViewAdapter;
 import cs3500.music.adapter.IMusicEditorModelView;
 import cs3500.music.adapter.Piece;
 import cs3500.music.controller.GuiController;
@@ -42,7 +43,7 @@ public class MusicMain {
 //      IGUIView view = IMusicViewFactory.make(args[1]);
       IGuiView view = new ComboView(new MidiView(), new GuiViewFrame());
       IView midi = new MidiView();
-      IMusicController controller = new GuiController(model, new GuiViewFrame());
+      IMusicController controller = new GuiController(model, new GuiViewAdapter(view));
       controller.start();
     } catch (IOException e) {
       System.out.println("Not a valid song.");

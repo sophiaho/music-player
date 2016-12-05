@@ -3,19 +3,14 @@ package cs3500.music.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Scanner;
 
-import javax.swing.Timer;
+import javax.swing.*;
 
-import cs3500.music.adapter.IMusicEditorModelView;
-import cs3500.music.adapter.MusicEditorAdapter;
-import cs3500.music.adapter.Note;
-import cs3500.music.adapter.Piece;
-import cs3500.music.adapter.PieceAdapter;
-import cs3500.music.adapter.Pitch;
+import cs3500.music.model.INote;
 import cs3500.music.model.ISong;
-import cs3500.music.provider.IGuiView;
+import cs3500.music.model.ITone;
+import cs3500.music.view.IGUIView;
 import cs3500.music.provider.KeyboardHandler;
 
 /**
@@ -24,7 +19,7 @@ import cs3500.music.provider.KeyboardHandler;
 public class GuiController implements IMusicController, ActionListener {
 
   ISong model;
-  IGuiView view;
+  IGUIView view;
   boolean playing;
   private Timer timer;
 
@@ -34,11 +29,11 @@ public class GuiController implements IMusicController, ActionListener {
    * @param model model, must be an ISong implementation.
    * @param view  view implementation, should work for ISong.
    */
-  public GuiController(ISong model, IGuiView view) {
+  public GuiController(ISong model, IGUIView view) {
     this.model = model;
     this.view = view;
     this.configureHandlers();
-    this.view.setListeners(this, new KeyboardHandler());
+    this.view.addActionListener(this);
     this.playing = true;
     this.timer = new Timer(20, this);
   }
@@ -48,144 +43,143 @@ public class GuiController implements IMusicController, ActionListener {
     this.timer = new Timer(20, this);
     this.timer.setActionCommand("Tick");
     this.timer.start();
-    this.view.setModel(new MusicEditorAdapter(model));
-    this.view.refresh();
-    this.view.makeVisible();
+    this.view.setUp(model);
+    this.view.render();
   }
 
   /**
    * Spacebar to pause/start, left right arrow keys to scroll,
    * character inputs into the text box.
    */
-
   private void configureHandlers() {
-
     KeyboardHandler khandler = new KeyboardHandler();
+
+    khandler.addPressedRunnable(KeyEvent.VK_HOME, new Runnable() {
+      @Override
+      public void run() {
+        view.home();
+      }
+    });
+    khandler.addPressedRunnable(KeyEvent.VK_END, new Runnable() {
+      @Override
+      public void run() {
+        view.end();
+      }
+    });
+    khandler.addPressedRunnable(KeyEvent.VK_SPACE, new Runnable() {
+      @Override
+      public void run() {
+        view.switchPP();
+      }
+    });
     khandler.addPressedRunnable(KeyEvent.VK_RIGHT, new Runnable() {
       @Override
       public void run() {
-        view.editXScroll(1);
+        view.right();
       }
     });
-
     khandler.addPressedRunnable(KeyEvent.VK_LEFT, new Runnable() {
       @Override
       public void run() {
-        view.editXScroll(-1);
+        view.left();
       }
     });
-
     khandler.addPressedRunnable(KeyEvent.VK_UP, new Runnable() {
       @Override
       public void run() {
-        view.editYScroll(1);
+        view.upPress();
       }
     });
-
     khandler.addPressedRunnable(KeyEvent.VK_DOWN, new Runnable() {
       @Override
       public void run() {
-        view.editXScroll(-1);
+        view.down();
       }
     });
-
     khandler.addPressedRunnable(KeyEvent.VK_R, new Runnable() {
       @Override
       public void run() {
         view.restart();
       }
     });
+    khandler.addPressedRunnable(KeyEvent.VK_A, new Runnable() {
+      @Override
+      public void run() {
+        JFrame frame2 = new JFrame("");
+        String s = JOptionPane.showInputDialog(frame2, "Enter your input in the form " +
+                ":Instrument :" +
+                " Volume : MIDIValue : Beats : Start Time", JOptionPane.PLAIN_MESSAGE);
 
-    view.setListeners(this, khandler);
+
+        Scanner scan = new Scanner(s);
+        String noteAdd = scan.toString();
+        int instrument = scan.nextInt();
+        int volume = scan.nextInt();
+        int val = scan.nextInt();
+        int beats = scan.nextInt();
+        int startTime = scan.nextInt();
+
+        model.addNote(INote.fromString(noteAdd));
+        view.repaint();
+        view.clearInputString();
+        view.resetFocus();
+        view.restart();
+      }
+    });
+    khandler.addPressedRunnable(KeyEvent.VK_D, new Runnable() {
+      @Override
+      public void run() {        JFrame frame2 = new JFrame("");
+        String s = JOptionPane.showInputDialog(frame2, "Enter your input in the form " +
+                "MIDIVal : Time", JOptionPane.PLAIN_MESSAGE);
 
 
-//    pressed.put(KeyEvent.VK_HOME, new Runnable() {
-//      @Override
-//      public void run() {
-//        view.home();
-//      }
-//    });
-//
-//    pressed.put(KeyEvent.VK_END, new Runnable() {
-//      @Override
-//      public void run() {
-//        view.end();
-//      }
-//    });
-//    released.put(KeyEvent.VK_SPACE, new PauseRun(view));
-//    released.put(KeyEvent.VK_RIGHT, new Runnable() {
-//      @Override
-//      public void run() {
-//        view.switchPP();
-//        playing = !playing;
-//        view.right();
-//      }
-//    });
-//    released.put(KeyEvent.VK_LEFT, new Runnable() {
-//      @Override
-//      public void run() {
-//        view.left();
-//      }
-//    });
-//    released.put(KeyEvent.VK_UP, new Runnable() {
-//      @Override
-//      public void run() {
-//        view.upPress();
-//      }
-//    });
-//    released.put(KeyEvent.VK_DOWN, new Runnable() {
-//      @Override
-//      public void run() {
-//        view.down();
-//      }
-//    });
-//    released.put(KeyEvent.VK_R, new Runnable() {
-//      @Override
-//      public void run() {
-//        view.restart();
-//      }
-//    });
-//
-//
-//    khandler.setTypedMap(typed);
-//    khandler.setPressedMap(pressed);
-//    khandler.setReleasedMap(released);
-//    view.addKeyListener(khandler);
-//
-//    MouseHandler mhandler = new MouseHandler();
-//
-//    mhandler.setLeftClick(new Runnable() {
-//      @Override
-//      public void run() {
-//        int beat = view.getClickedBeat(mhandler.x);
-//        ITone tone = view.getClickedTone(mhandler.y);
-//        view.setEchoText(tone.toString() + " " + String.valueOf(beat) +
-//                ", Numeric Note Version: " + tone.numeric());
-//      }
-//    });
-//    mhandler.setRightClick(new Runnable() {
-//      @Override
-//      public void run() {
-//        int beat = view.getClickedBeat(mhandler.x);
-//        ITone tone = view.getClickedTone(mhandler.y);
-//        view.setEchoText(tone.toString() + " " + String.valueOf(beat) +
-//                ", Numeric Note Version: " + tone.numeric());
-//        model.deleteNoteAtX(tone, beat);
-//        view.repaint();
-//      }
-//    });
-//
-//    view.addMouseListener(mhandler);
+        Scanner scan = new Scanner(s);
+        String noteAdd = scan.toString();
+        int midi = scan.nextInt();
+        int time = scan.nextInt();
+
+        model.deleteNoteAtX(ITone.fromInt(midi), time);
+        view.repaint();
+        view.clearInputString();
+        view.resetFocus();
+        view.restart();
+      }
+    });
+
+    view.addKeyListener(khandler);
+
+    MouseHandler mhandler = new MouseHandler();
+
+    mhandler.setLeftClick(new Runnable() {
+      @Override
+      public void run() {
+        int beat = view.getClickedBeat(mhandler.x);
+        ITone tone = view.getClickedTone(mhandler.y);
+        view.setEchoText(tone.toString() + " " + String.valueOf(beat) +
+                ", Numeric Note Version: " + tone.numeric());
+      }
+    });
+    mhandler.setRightClick(new Runnable() {
+      @Override
+      public void run() {
+        int beat = view.getClickedBeat(mhandler.x);
+        ITone tone = view.getClickedTone(mhandler.y);
+        view.setEchoText(tone.toString() + " " + String.valueOf(beat) +
+                ", Numeric Note Version: " + tone.numeric());
+        model.deleteNoteAtX(tone, beat);
+        view.repaint();
+      }
+    });
+
+    view.addMouseListener(mhandler);
   }
-
 
   @Override
   public void actionPerformed(ActionEvent e) {
     switch (e.getActionCommand()) {
-      /*
       case "Add Note Button":
         String noteAdd = view.getInputString();
-        model.addNote(IMusicEditorModelView.fromString(noteAdd));
+        model.addNote(INote.fromString(noteAdd));
         this.view.repaint();
         view.clearInputString();
         view.resetFocus();
@@ -198,17 +192,15 @@ public class GuiController implements IMusicController, ActionListener {
         view.clearInputString();
         view.resetFocus();
         break;
-        */
       case "Tick":
-//        if (playing) {
-//          view.refreshGui();
-//        } else {
-////          view.pause();
-//        }
-        view.refreshGui();
+        if (playing) {
+          view.incrementBeat();
+          view.repaint();
+        } else {
+          view.switchPP();
+        }
         break;
       default: break;
     }
   }
 }
-

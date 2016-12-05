@@ -3,7 +3,7 @@ package cs3500.music.adapter;
 import cs3500.music.model.ISong;
 
 /**
- * Created by andrew on 01/12/2016.
+ * Adapts ISong to a ViewModel for Piece.
  */
 public class MusicEditorAdapter implements IMusicEditorModelView {
   private PieceAdapter piece;
