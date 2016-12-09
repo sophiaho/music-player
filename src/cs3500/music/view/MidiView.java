@@ -24,6 +24,7 @@ public class MidiView extends GUIView {
   private Sequencer sequencer;
   private Sequence sequence;
   private int songLength;
+  private boolean isPaused;
 
   /**
    * Constructor for MidiView, starts the sequencer.
@@ -58,6 +59,7 @@ public class MidiView extends GUIView {
     } catch (InvalidMidiDataException e) {
       e.printStackTrace();
     }
+    this.isPaused = true;
   }
 
   @Override
@@ -114,15 +116,20 @@ public class MidiView extends GUIView {
 
   @Override
   public void switchPP() {
-    if (this.sequencer.isRunning()) {
-      this.sequencer.stop();
-    } else {
+    if (isPaused) {
       this.sequencer.start();
+      isPaused = false;
+    } else {
+      this.sequencer.stop();
+      isPaused = true;
     }
+    this.sequencer.setTempoInMPQ(this.panel.getTempo());
   }
+
 
   /**
    * Returns the time that midi is at right now from the sequencer.
+   *
    * @return int time in ticks.
    */
   public int getTick() {
@@ -136,12 +143,19 @@ public class MidiView extends GUIView {
    * Restarts the whole midi from the beginning.
    */
   public void restart() {
-    try {
-      this.sequencer.setSequence(sequence);
-    } catch (InvalidMidiDataException e) {
-      e.printStackTrace();
-    }
     this.sequencer.setTickPosition(0);
+    this.sequencer.setTempoInMPQ(this.panel.getTempo());
+    this.sequencer.start();
+    this.isPaused = false;
+  }
+
+  public void changeTime(int i) {
+    this.sequencer.setTickPosition(i);
+    this.sequencer.setTempoInMPQ(this.panel.getTempo());
+  }
+
+  public void restartMidi() {
+    this.sequencer.stop();
     this.sequencer.start();
   }
 }

@@ -48,5 +48,4 @@ public interface IGuiView extends IView {
    * restarts the song from the beginning.
    */
   void restart();
-
 }

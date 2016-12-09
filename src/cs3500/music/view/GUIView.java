@@ -3,6 +3,7 @@ package cs3500.music.view;
 import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 import javax.swing.*;
 
@@ -44,22 +45,22 @@ public class GUIView extends JFrame implements IGUIView {
     this.input = new JTextField(50);
     this.curr = 0;
 
-    addNote = new JButton("Add Note");
-    addNote.setActionCommand("Add Note Button");
+//    addNote = new JButton("Add Note");
+//    addNote.setActionCommand("Add Note Button");
+//
+//    removeNote = new JButton("Remove Note");
+//    removeNote.setActionCommand("Remove Note Button");
+//
+//    display = new JLabel("Enter a note below.");
+//
+//    JPanel interactions = new JPanel();
+//    interactions.setLayout(new BorderLayout());
+//    interactions.add(this.input, BorderLayout.CENTER);
+//    interactions.add(addNote, BorderLayout.SOUTH);
+//    interactions.add(removeNote, BorderLayout.EAST);
+//    interactions.add(display, BorderLayout.NORTH);
 
-    removeNote = new JButton("Remove Note");
-    removeNote.setActionCommand("Remove Note Button");
-
-    display = new JLabel("Enter a note below.");
-
-    JPanel interactions = new JPanel();
-    interactions.setLayout(new BorderLayout());
-    interactions.add(this.input, BorderLayout.CENTER);
-    interactions.add(addNote, BorderLayout.SOUTH);
-    interactions.add(removeNote, BorderLayout.EAST);
-    interactions.add(display, BorderLayout.NORTH);
-
-    this.add(interactions, BorderLayout.SOUTH);
+//    this.add(interactions, BorderLayout.SOUTH);
 
     this.pack();
     this.repaint();
@@ -159,7 +160,7 @@ public class GUIView extends JFrame implements IGUIView {
 
   @Override
   public void setEchoText(String s) {
-    display.setText(s);
+//    display.setText(s);
   }
 
   @Override
@@ -174,8 +175,8 @@ public class GUIView extends JFrame implements IGUIView {
 
   @Override
   public void addActionListener(ActionListener listener) {
-    addNote.addActionListener(listener);
-    removeNote.addActionListener(listener);
+//    addNote.addActionListener(listener);
+//    removeNote.addActionListener(listener);
   }
 
   @Override
@@ -210,5 +211,26 @@ public class GUIView extends JFrame implements IGUIView {
   public void restart() {
     this.panel.setCurrBeat(curr);
     this.repaint();
+  }
+
+  @Override
+  public int getTick() {
+    return 0;
+  }
+
+  @Override
+  public void setTick(int i) {
+
+  }
+
+  @Override
+  public void restartMidi() {
+
+  }
+
+  @Override
+  public void setRepeats(HashMap<Integer, Boolean> starts, HashMap<Integer, Boolean> ends) {
+    this.panel.setRStarts(starts);
+    this.panel.setREnds(ends);
   }
 }

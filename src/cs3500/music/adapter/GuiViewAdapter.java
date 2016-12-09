@@ -3,6 +3,7 @@ package cs3500.music.adapter;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.util.HashMap;
 
 import cs3500.music.model.ISong;
 import cs3500.music.model.ITone;
@@ -124,6 +125,26 @@ public class GuiViewAdapter implements IGUIView {
 
   @Override
   public void incrementBeat() {
+  }
+
+  @Override
+  public int getTick() {
+    return 0;
+  }
+
+  @Override
+  public void setTick(int i) {
+
+  }
+
+  @Override
+  public void restartMidi() {
+
+  }
+
+  @Override
+  public void setRepeats(HashMap<Integer, Boolean> starts, HashMap<Integer, Boolean> ends) {
+
   }
 
   @Override

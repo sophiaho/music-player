@@ -20,7 +20,6 @@ public class GuiController implements IMusicController, ActionListener {
 
   ISong model;
   IGUIView view;
-  boolean playing;
   private Timer timer;
 
   /**
@@ -34,13 +33,12 @@ public class GuiController implements IMusicController, ActionListener {
     this.view = view;
     this.configureHandlers();
     this.view.addActionListener(this);
-    this.playing = true;
-    this.timer = new Timer(20, this);
+    this.timer = new Timer(5, this);
   }
 
   @Override
   public void start() {
-    this.timer = new Timer(20, this);
+    this.timer = new Timer(5, this);
     this.timer.setActionCommand("Tick");
     this.timer.start();
     this.view.setUp(model);
@@ -99,6 +97,7 @@ public class GuiController implements IMusicController, ActionListener {
     khandler.addPressedRunnable(KeyEvent.VK_R, new Runnable() {
       @Override
       public void run() {
+        model.restartRepeats();
         view.restart();
       }
     });
@@ -109,26 +108,32 @@ public class GuiController implements IMusicController, ActionListener {
         String s = JOptionPane.showInputDialog(frame2, "Enter your input in the form " +
                 ":Instrument :" +
                 " Volume : MIDIValue : Beats : Start Time", JOptionPane.PLAIN_MESSAGE);
+        try {
+          Scanner scan = new Scanner(s);
+          String noteAdd = scan.toString();
+          int instrument = scan.nextInt();
+          int volume = scan.nextInt();
+          int val = scan.nextInt();
+          int beats = scan.nextInt();
+          int startTime = scan.nextInt();
 
+          model.addNote(INote.fromString(noteAdd));
+          view.repaint();
+          view.clearInputString();
+          view.resetFocus();
+          view.restart();
+        } catch (NullPointerException e) {
+          e.printStackTrace();
+        } catch (NumberFormatException e) {
+          e.printStackTrace();
+        }
 
-        Scanner scan = new Scanner(s);
-        String noteAdd = scan.toString();
-        int instrument = scan.nextInt();
-        int volume = scan.nextInt();
-        int val = scan.nextInt();
-        int beats = scan.nextInt();
-        int startTime = scan.nextInt();
-
-        model.addNote(INote.fromString(noteAdd));
-        view.repaint();
-        view.clearInputString();
-        view.resetFocus();
-        view.restart();
       }
     });
     khandler.addPressedRunnable(KeyEvent.VK_D, new Runnable() {
       @Override
-      public void run() {        JFrame frame2 = new JFrame("");
+      public void run() {
+        JFrame frame2 = new JFrame("");
         String s = JOptionPane.showInputDialog(frame2, "Enter your input in the form " +
                 "MIDIVal : Time", JOptionPane.PLAIN_MESSAGE);
 
@@ -143,6 +148,27 @@ public class GuiController implements IMusicController, ActionListener {
         view.clearInputString();
         view.resetFocus();
         view.restart();
+      }
+    });
+
+    khandler.addPressedRunnable(KeyEvent.VK_E, new Runnable() {
+      @Override
+      public void run() {
+        JFrame frame2 = new JFrame("");
+        String s = JOptionPane.showInputDialog(frame2, "Enter a repeat start and end", JOptionPane.PLAIN_MESSAGE);
+
+
+        Scanner scan = new Scanner(s);
+        int start = scan.nextInt();
+        int end = scan.nextInt();
+
+        if (start <= end) {
+          model.addRepeatStart(start * 20);
+          model.addRepeatEnd(end * 20);
+          model.addCorrStart(end * 20, start * 20);
+          view.setRepeats(model.rStarts(), model.rEnds());
+          view.restart();
+        }
       }
     });
 
@@ -167,7 +193,7 @@ public class GuiController implements IMusicController, ActionListener {
         view.setEchoText(tone.toString() + " " + String.valueOf(beat) +
                 ", Numeric Note Version: " + tone.numeric());
         model.deleteNoteAtX(tone, beat);
-        view.repaint();
+        view.restart();
       }
     });
 
@@ -180,27 +206,27 @@ public class GuiController implements IMusicController, ActionListener {
       case "Add Note Button":
         String noteAdd = view.getInputString();
         model.addNote(INote.fromString(noteAdd));
-        this.view.repaint();
-        view.clearInputString();
-        view.resetFocus();
+        this.view.restart();
         break;
       case "Remove Note Button":
         String[] toDelete = view.getInputString().split(" ");
         model.deleteNoteAtX(ITone.fromInt(Integer.valueOf(toDelete[0])),
                 Integer.valueOf(toDelete[1]));
-        this.view.repaint();
-        view.clearInputString();
-        view.resetFocus();
+        this.view.restart();
         break;
       case "Tick":
-        if (playing) {
-          view.incrementBeat();
+        if (model.rEnds().containsKey(view.getTick()) &&
+                !model.rEnds().get(view.getTick())) {
+          model.rEnds().put(view.getTick(), true);
+          System.out.println(model.corrStart(view.getTick()));
+          view.setTick(model.corrStart(view.getTick()));
+          System.out.println(view.getTick());
           view.repaint();
-        } else {
-          view.switchPP();
         }
+        view.incrementBeat();
+        view.repaint();
         break;
-      default: break;
     }
   }
 }
+

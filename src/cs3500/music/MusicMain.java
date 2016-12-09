@@ -16,6 +16,7 @@ import cs3500.music.provider.IView;
 import cs3500.music.provider.MidiView;
 import cs3500.music.util.MusicReader;
 import cs3500.music.util.SongBuilder;
+import cs3500.music.view.CompositeView;
 
 /**
  * Created by soapyho on 11/3/16.
@@ -28,24 +29,21 @@ public class MusicMain {
    * @throws InvalidMidiDataException when malformed midis are imported.
    */
   public static void main(String[] args) throws IOException, InvalidMidiDataException {
-    if (args.length != 2) {
-      System.out.println("Should only have two arguments");
-      return;
-    }
+//    if (args.length != 1) {
+//      System.out.println("Should only have one argument");
+//      return;
+//    }
     try {
       ISong model = MusicReader.parseFile(new FileReader("songs/mary-little-lamb.txt"), new SongBuilder());
       //      IGUIView view = IMusicViewFactory.make(args[1]);
       IGuiView view = new ComboView(new MidiView(), new GuiViewFrame());
       IView midi = new MidiView();
-      IMusicController controller = new GuiController(model, new GuiViewAdapter(view));
+      IMusicController controller = new GuiController(model, new CompositeView());
       controller.start();
     } catch (IOException e) {
       System.out.println("Not a valid song.");
     } catch (IllegalArgumentException ie) {
-      System.out.print("Not a valid view type.");
+      ie.printStackTrace();
     }
   }
 }
-
-
-

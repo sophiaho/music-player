@@ -3,6 +3,7 @@ package cs3500.music.view;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.util.HashMap;
 
 import cs3500.music.model.ITone;
 
@@ -133,4 +134,16 @@ public interface IGUIView extends IMusicView {
    * Restarts the whole song.
    */
   void restart();
+
+  /**
+   * Get tick position.
+   */
+  int getTick();
+
+  void setTick(int i);
+
+  void restartMidi();
+
+  void setRepeats(HashMap<Integer, Boolean> starts,
+                  HashMap<Integer, Boolean> ends);
 }

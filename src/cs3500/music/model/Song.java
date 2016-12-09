@@ -3,6 +3,7 @@ package cs3500.music.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
 
 /**
  * Song class stores all the notes with the same tone, it extends TreeMap so that it's
@@ -13,10 +14,16 @@ public class Song implements ISong {
   private int tempo;
   private ITone lowest;
   private ITone highest;
+  private HashMap<Integer, Boolean> rStarts;
+  private HashMap<Integer, Boolean> rEnds;
+  private HashMap<Integer, Integer> corrEnd;
 
   public Song() {
     this.contents = new HashMap<>();
     this.tempo = 0;
+    this.rStarts = new HashMap<>();
+    this.rEnds = new HashMap<>();
+    this.corrEnd = new HashMap<>();
   }
 
   public Song(int tempo) {
@@ -181,6 +188,43 @@ public class Song implements ISong {
           }
         }
       }
+    }
+  }
+
+  @Override
+  public HashMap<Integer, Boolean> rStarts() {
+    return this.rStarts;
+  }
+
+  @Override
+  public HashMap<Integer, Boolean> rEnds() {
+    return this.rEnds;
+  }
+
+  @Override
+  public void addRepeatStart(int i) {
+    this.rStarts.put(i, false);
+  }
+
+  @Override
+  public void addRepeatEnd(int i) {
+    this.rEnds.put(i, false);
+  }
+
+  @Override
+  public int corrStart(int i) {
+    return this.corrEnd.get(i);
+  }
+
+  @Override
+  public void addCorrStart(int s, int e) {
+    this.corrEnd.put(s, e);
+  }
+
+  @Override
+  public void restartRepeats() {
+    for (Integer i : rEnds.keySet()) {
+      rEnds.put(i, false);
     }
   }
 }

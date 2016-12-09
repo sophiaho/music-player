@@ -36,4 +36,18 @@ public interface ISong {
   int getTempo();
 
   void deleteNoteAtX(ITone tone, int time);
+
+  HashMap<Integer, Boolean> rStarts();
+
+  HashMap<Integer, Boolean> rEnds();
+
+  int corrStart(int i);
+
+  void addRepeatStart(int i);
+
+  void addRepeatEnd(int i);
+
+  void addCorrStart(int s, int e);
+
+  void restartRepeats();
 }

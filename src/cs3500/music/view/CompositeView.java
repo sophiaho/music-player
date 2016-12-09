@@ -3,6 +3,7 @@ package cs3500.music.view;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.util.HashMap;
 
 import cs3500.music.model.ISong;
 import cs3500.music.model.ITone;
@@ -139,5 +140,25 @@ public class CompositeView implements IGUIView {
     midi.restart();
     gui.restart();
     gui.repaint();
+  }
+
+  @Override
+  public int getTick() {
+    return midi.getTick();
+  }
+
+  @Override
+  public void setTick(int i) {
+    midi.changeTime(i);
+  }
+
+  @Override
+  public void restartMidi() {
+    midi.restartMidi();
+  }
+
+  @Override
+  public void setRepeats(HashMap<Integer, Boolean> starts, HashMap<Integer, Boolean> ends) {
+    gui.setRepeats(starts, ends);
   }
 }

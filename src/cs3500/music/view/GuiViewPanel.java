@@ -5,6 +5,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -24,6 +25,9 @@ public class GuiViewPanel extends JPanel {
   private int tempo;
   double currBeat;
 
+  private HashMap<Integer, Boolean> rStarts;
+  private HashMap<Integer, Boolean> rEnds;
+
   private final int SQUARE = 20;
   private final int BEATS = 4;
   private final int TOPOFFSET = 10 + SQUARE;
@@ -37,6 +41,8 @@ public class GuiViewPanel extends JPanel {
     this.starts = new HashMap<>();
     this.ends = new HashMap<>();
     this.tempo = 1;
+    this.rStarts = new HashMap();
+    this.rEnds = new HashMap();
   }
 
   /**
@@ -76,9 +82,14 @@ public class GuiViewPanel extends JPanel {
 
     this.drawBar(g);
 
-    this.drawStartRepeat(g, 20);
-
-    this.drawEndRepeat(g, 30);
+    if (rStarts.keySet().size() > 0) {
+      for (Integer i : rStarts.keySet()) {
+        this.drawStartRepeat(g, i / 20);
+      }
+      for (Integer i : rEnds.keySet()) {
+        this.drawEndRepeat(g, i / 20);
+      }
+    }
   }
 
   /**
@@ -324,5 +335,13 @@ public class GuiViewPanel extends JPanel {
 
   public int getSQUARE() {
     return SQUARE;
+  }
+
+  public void setRStarts(HashMap<Integer, Boolean> starts) {
+    this.rStarts = starts;
+  }
+
+  public void setREnds(HashMap<Integer, Boolean> ends) {
+    this.rEnds = ends;
   }
 }
