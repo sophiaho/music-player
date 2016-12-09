@@ -1,6 +1,7 @@
 package cs3500.music.view;
 
 import java.awt.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -74,6 +75,10 @@ public class GuiViewPanel extends JPanel {
     this.drawVert(g);
 
     this.drawBar(g);
+
+    this.drawStartRepeat(g, 20);
+
+    this.drawEndRepeat(g, 30);
   }
 
   /**
@@ -177,6 +182,64 @@ public class GuiViewPanel extends JPanel {
   }
 
   /**
+   * Draws the bar that shows the start of the repeat.
+   *
+   * @param beat the beat that you want the repeat to start on
+   * @param g Graphics
+   */
+  private void drawStartRepeat(Graphics g, int beat) {
+    Graphics2D g2d = (Graphics2D) g;
+    int toneLength = this.toneSet.size();
+    Stroke dashed = new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0,
+            new float[] {5}, 0);
+    Stroke bar = new BasicStroke(1);
+    Stroke solid = new BasicStroke(2);
+    g2d.setStroke(solid);
+    g2d.setColor(Color.black);
+    g2d.drawLine(beat * SQUARE + SQUARE * 2, TOPOFFSET,
+            beat * SQUARE + SQUARE * 2, TOPOFFSET + toneLength * SQUARE);
+    g2d.setStroke(dashed);
+    g2d.drawLine((beat * SQUARE + SQUARE * 2) + 4, TOPOFFSET, (beat * SQUARE + SQUARE * 2) + 4,
+            TOPOFFSET + toneLength * SQUARE);
+  }
+
+
+  /**
+   * Draws the bar that shows the end of the repeat.
+   *
+   * @param beat the beat that you want the repeat to end on
+   */
+  private void drawEndRepeat(Graphics g, int beat) {
+    Graphics2D g2d = (Graphics2D) g;
+    int toneLength = this.toneSet.size();
+    Stroke dashed = new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0,
+            new float[] {5}, 0);
+    Stroke solid = new BasicStroke(2);
+    g2d.setStroke(dashed);
+    g2d.setColor(Color.black);
+    g2d.drawLine((beat * SQUARE + SQUARE * 2) - 4, TOPOFFSET,
+            (beat * SQUARE + SQUARE * 2) - 4, TOPOFFSET + toneLength * SQUARE);
+    g2d.setStroke(solid);
+    g2d.drawLine(beat * SQUARE + SQUARE * 2, TOPOFFSET, beat * SQUARE + SQUARE * 2,
+            TOPOFFSET + toneLength * SQUARE);
+  }
+
+  /**
+   * Draws the bar that plays the first time through then repeats, allowing for varied endings
+   *
+   * @param beat the beat that the first time bar is located on
+   */
+  private void drawFirstTimeBar(Graphics g, int beat) {
+    Graphics2D g2d = (Graphics2D) g;
+    int toneLength = this.toneSet.size();
+    Stroke bar = new BasicStroke(1);
+    g2d.setStroke(bar);
+    g2d.setColor(Color.black);
+    g2d.drawLine(beat * SQUARE + SQUARE * 2, TOPOFFSET, beat * SQUARE + SQUARE * 2,
+            TOPOFFSET + toneLength * SQUARE);
+  }
+
+  /**
    * Calculates the floor for the beat count.
    *
    * @return int, the beat count
@@ -248,6 +311,7 @@ public class GuiViewPanel extends JPanel {
     return new Dimension((SQUARE * (beatsFloor() + 3) * 4),
             TOPOFFSET + SQUARE * toneSet.size() + 50);
   }
+
 
   /**
    * Finds the length of the song.
