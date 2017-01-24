@@ -3,7 +3,7 @@ package cs3500.music.view;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
-import java.util.HashMap;
+import java.util.Set;
 
 import cs3500.music.model.ISong;
 import cs3500.music.model.ITone;
@@ -158,7 +158,7 @@ public class CompositeView implements IGUIView {
   }
 
   @Override
-  public void setRepeats(HashMap<Integer, Boolean> starts, HashMap<Integer, Boolean> ends) {
+  public void setRepeats(Set<Integer> starts, Set<Integer> ends) {
     gui.setRepeats(starts, ends);
   }
 }

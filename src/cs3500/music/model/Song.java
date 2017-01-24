@@ -3,7 +3,7 @@ package cs3500.music.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.TreeMap;
+import java.util.Set;
 
 /**
  * Song class stores all the notes with the same tone, it extends TreeMap so that it's
@@ -14,16 +14,11 @@ public class Song implements ISong {
   private int tempo;
   private ITone lowest;
   private ITone highest;
-  private HashMap<Integer, Boolean> rStarts;
-  private HashMap<Integer, Boolean> rEnds;
-  private HashMap<Integer, Integer> corrEnd;
+  private Repeater rep;
 
   public Song() {
     this.contents = new HashMap<>();
-    this.tempo = 0;
-    this.rStarts = new HashMap<>();
-    this.rEnds = new HashMap<>();
-    this.corrEnd = new HashMap<>();
+    this.tempo = 0;this.rep = new Repeater();
   }
 
   public Song(int tempo) {
@@ -192,39 +187,57 @@ public class Song implements ISong {
   }
 
   @Override
-  public HashMap<Integer, Boolean> rStarts() {
-    return this.rStarts;
+  public Set<Integer> rStarts() {
+    return this.rep.basicRStarts();
   }
 
   @Override
-  public HashMap<Integer, Boolean> rEnds() {
-    return this.rEnds;
-  }
-
-  @Override
-  public void addRepeatStart(int i) {
-    this.rStarts.put(i, false);
-  }
-
-  @Override
-  public void addRepeatEnd(int i) {
-    this.rEnds.put(i, false);
+  public Set<Integer> rEnds() {
+    return this.rep.basicREnds();
   }
 
   @Override
   public int corrStart(int i) {
-    return this.corrEnd.get(i);
-  }
-
-  @Override
-  public void addCorrStart(int s, int e) {
-    this.corrEnd.put(s, e);
+    return this.rep.corrStart(i);
   }
 
   @Override
   public void restartRepeats() {
-    for (Integer i : rEnds.keySet()) {
-      rEnds.put(i, false);
-    }
+    this.rep.restartRepeats();
+  }
+
+  @Override
+  public boolean isRepeat(int i) {
+    return this.rep.isRepeat(i);
+  }
+
+  @Override
+  public boolean addSafeBasicRepeat(int s, int e) {
+    return rep.addSafeRepeat(s, e);
+  }
+
+  @Override
+  public boolean multipeAction(int i) {
+    return this.rep.multipleAction(i);
+  }
+
+  @Override
+  public int multipleSet(int i) {
+    return this.rep.multipleSet(i);
+  }
+
+  @Override
+  public void addMultipleRepeat(int s, int r, List<Integer> ends) {
+    this.rep.addMultiple(s, r, ends);
+  }
+
+  @Override
+  public Set<Integer> mStarts() {
+    return this.rep.mStarts();
+  }
+
+  @Override
+  public Set<Integer> mEnds() {
+    return this.rep.mEnds();
   }
 }

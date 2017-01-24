@@ -3,6 +3,8 @@ package cs3500.music.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import javax.swing.*;
@@ -33,12 +35,12 @@ public class GuiController implements IMusicController, ActionListener {
     this.view = view;
     this.configureHandlers();
     this.view.addActionListener(this);
-    this.timer = new Timer(5, this);
+    this.timer = new Timer(20, this);
   }
 
   @Override
   public void start() {
-    this.timer = new Timer(5, this);
+    this.timer = new Timer(20, this);
     this.timer.setActionCommand("Tick");
     this.timer.start();
     this.view.setUp(model);
@@ -155,27 +157,64 @@ public class GuiController implements IMusicController, ActionListener {
       @Override
       public void run() {
         JFrame frame2 = new JFrame("");
-        String s = JOptionPane.showInputDialog(frame2, "Enter a repeat start and end", JOptionPane.PLAIN_MESSAGE);
+        String s = JOptionPane.showInputDialog(frame2, "Enter a repeat start and end",
+                JOptionPane.PLAIN_MESSAGE);
 
 
         Scanner scan = new Scanner(s);
-        int start = scan.nextInt();
-        int end = scan.nextInt();
+        int start = scan.nextInt() * 20;
+        int end = scan.nextInt() * 20;
 
-        if (start <= end) {
-          model.addRepeatStart(start * 20);
-          model.addRepeatEnd(end * 20);
-          model.addCorrStart(end * 20, start * 20);
+        if (model.addSafeBasicRepeat(start, end)) {
           view.setRepeats(model.rStarts(), model.rEnds());
           view.restart();
         }
+
+//        if (start <= end && !model.inEnds(end * 20)) {
+//          model.addRepeatStart(start * 20);
+//          model.addRepeatEnd(end * 20);
+//          model.addCorrStart(end * 20, start * 20);
+//          view.setRepeats(model.rStarts(), model.rEnds());
+//          view.restart();
+//        }
+      }
+    });
+
+    khandler.addPressedRunnable(KeyEvent.VK_M, new Runnable() {
+      @Override
+      public void run() {
+        JFrame frame2 = new JFrame("");
+        String s = JOptionPane.showInputDialog(frame2, "Enter a multiple " +
+                        "repeat start, return time, and ends",
+                JOptionPane.PLAIN_MESSAGE);
+
+
+        Scanner scan = new Scanner(s);
+        int start = scan.nextInt() * 20;
+        int ref = scan.nextInt() * 20;
+        List<Integer> ends = new ArrayList<>();
+        while (scan.hasNext()) {
+          ends.add(scan.nextInt() * 20);
+        }
+
+        model.addMultipleRepeat(start, ref, ends);
+
+        view.setRepeats(model.mStarts(), model.mEnds());
+        view.restart();
+
+//        if (start <= end && !model.inEnds(end * 20)) {
+//          model.addRepeatStart(start * 20);
+//          model.addRepeatEnd(end * 20);
+//          model.addCorrStart(end * 20, start * 20);
+//          view.setRepeats(model.rStarts(), model.rEnds());
+//          view.restart();
+//        }
       }
     });
 
     view.addKeyListener(khandler);
 
     MouseHandler mhandler = new MouseHandler();
-
     mhandler.setLeftClick(new Runnable() {
       @Override
       public void run() {
@@ -215,18 +254,27 @@ public class GuiController implements IMusicController, ActionListener {
         this.view.restart();
         break;
       case "Tick":
-        if (model.rEnds().containsKey(view.getTick()) &&
-                !model.rEnds().get(view.getTick())) {
-          model.rEnds().put(view.getTick(), true);
-          System.out.println(model.corrStart(view.getTick()));
-          view.setTick(model.corrStart(view.getTick()));
-          System.out.println(view.getTick());
+        int low = roundDown(view.getTick());
+        if (model.isRepeat(low)) {
+          view.setTick(model.corrStart(low));
           view.repaint();
+        } else if (model.multipeAction(low)) {
+          System.out.println(model.multipleSet(low));
+          int n = model.multipleSet(low);
+          if (n != low) {
+            view.setTick(model.multipleSet(n));
+            view.repaint();
+          }
         }
         view.incrementBeat();
         view.repaint();
         break;
     }
+  }
+
+  // rounds down to multiple of 20
+  private int roundDown(int i) {
+    return i - (i % 20);
   }
 }
 

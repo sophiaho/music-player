@@ -3,7 +3,7 @@ package cs3500.music.view;
 import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
+import java.util.Set;
 
 import javax.swing.*;
 
@@ -19,9 +19,6 @@ public class GUIView extends JFrame implements IGUIView {
   GuiViewPanel panel;
   private final JScrollPane scroller;
   private JTextField input;
-  private JButton addNote;
-  private JButton removeNote;
-  private JLabel display;
   private int curr;
 
   /**
@@ -44,23 +41,6 @@ public class GUIView extends JFrame implements IGUIView {
 
     this.input = new JTextField(50);
     this.curr = 0;
-
-//    addNote = new JButton("Add Note");
-//    addNote.setActionCommand("Add Note Button");
-//
-//    removeNote = new JButton("Remove Note");
-//    removeNote.setActionCommand("Remove Note Button");
-//
-//    display = new JLabel("Enter a note below.");
-//
-//    JPanel interactions = new JPanel();
-//    interactions.setLayout(new BorderLayout());
-//    interactions.add(this.input, BorderLayout.CENTER);
-//    interactions.add(addNote, BorderLayout.SOUTH);
-//    interactions.add(removeNote, BorderLayout.EAST);
-//    interactions.add(display, BorderLayout.NORTH);
-
-//    this.add(interactions, BorderLayout.SOUTH);
 
     this.pack();
     this.repaint();
@@ -229,7 +209,7 @@ public class GUIView extends JFrame implements IGUIView {
   }
 
   @Override
-  public void setRepeats(HashMap<Integer, Boolean> starts, HashMap<Integer, Boolean> ends) {
+  public void setRepeats(Set<Integer> starts, Set<Integer> ends) {
     this.panel.setRStarts(starts);
     this.panel.setREnds(ends);
   }
